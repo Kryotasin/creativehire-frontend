@@ -24,7 +24,10 @@ class JobpostCreate extends React.Component{
             <div>
             <br />
             <h2>New Jobpost</h2>
-            <CustomForm />
+            <CustomForm 
+                requestType="post" 
+                jobpostID={null} 
+                btnText="Create"/>
             </div>
         )
     }
