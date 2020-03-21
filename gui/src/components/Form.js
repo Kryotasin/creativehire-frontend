@@ -21,6 +21,10 @@ const validateMessages = {
 
 class CustomForm extends React.Component {
 
+    componentDidMount = () => {
+      console.log(this.props);
+    }
+
     handleFormSubmit = (event, requestType, jobpostID) => {
         const title = event.target.elements.title.value;
         const description = event.target.elements.description.value;
@@ -46,8 +50,6 @@ class CustomForm extends React.Component {
                 .then(res => console.log(res))
                 .catch(error => console.error(error));
         }
-
-        console.log(title);
     }
 
     render(){
@@ -65,7 +67,12 @@ class CustomForm extends React.Component {
                   },
                 ]}
               >
-                <Input name="title" placeholder="Enter a catchy title"/>
+                <Input name="title" value={
+                  this.props.requestType == 'put' ?
+                    this.props.jobpost.title
+                  :
+                    "Enter a title"
+                  }/>
               </Form.Item>
         
               <Form.Item label="Description"
@@ -74,7 +81,12 @@ class CustomForm extends React.Component {
                     required: true,
                     message:'Please enter an image url'},
               ]}>
-                <Input.TextArea name="description" placeholder="Paste the entire job description..."/>
+                <Input.TextArea name="description" value={
+                  this.props.requestType == 'put' ?
+                    this.props.jobpost.description
+                  :
+                    "Enter a title"
+                  }/>
               </Form.Item>
               
               <Form.Item
@@ -86,7 +98,12 @@ class CustomForm extends React.Component {
                   },
                 ]}
               >
-                  <Input name="img" placeholder="Paste image url here..."/>
+                  <Input name="img"  value={
+                  this.props.requestType == 'put' ?
+                    this.props.jobpost.img
+                  :
+                    "Enter a title"
+                  }/>
               </Form.Item>
         
               <Form.Item label="Expires On" 
