@@ -28,7 +28,7 @@ const Jobposts = (props) => {
             }
         >
         <List.Item.Meta
-          title={<a href={"/" + item.id} >{item.title}</a>}
+          title={<a href={"/jobpost/" + item.id} >{item.title}</a>}
           description={"Posted by " + item.job_poster_id + " on " + item.post_date}
         />
         {item.description}

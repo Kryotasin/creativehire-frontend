@@ -39,8 +39,8 @@ class CustomLayout extends React.Component {
                             localStorage.getItem('token') !== null ?
                             <SubMenu style={{float: 'right'}} title={<span><Link to="profile/"> Profile</Link></span>}>
                                 <MenuItemGroup title="General">
-                                    <Menu.Item key="setting:1"><span><PlusOutlined /> <Link to="create/"> New Jobpost</Link></span></Menu.Item>
-                                    <Menu.Item key="setting:2" onClickCapture={this.props.logout}>Logout</Menu.Item>
+                                    <Menu.Item key="setting:2"><span><PlusOutlined /> <Link to="/create/"> New Jobpost</Link></span></Menu.Item>
+                                    <Menu.Item key="setting:3" onClickCapture={this.props.logout}>Logout</Menu.Item>
                                 </MenuItemGroup>
 
                             </SubMenu>
