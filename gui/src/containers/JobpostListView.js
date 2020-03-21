@@ -26,11 +26,6 @@ class JobpostList extends React.Component{
             <div>
                  <Jobposts data={this.state.jobposts} />
                 <br />
-                <h2>New Jobpost</h2>
-                <CustomForm 
-                requestType="post" 
-                jobpostID={null} 
-                btnText="Create"/>
             </div>
             
         )
