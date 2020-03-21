@@ -32,13 +32,23 @@ class JobpostDetail extends React.Component{
                 <Card title={this.state.jobpost.title}>
                     <p>{this.state.jobpost.description}</p>
                 </Card>
-                <CustomForm {...this.state}
+                {
+                this.props.match.params.jobpostID !== null ? 
+                
+                <div>
+                    <CustomForm {...this.state}
                     requestType="put" 
                     jobpostID={this.props.match.params.jobpostID} 
                     btnText="Update" />
                     <form onSubmitCapture={this.handleDelete}>
                         <Button type="danger" htmlType="submit">Delete</Button>
                     </form>
+                </div>
+
+                :
+
+                    <span>No data fdound</span>
+                }
            </div>
         )
     }
