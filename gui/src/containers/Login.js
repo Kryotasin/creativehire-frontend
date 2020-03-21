@@ -33,11 +33,9 @@ class NormalLoginForm extends React.Component {
     const onFinish = values => {
         this.props.onAuth(values.username, values.password);
         this.props.history.push('/');
-        console.log('Success:', values);
     };
     
     const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
     };
 
     let errorMessage = null;
