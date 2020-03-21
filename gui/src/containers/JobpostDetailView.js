@@ -24,7 +24,6 @@ class JobpostDetail extends React.Component{
     handleDelete = (event) => {
         const jobpostID = this.props.match.params.jobpostID;
         axios.delete('http://127.0.0.1:8000/jobpost/' + jobpostID);
-        console.log("here");
     }
 
     render(){
@@ -33,7 +32,7 @@ class JobpostDetail extends React.Component{
                 <Card title={this.state.jobpost.title}>
                     <p>{this.state.jobpost.description}</p>
                 </Card>
-                <CustomForm 
+                <CustomForm {...this.state}
                     requestType="put" 
                     jobpostID={this.props.match.params.jobpostID} 
                     btnText="Update" />
