@@ -48,7 +48,9 @@ class CustomForm extends React.Component {
                     img:img
                 })
                 .then(res => console.log(res))
-                .catch(error => console.error(error));
+                .catch(error => console.error(error))
+                .finally(f => window.location.reload());
+                
         }
     }
 
@@ -67,7 +69,7 @@ class CustomForm extends React.Component {
                   },
                 ]}
               >
-                <Input name="title" value={
+                <Input name="title" placeholder={
                   this.props.requestType == 'put' ?
                     this.props.jobpost.title
                   :
@@ -81,7 +83,7 @@ class CustomForm extends React.Component {
                     required: true,
                     message:'Please enter an image url'},
               ]}>
-                <Input.TextArea name="description" value={
+                <Input.TextArea name="description" placeholder={
                   this.props.requestType == 'put' ?
                     this.props.jobpost.description
                   :
@@ -98,7 +100,7 @@ class CustomForm extends React.Component {
                   },
                 ]}
               >
-                  <Input name="img"  value={
+                  <Input name="img"  placeholder={
                   this.props.requestType == 'put' ?
                     this.props.jobpost.img
                   :
