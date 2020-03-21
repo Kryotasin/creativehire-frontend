@@ -2,11 +2,17 @@ import React from'react';
 import * as actions from '../store/actions/auth';
 import {connect} from 'react-redux';
 import { Menu, Layout } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
 
 import { Link } from 'react-router-dom';
 
 const { Header, Content, Footer } = Layout;
+
+
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
+
 
 class CustomLayout extends React.Component {
 
@@ -31,8 +37,14 @@ class CustomLayout extends React.Component {
                         
                         {
                             localStorage.getItem('token') !== null ?
-                            <Menu.Item style={{float: 'right'}} key="2" onClickCapture={this.props.logout}>Logout</Menu.Item>
-    
+                            <SubMenu style={{float: 'right'}} title={<span><Link to="profile/"> Profile</Link></span>}>
+                                <MenuItemGroup title="General">
+                                    <Menu.Item key="setting:1"><span><PlusOutlined /> <Link to="create/"> New Jobpost</Link></span></Menu.Item>
+                                    <Menu.Item key="setting:2" onClickCapture={this.props.logout}>Logout</Menu.Item>
+                                </MenuItemGroup>
+
+                            </SubMenu>
+                          
                                 :
     
                                 <Menu.Item style={{float: 'right'}} key="2"><Link to="/login">Login</Link></Menu.Item>
