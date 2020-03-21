@@ -8,6 +8,7 @@ import * as actions from './store/actions/auth'
 import './App.css';
 
 import CustomLayout from './containers/Layout';
+import GuestRouter from './guestRoute';
 
 class App extends Component {
 
@@ -18,11 +19,24 @@ class App extends Component {
   render() {
     return (
       <div className="">
-        <Router>
-         <CustomLayout {...this.props}>
-            <BaseRouter />
-          </CustomLayout>
-        </Router>
+
+{
+                    localStorage.getItem('token') !== null ?
+                    <Router>
+                    <CustomLayout {...this.props}>
+                       <BaseRouter />
+                     </CustomLayout>
+                   </Router>
+                    :
+                    <Router>
+                    <CustomLayout {...this.props}>
+                       <GuestRouter />
+                     </CustomLayout>
+                   </Router>
+                }
+
+
+        
       </div>
     );
   }
