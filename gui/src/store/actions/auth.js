@@ -22,20 +22,26 @@ export const authFail = error => {
 }
 
 export const logout = () => {
+    console.log("Logging out before");
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     localStorage.removeItem('expirationDate');
+    console.log("Logging out after");
 
     return {
         type: actionTypes.AUTH_LOGOUT
     }
 }
 
+export const dispatchLogout = () => {
+    return dispatch => {
+        dispatch(logout());
+    }
+}
+
 export const checkAuthTimeout = expirationDate => {
     return dispatch => {
-        setTimeout(() => {
-            dispatch(logout());
-        }, expirationDate * 3600 * 1000)
+        setTimeout(dispatchLogout, expirationDate * 3600 * 1000 * 1000)
     }
 }
 
@@ -98,11 +104,17 @@ export const authCheckState = () => {
             console.log(expirationDate);
             if(expirationDate <= new Date()){
                 dispatch(logout());
+                console.log("Here, logging out");
             }
             else{
                 dispatch(authSuccess(token));
+                console.log("Here, not logging out");
                 dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime())/1000));
-            }
+           
+                console.log(expirationDate);
+                console.log(localStorage.getItem('token'));
+                console.log((expirationDate.getTime() - new Date().getTime())/1000); }
+                
         }
     }
 }
