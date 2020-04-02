@@ -30,7 +30,7 @@ class CustomForm extends React.Component {
         const description = event.target.elements.description.value;
         const img = event.target.elements.img.value;
         const expiry_date = event.target.elements.expiry_date.value;
-        const job_poster_id = "1";
+        const job_poster_id = localStorage.getItem('userProfileID');
 
         switch(requestType){
             case 'post':
@@ -47,6 +47,7 @@ class CustomForm extends React.Component {
                 return axios.put('http://127.0.0.1:8000/jobpost/' + jobpostID + '/', {
                     title: title,
                     description: description,
+                    job_poster_id: job_poster_id,
                     img:img
                 })
                 .then(res => console.log(res))

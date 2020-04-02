@@ -45,6 +45,10 @@ export const checkAuthTimeout = expirationDate => {
     }
 }
 
+export const getUserID = (username, password) => {
+    return 
+}
+
 export const authLogin = (username, password) => {
     return dispatch => {
         dispatch(authStart());
@@ -54,6 +58,13 @@ export const authLogin = (username, password) => {
         })
         .then (res => {
             console.log(res);
+            console.log("Logging in");
+
+            axios.post("http://127.0.0.1:8000/authenticate/", {
+                username: username,
+                password: password
+            }).then(res => localStorage.setItem('userProfileID', res.data.id))
+
             const token = res.data.key;
             const expirationDate = new Date(new Date().getTime() + 3600*1000 );
             localStorage.setItem('token', token);
@@ -104,16 +115,17 @@ export const authCheckState = () => {
             console.log(expirationDate);
             if(expirationDate <= new Date()){
                 dispatch(logout());
-                console.log("Here, logging out");
+                // console.log("Here, logging out");
             }
             else{
                 dispatch(authSuccess(token));
-                console.log("Here, not logging out");
+                // console.log("Here, not logging out");
                 dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime())/1000));
            
-                console.log(expirationDate);
-                console.log(localStorage.getItem('token'));
-                console.log((expirationDate.getTime() - new Date().getTime())/1000); }
+                // console.log(expirationDate);
+                // console.log(localStorage.getItem('token'));
+                // console.log((expirationDate.getTime() - new Date().getTime())/1000); 
+            }
                 
         }
     }
