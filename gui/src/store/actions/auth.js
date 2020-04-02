@@ -22,11 +22,11 @@ export const authFail = error => {
 }
 
 export const logout = () => {
-    console.log("Logging out before");
+    // console.log("Logging out before");
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     localStorage.removeItem('expirationDate');
-    console.log("Logging out after");
+    // console.log("Logging out after");
 
     return {
         type: actionTypes.AUTH_LOGOUT
@@ -53,6 +53,7 @@ export const authLogin = (username, password) => {
             password: password
         })
         .then (res => {
+            console.log(res);
             const token = res.data.key;
             const expirationDate = new Date(new Date().getTime() + 3600*1000 );
             localStorage.setItem('token', token);
@@ -68,7 +69,6 @@ export const authLogin = (username, password) => {
 
 export const authSignup = (username, email, password1, password2) => {
     return dispatch => {
-        console.log(username, password1, password2, email);
         dispatch(authStart());
         axios.post('http://127.0.0.1:8000/rest-auth/registration/',{
             username: username,
