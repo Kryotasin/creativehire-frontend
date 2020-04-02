@@ -1,6 +1,5 @@
 import React from 'react';
 import Jobposts from '../components/Jobpost';
-import CustomForm from '../components/Form';
 
 import axios from 'axios';
 

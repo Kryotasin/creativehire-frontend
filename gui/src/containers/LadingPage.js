@@ -1,8 +1,6 @@
 import React from 'react';
 
-import axios from 'axios';
 
-import GuestRoute from '../guestRoute';
 
 
 class LandingPage extends React.Component{
