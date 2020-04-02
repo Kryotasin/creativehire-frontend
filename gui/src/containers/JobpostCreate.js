@@ -27,7 +27,8 @@ class JobpostCreate extends React.Component{
             <CustomForm 
                 requestType="post" 
                 jobpostID={null} 
-                btnText="Create"/>
+                btnText="Create"
+                {...this.props}/>
             </div>
         )
     }
