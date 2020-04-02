@@ -21,11 +21,19 @@ const validateMessages = {
 
 class CustomForm extends React.Component {
 
+    constructor(props){
+      super(props);
+      this.state = {
+        err: null
+      }
+    }
+
     componentDidMount = () => {
       // console.log(this.props);
     }
 
     handleFormSubmit = (event, requestType, jobpostID) => {
+        event.preventDefault();
         const title = event.target.elements.title.value;
         const description = event.target.elements.description.value;
         const img = event.target.elements.img.value;
@@ -40,8 +48,13 @@ class CustomForm extends React.Component {
                     job_poster_id: job_poster_id,
                     img:img
                 })
-                .then(res => console.log(res))
-                .catch(error => console.error(error));
+                .then(res => {
+                  console.log(res);
+                  if(res.status == '201'){
+                    this.props.history.push('/jobpost/' + res.data.id + '/');
+                  }
+                })
+                .catch(error => this.setState({err: error}));
 
             case 'put':
                 return axios.put('http://127.0.0.1:8000/jobpost/' + jobpostID + '/', {
@@ -90,7 +103,7 @@ class CustomForm extends React.Component {
                   this.props.requestType == 'put' ?
                     this.props.jobpost.description
                   :
-                    "Enter a title"
+                    "Enter a Description"
                   }/>
               </Form.Item>
               
@@ -107,7 +120,7 @@ class CustomForm extends React.Component {
                   this.props.requestType == 'put' ?
                     this.props.jobpost.img
                   :
-                    "Enter a title"
+                    "Enter image url"
                   }/>
               </Form.Item>
         
@@ -116,6 +129,11 @@ class CustomForm extends React.Component {
                   {required:true,}
               ]}>
                 <DatePicker name="expiry_date" />
+              </Form.Item>
+
+              <Form.Item
+                hidden={this.state.err == null ? true : false}
+              >
               </Form.Item>
              
               <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
