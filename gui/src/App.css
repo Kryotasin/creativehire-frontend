@@ -1,5 +1,7 @@
 .site-layout-content {
   background-color: white !important;
+  padding-top: 5%;
+  padding-bottom: 3%;
 }
 
 .site-card-wrapper {
