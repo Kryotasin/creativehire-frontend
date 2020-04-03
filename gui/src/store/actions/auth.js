@@ -23,6 +23,7 @@ export const authFail = error => {
 
 export const logout = () => {
     // console.log("Logging out before");
+    localStorage.removeItem('userProfileID');
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     localStorage.removeItem('expirationDate');
@@ -45,8 +46,12 @@ export const checkAuthTimeout = expirationDate => {
     }
 }
 
-export const getUserID = (username, password) => {
-    return 
+export const setUserID = (username, password) => {
+    
+        axios.post("http://127.0.0.1:8000/authenticate/", {
+                username: username,
+                password: password
+            }).then(res => localStorage.setItem('userProfileID', res.data.id))
 }
 
 export const authLogin = (username, password) => {
@@ -57,13 +62,10 @@ export const authLogin = (username, password) => {
             password: password
         })
         .then (res => {
-            console.log(res);
-            console.log("Logging in");
+            // console.log(res);
+            // console.log("Logging in");
 
-            axios.post("http://127.0.0.1:8000/authenticate/", {
-                username: username,
-                password: password
-            }).then(res => localStorage.setItem('userProfileID', res.data.id))
+            setUserID(username, password);
 
             const token = res.data.key;
             const expirationDate = new Date(new Date().getTime() + 3600*1000 );
@@ -88,6 +90,7 @@ export const authSignup = (username, email, password1, password2) => {
             email: email
         })
         .then (res => {
+            setUserID(username, password1);
             const token = res.data.key;
             const expirationDate = new Date(new Date().getTime() + 3600*1000 );
             localStorage.setItem('token', token);
