@@ -1,9 +1,10 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox, Spin } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { Form, Input, Button, Checkbox, Spin, Alert } from 'antd';
+import { NavLink, Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
 import * as actions from '../store/actions/auth';
 import { LoadingOutlined } from '@ant-design/icons';
+
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -12,7 +13,7 @@ const layout = {
     span: 8,
   },
   wrapperCol: {
-    span: 16,
+    span: 8,
   },
 };
 const tailLayout = {
@@ -21,7 +22,6 @@ const tailLayout = {
     span: 16,
   },
 };
-
 class NormalLoginForm extends React.Component {
 
     formRef = React.createRef();
@@ -32,23 +32,29 @@ class NormalLoginForm extends React.Component {
 
     const onFinish = values => {
         this.props.onAuth(values.username, values.password);
-        this.props.history.push('/');
+
+        localStorage.getItem('token') != null ? 
+            this.props.history.push('/')
+        :
+            console.log('Login failed')
+            
     };
     
     const onFinishFailed = errorInfo => {
     };
 
     let errorMessage = null;
+
     if(this.props.error){
         errorMessage = (
-            <p>{this.props.error.message}</p>
+            // <p>{this.props.error.message}</p>
+            <Alert {...tailLayout} message = 'Please check the username and password' type='error' />
         )
     }
     
 
     return (
         <div>
-            {errorMessage}
             {
   
                 this.props.loading ?
@@ -106,6 +112,9 @@ class NormalLoginForm extends React.Component {
                   to='/signup/'> Signup
                   </NavLink>
               </Form.Item>
+
+              
+                {errorMessage}
               </Form>
           }
       </div>
