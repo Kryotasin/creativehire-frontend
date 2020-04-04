@@ -13,6 +13,7 @@ import GuestRouter from './guestRoute';
 class App extends Component {
 
   componentDidMount() {
+    document.title="CreativeHire";
     this.props.onTryAutoSignup();
   }
 
