@@ -24,23 +24,18 @@ const tailLayout = {
 };
 class NormalLoginForm extends React.Component {
 
-    formRef = React.createRef();
-
-    
-
   render() {
 
     const onFinish = values => {
         this.props.onAuth(values.username, values.password);
-
-        localStorage.getItem('token') != null ? 
-            this.props.history.push('/')
-        :
-            console.log('Login failed')
-            
     };
     
     const onFinishFailed = errorInfo => {
+    };
+
+    const onSubCap = event => {
+        event.preventDefault();
+        // this.props.onAuth(event.username, event.password);
     };
 
     let errorMessage = null;
@@ -48,9 +43,10 @@ class NormalLoginForm extends React.Component {
     if(this.props.error){
         errorMessage = (
             // <p>{this.props.error.message}</p>
-            <Alert {...tailLayout} message = 'Please check the username and password' type='error' />
+            <Alert {...tailLayout} message = 'Username password combination not found.' type='error' />
         )
     }
+
     
 
     return (
@@ -66,11 +62,11 @@ class NormalLoginForm extends React.Component {
   
               <Form
               {...layout}
-              name="basic"
               initialValues={{
                   remember: true,
               }}
               ref={this.formRef}
+              onSubmitCapture={onSubCap}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
               >
@@ -122,8 +118,6 @@ class NormalLoginForm extends React.Component {
   } 
   
 }
-
-//const WrappedNormalLoginForm = this.forkmRef.create()(NormalLoginForm);
 
 const mapStateToProps = (state) => {
     return {

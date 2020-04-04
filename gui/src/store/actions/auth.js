@@ -1,5 +1,7 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 export const authStart =() => {
     return{
@@ -47,7 +49,6 @@ export const checkAuthTimeout = expirationDate => {
 }
 
 export const setUserID = (username, password) => {
-    
         axios.post("http://127.0.0.1:8000/authenticate/", {
                 username: username,
                 password: password
@@ -75,7 +76,7 @@ export const authLogin = (username, password) => {
             dispatch(checkAuthTimeout(3600));
         })
         .catch(err => {
-            dispatch(authFail(err))
+            dispatch(authFail(err));
         })
     }
 }
