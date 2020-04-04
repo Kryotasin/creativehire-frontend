@@ -43,7 +43,7 @@ class NormalLoginForm extends React.Component {
     if(this.props.error){
         errorMessage = (
             // <p>{this.props.error.message}</p>
-            <Alert {...tailLayout} message = 'Username password combination not found.' type='error' />
+            <Alert {...tailLayout} message = 'Username password combination not found.' type='error' showIcon />
         )
     }
 
