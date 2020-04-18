@@ -134,8 +134,8 @@ class CustomForm extends React.Component {
                         <p className="ant-upload-drag-icon">
                           <InboxOutlined />
                         </p>
-                        <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                        <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+                        <p className="ant-upload-text">Click or drag image to this area to upload</p>
+                        <p className="ant-upload-hint">Support for .png files only. 150x150 preferred.</p>
                       </Upload.Dragger>
                     </Form.Item>
                   </Form.Item>
@@ -145,6 +145,11 @@ class CustomForm extends React.Component {
                   {required:true,}
               ]}>
                 <DatePicker name="expiry_date" />
+              </Form.Item>
+
+              <Form.Item
+                hidden={this.state.err == null ? true : false}
+              >
               </Form.Item>
 
               <Form.Item
