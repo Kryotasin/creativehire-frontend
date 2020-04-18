@@ -1,5 +1,7 @@
 import React from 'react';
-import { Form, Input, Button, DatePicker } from 'antd';
+import { Form, Input, Button, DatePicker, Upload } from 'antd';
+import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
+
 
 import axios from 'axios';
 
@@ -11,11 +13,22 @@ const layout = {
     span: 14,
   },
 };
+
 const validateMessages = {
   required: 'This field is required!',
   types: {
     number: 'Not a validate number!',
   },
+};
+
+const normFile = e => {
+  console.log('Upload event:', e);
+
+  if (Array.isArray(e)) {
+    return e;
+  }
+
+  return e && e.fileList;
 };
 
 
@@ -36,7 +49,7 @@ class CustomForm extends React.Component {
         event.preventDefault();
         const title = event.target.elements.title.value;
         const description = event.target.elements.description.value;
-        const img = event.target.elements.img.value;
+        // const img = event.target.elements.img.value;
         const expiry_date = event.target.elements.expiry_date.value;
         const job_poster_id = localStorage.getItem('userProfileID');
         
@@ -46,7 +59,7 @@ class CustomForm extends React.Component {
                     title: title,
                     description: description,
                     job_poster_id: job_poster_id,
-                    img:img
+                    // img:img
                 })
                 .then(res => {
                   console.log(res);
@@ -61,7 +74,7 @@ class CustomForm extends React.Component {
                     title: title,
                     description: description,
                     job_poster_id: job_poster_id,
-                    img:img
+                    // img:img
                 })
                 .then(res => console.log(res))
                 .catch(error => console.error(error))
@@ -106,8 +119,28 @@ class CustomForm extends React.Component {
                     "Enter a Description"
                   }/>
               </Form.Item>
+
+                <Form.Item label="Dragger">
+                    <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
+                      <Upload.Dragger name="files" accept="" action="/upload.do">
+                        <p className="ant-upload-drag-icon">
+                          <InboxOutlined />
+                        </p>
+                        <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                        <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+                      </Upload.Dragger>
+                    </Form.Item>
+                  </Form.Item>
+
+                  <Form.Item
+                    wrapperCol={{
+                      span: 12,
+                      offset: 6,
+                    }}
+                  ></Form.Item>
+
               
-              <Form.Item
+              {/* <Form.Item
                 label="Image"
                 rules={[
                   {
@@ -122,7 +155,12 @@ class CustomForm extends React.Component {
                   :
                     "Enter image url"
                   }/>
-              </Form.Item>
+              </Form.Item> */}
+
+
+
+
+
         
               <Form.Item label="Expires On" 
               rules={[
