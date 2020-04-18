@@ -9,6 +9,7 @@ import './App.css';
 
 import CustomLayout from './containers/Layout';
 import GuestRouter from './guestRoute';
+import ErrorBoundary from './components/ErrorBoundary'
 
 class App extends Component {
 
@@ -25,7 +26,9 @@ class App extends Component {
                     localStorage.getItem('token') !== null ?
                     <Router>
                     <CustomLayout {...this.props}>
+                      <ErrorBoundary>
                        <BaseRouter />
+                      </ErrorBoundary>
                      </CustomLayout>
                    </Router>
                     :
