@@ -1,6 +1,6 @@
 import React from 'react';
-import { Form, Input, Button, DatePicker, Upload } from 'antd';
-import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
+import { Form, Input, Button, DatePicker, Upload, message } from 'antd';
+import { InboxOutlined } from '@ant-design/icons';
 
 
 import axios from 'axios';
@@ -21,16 +21,24 @@ const validateMessages = {
   },
 };
 
-const normFile = e => {
-  console.log('Upload event:', e);
+const { Dragger } = Upload;
 
-  if (Array.isArray(e)) {
-    return e;
-  }
-
-  return e && e.fileList;
+const jobdescriptionImageProps = {
+  name: 'file',
+  multiple: false,
+  action: 'http://127.0.0.1:8000/upload-jobpost-image/',
+  onChange(info) {
+    const { status } = info.file;
+    if (status !== 'uploading') {
+      console.log(info.file, info.fileList);
+    }
+    if (status === 'done') {
+      message.success(`${info.file.name} file uploaded successfully.`);
+    } else if (status === 'error') {
+      message.error(`${info.file.name} file upload failed.`);
+    }
+  },
 };
-
 
 class CustomForm extends React.Component {
 
@@ -120,9 +128,9 @@ class CustomForm extends React.Component {
                   }/>
               </Form.Item>
 
-                <Form.Item label="Dragger">
-                    <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
-                      <Upload.Dragger name="files" accept="" action="/upload.do">
+                <Form.Item name='image' label="Image" >
+                    <Form.Item name="jd-image">
+                      <Upload.Dragger {...jobdescriptionImageProps}>
                         <p className="ant-upload-drag-icon">
                           <InboxOutlined />
                         </p>
@@ -131,37 +139,7 @@ class CustomForm extends React.Component {
                       </Upload.Dragger>
                     </Form.Item>
                   </Form.Item>
-
-                  <Form.Item
-                    wrapperCol={{
-                      span: 12,
-                      offset: 6,
-                    }}
-                  ></Form.Item>
-
               
-              {/* <Form.Item
-                label="Image"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input image url!',
-                  },
-                ]}
-              >
-                  <Input name="img"  placeholder={
-                  this.props.requestType == 'put' ?
-                    this.props.jobpost.img
-                  :
-                    "Enter image url"
-                  }/>
-              </Form.Item> */}
-
-
-
-
-
-        
               <Form.Item label="Expires On" 
               rules={[
                   {required:true,}
