@@ -30,7 +30,7 @@ const jobdescriptionImageProps = {
   onChange(info) {
     const { status } = info.file;
     if (status !== 'uploading') {
-      console.log(info.file, info.fileList);
+      // console.log(info.file, info.fileList);
     }
     if (status === 'done') {
       message.success(`${info.file.name} file uploaded successfully.`);
@@ -57,25 +57,28 @@ class CustomForm extends React.Component {
         event.preventDefault();
         const title = event.target.elements.title.value;
         const description = event.target.elements.description.value;
-        // const img = event.target.elements.img.value;
+        const img_salt = event.target.elements.file;
         const expiry_date = event.target.elements.expiry_date.value;
         const job_poster_id = localStorage.getItem('userProfileID');
         
+        // console.log(event.target.elements)
+        // console.log(img_salt)
+
         switch(requestType){
             case 'post':
-               return axios.post('http://127.0.0.1:8000/jobpost/', {
-                    title: title,
-                    description: description,
-                    job_poster_id: job_poster_id,
-                    // img:img
-                })
-                .then(res => {
-                  console.log(res);
-                  if(res.status == '201'){
-                    this.props.history.push('/jobpost/' + res.data.id + '/');
-                  }
-                })
-                .catch(error => this.setState({err: error}));
+              //  return axios.post('http://127.0.0.1:8000/jobpost/', {
+              //       title: title,
+              //       description: description,
+              //       job_poster_id: job_poster_id,
+              //       // img:img
+              //   })
+              //   .then(res => {
+              //     console.log(res);
+              //     if(res.status == '201'){
+              //       this.props.history.push('/jobpost/' + res.data.id + '/');
+              //     }
+              //   })
+              //   .catch(error => this.setState({err: error}));
 
             case 'put':
                 return axios.put('http://127.0.0.1:8000/jobpost/' + jobpostID + '/', {
@@ -86,7 +89,7 @@ class CustomForm extends React.Component {
                 })
                 .then(res => console.log(res))
                 .catch(error => console.error(error))
-                .finally(f => window.location.reload());
+                // .finally(f => window.location.reload());
                 
         }
     }
@@ -129,7 +132,7 @@ class CustomForm extends React.Component {
               </Form.Item>
 
                 <Form.Item name='image' label="Image" >
-                    <Form.Item name="jd-image">
+                    <Form.Item name="jdimage">
                       <Upload.Dragger {...jobdescriptionImageProps}>
                         <p className="ant-upload-drag-icon">
                           <InboxOutlined />
@@ -145,11 +148,6 @@ class CustomForm extends React.Component {
                   {required:true,}
               ]}>
                 <DatePicker name="expiry_date" />
-              </Form.Item>
-
-              <Form.Item
-                hidden={this.state.err == null ? true : false}
-              >
               </Form.Item>
 
               <Form.Item
