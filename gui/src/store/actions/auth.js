@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
+import '../../global';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
@@ -58,7 +59,7 @@ export const setUserID = (username, password) => {
 export const authLogin = (username, password) => {
     return dispatch => {
         dispatch(authStart());
-        axios.post('http://127.0.0.1:8000/rest-auth/login/',{
+        axios.post('http://127.0.0.1:8000/api/v1/rest-auth/login/',{
             username: username,
             password: password
         })
@@ -84,7 +85,7 @@ export const authLogin = (username, password) => {
 export const authSignup = (username, email, password1, password2) => {
     return dispatch => {
         dispatch(authStart());
-        axios.post('http://127.0.0.1:8000/rest-auth/registration/',{
+        axios.post('http://127.0.0.1:8000/api/v1/rest-auth/registration/',{
             username: username,
             password1: password1,
             password2: password2,
