@@ -21,12 +21,17 @@ const validateMessages = {
   },
 };
 
-const { Dragger } = Upload;
+
+const type = () => {
+  return {"type" : "jd"}
+}
 
 const jobdescriptionImageProps = {
   name: 'file',
   multiple: false,
-  action: 'http://127.0.0.1:8000/upload-jobpost-image/',
+  method: 'post',
+  data: type,
+  action: 'http://127.0.0.1:8000/upload-image/',
   onChange(info) {
     const { status } = info.file;
     if (status !== 'uploading') {
