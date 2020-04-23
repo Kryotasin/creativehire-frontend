@@ -9,10 +9,12 @@ import Login from './containers/Login';
 import Signup from './containers/Signup';
 import LandingPage from './containers/LadingPage';
 import UserProfile from './containers/Profile';
+import Comparison from './containers/Comparison';
 
 const BaseRouter = () => (
     <div>
-        <Route exact path ='/' component ={JobpostList} />
+        <Route exact path ='/' component ={Comparison} />
+        <Route exact path ='/jobs' component ={JobpostList} />
         <Route exact path ='/jobpost/:jobpostID' component ={JobpostDetail} />
         <Route exact path ='/create/' component ={JobpostCreate} />
         <Route exact path ='/login/' component ={Login} />
