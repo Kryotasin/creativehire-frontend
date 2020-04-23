@@ -34,7 +34,14 @@ class CustomLayout extends React.Component {
                     style={{ lineHeight: '64px' }}
                     >
                         <Menu.Item key="1"><Link to="/">Home</Link></Menu.Item>
-                        
+                        {
+                            localStorage.getItem('token') !== null && localStorage.getItem('error') == null?
+                                <Menu.Item key="2"><Link to="/jobs">See Jobs</Link></Menu.Item>
+                            
+                            :
+                            ''
+                        }
+                            
                         {
                             localStorage.getItem('token') !== null && localStorage.getItem('error') == null?
                             <SubMenu style={{float: 'right'}} title={<span><Link to="/profile/"> Profile</Link></span>}>
