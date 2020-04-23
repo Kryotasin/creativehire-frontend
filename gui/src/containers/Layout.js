@@ -36,7 +36,7 @@ class CustomLayout extends React.Component {
                         <Menu.Item key="1"><Link to="/">Home</Link></Menu.Item>
                         {
                             localStorage.getItem('token') !== null && localStorage.getItem('error') == null?
-                                <Menu.Item key="2"><Link to="/jobs">See Jobs</Link></Menu.Item>
+                                <Menu.Item key="2"><Link to="/jobs">Jobs</Link></Menu.Item>
                             
                             :
                             ''
