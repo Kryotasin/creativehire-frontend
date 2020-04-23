@@ -31,7 +31,7 @@ const jobdescriptionImageProps = {
   multiple: false,
   method: 'post',
   data: type,
-  action: 'http://127.0.0.1:8000/upload-image/',
+  action: 'http://127.0.0.1:8000/file-handler/',
   onChange(info) {
     const { status } = info.file;
     if (status !== 'uploading') {
