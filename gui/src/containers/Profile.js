@@ -11,12 +11,13 @@ function UserProfile() {
     const[name, setName] = useState('');
     const[location, setLocation] = useState('');
     const[img_salt, setImgSalt] = useState('');
+    const[img, setImg] = useState(null);
 
     const { Text } = Typography;
 
 
     const typeOfImage = (proc) => {
-        return {"type" : "profile_pic", "process": proc}
+        return {"type" : "profile_pic", "process": proc, "fileName": img_salt}
     }
     
     const userProfilePictureUploadProps = {
@@ -25,12 +26,12 @@ function UserProfile() {
         multiple: false,
         method: 'post',
         data: typeOfImage("upload"),
-        action: 'http://127.0.0.1:8000/image-handler/',
+        action: 'http://127.0.0.1:8000/file-handler/',
         onRemove(file){
 
             console.log(file);
             
-            axios.post('http://127.0.0.1:8000/image-handler/', {
+            axios.post('http://127.0.0.1:8000/file-handler/', {
                 "file": file.name,
                 ...typeOfImage('remove')
             });
@@ -46,10 +47,8 @@ function UserProfile() {
             message.success(`${info.file.name} file uploaded successfully.`);
           } else if (status === 'error') {
             message.error(`${info.file.name} file upload failed.`);
-            // Reload image
-            
-            reloadProfilePicture();
           }
+          reloadProfilePicture();
         },
       };
 
@@ -64,8 +63,6 @@ function UserProfile() {
         reloadName(res.data['name']);
         reloadLocation(res.data['location']);
         reloadImgSalt(res.data['img_salt']);
-
-
 
         setTimeout(() => message.success('Profile loaded successfully.'), 100);
         }
@@ -95,8 +92,31 @@ function UserProfile() {
         setImgSalt(data);
     }
 
-    const reloadProfilePicture = () => {
+    const reloadImg = (data) => {
+        setImg(data);
+    }
 
+    const reloadProfilePicture = () => {
+        console.log(typeOfImage('fetch'));
+        axios.post('http://localhost:8000/file-handler/', {
+            ...typeOfImage('fetch')
+        })
+        .then(
+            res => {
+
+            if(res.status === 404){
+                // Set something to show lack of profile picture.
+                console.log(res);
+            }
+
+            else if (res.status === 200 && res.data != 'ErrorResponseMetadata'){
+                console.log(res)
+                reloadImg(res.data);
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }
 
     const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
@@ -206,11 +226,19 @@ function UserProfile() {
     }, []); 
 
 
+
     return (
-            <div>   
+            <div>  
+                {reloadProfilePicture()}
+                
                 <Row gutter={[8, 48]}>
-                    <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                        <Avatar shape="square" size="large" icon={img_salt == null ? <UserOutlined /> : ''} src={img_salt == null ? '' : ''}/>
+                    <Col xs={{ span: 6, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                        { 
+                            img == null?
+                                <Avatar shape="square" size="large" icon={ <UserOutlined />}/>
+                            :
+                            <img src={`data:image/png;base64,${img}`} />                        
+                        }   
                     </Col>
                     <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
                         <h1>Your Profile</h1>
@@ -222,7 +250,7 @@ function UserProfile() {
                         <Upload {...userProfilePictureUploadProps}>
                             <Button
                                 size="small">
-                                Change
+                                Change Picture
                             </Button>
                         </Upload>
                     </Col>
