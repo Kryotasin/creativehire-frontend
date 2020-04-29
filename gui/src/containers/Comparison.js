@@ -24,7 +24,8 @@ const validateMessages = {
 class Comparison extends React.Component{
 
     state = {
-        jobid: null
+        jobid: null,
+        projectid: null
     }
 
     componentDidMount() {
@@ -54,7 +55,20 @@ class Comparison extends React.Component{
                     // this.props.history.push('/my-scans/' + res.data.id + '/');
                     this.setState({jobid: res.data.id});
 
-                    // axios.post
+                    axios.post('http://127.0.0.1:8000/project/', {
+                        title: projtitle,
+                        url: projlink,
+                    })
+                    .then(res => {
+                      console.log(res);
+                      if(res.status == '201'){
+                        // this.props.history.push('/my-scans/' + res.data.id + '/');
+                        this.setState({projectid: res.data.id});
+    
+                        // axios.post
+                    }
+                    })
+                    .catch(error => this.setState({err: error}));
                 }
                 })
                 .catch(error => this.setState({err: error}));
