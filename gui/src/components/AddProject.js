@@ -45,15 +45,12 @@ const jobdescriptionImageProps = {
   },
 };
 
-class CustomForm extends React.Component {
+class AddProject extends React.Component {
 
     constructor(props){
       super(props);
       this.state = {
         err: null, 
-        jobid: null,
-        userid: null,
-        matchid: null
       }
     }
 
@@ -82,8 +79,7 @@ class CustomForm extends React.Component {
                 .then(res => {
                   console.log(res);
                   if(res.status == '201'){
-                    // this.props.history.push('/my-scans/' + res.data.id + '/');
-                    this.setState({jobid: res.data.id});
+                    this.props.history.push('/my-scans/' + res.data.id + '/');
                   }
                 })
                 .catch(error => this.setState({err: error}));
@@ -176,4 +172,4 @@ class CustomForm extends React.Component {
  
 }
 
-export default CustomForm;
+export default AddProject;
