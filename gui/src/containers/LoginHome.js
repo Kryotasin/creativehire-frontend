@@ -16,7 +16,7 @@ class LoginHome extends React.Component{
             <div>
                 <h1 style={{color: "red"}}>Hello Style!</h1>
                 <p>Add a little style!</p>  
-                <Button type="primary"><Link to="/scan/">Scan Now</Link></Button>          
+                <Button type="primary"><Link to="/new-scan/">Scan Now</Link></Button>          
             </div>
         )
     }

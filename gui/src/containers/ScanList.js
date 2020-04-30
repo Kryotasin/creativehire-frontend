@@ -1,10 +1,10 @@
 import React from 'react';
-import Jobposts from '../components/Jobpost';
+import Scan from '../components/Scan';
 
 import axios from 'axios';
 
 
-class JobpostList extends React.Component{
+class ScanList extends React.Component{
 
     state = {
         jobposts: []
@@ -23,7 +23,7 @@ class JobpostList extends React.Component{
     render(){
         return (
             <div>
-                 <Jobposts data={this.state.jobposts} />
+                 <Scan data={this.state.jobposts} />
                 <br />
             </div>
             
@@ -31,4 +31,4 @@ class JobpostList extends React.Component{
     }
 }
 
-export default JobpostList;
+export default ScanList;

@@ -11,11 +11,15 @@ import LandingPage from './containers/LadingPage';
 import UserProfile from './containers/Profile';
 import Comparison from './containers/Comparison';
 import LoginHome from './containers/LoginHome';
+import ScanList from './containers/ScanList';
+import ScanDetail from './containers/ScanDetail';
 
 const BaseRouter = () => (
     <div>
         <Route exact path ='/' component ={LoginHome} />
-        <Route exact path ='/scan/' component ={Comparison} />
+        <Route exact path ='/new-scan/' component ={Comparison} />
+        <Route exact path ='/my-scans/' component ={ScanList} />
+        <Route exact path ='/my-scans/:matchid' component ={ScanDetail} />
 
         <Route exact path ='/jobs' component ={JobpostList} />
         <Route exact path ='/jobpost/:jobpostID' component ={JobpostDetail} />

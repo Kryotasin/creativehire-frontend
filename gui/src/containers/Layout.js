@@ -43,7 +43,7 @@ class CustomLayout extends React.Component {
                                 <Menu.Item style={{float: 'right'}} key="4"><Link to="/profile/">Profile <UserOutlined /></Link></Menu.Item>
                                 <Menu.Item style={{float: 'right'}} key="3"><Link to="/how-it-works/">How it works <QuestionCircleOutlined /></Link></Menu.Item>
                                 <Menu.Item style={{float: 'right'}} key="2"><Link to="/my-scans">My Scans <FolderOpenOutlined /></Link></Menu.Item>
-                                <Menu.Item style={{float: 'right'}} key="1"><Link to="/scan">New Scan <PlusCircleOutlined /> </Link></Menu.Item>
+                                <Menu.Item style={{float: 'right'}} key="1"><Link to="/new-scan">New Scan <PlusCircleOutlined /> </Link></Menu.Item>
                                 </Menu>
                             :
                             <Menu
