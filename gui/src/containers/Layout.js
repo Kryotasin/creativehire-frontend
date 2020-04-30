@@ -53,7 +53,7 @@ class CustomLayout extends React.Component {
                             style={{ lineHeight: '64px' }}
                             >
 
-                                <Link to="/"><img src={logo} style={{width: '9rem'}}></img></Link>
+                                <Menu.Item key="6"><Link to="/"><img src={logo} style={{width: '9rem'}}></img></Link></Menu.Item>
                                 <Menu.Item style={{float: 'right'}} key="2"><Link to="/login">Login</Link></Menu.Item>
                                 </Menu>
 
