@@ -50,10 +50,7 @@ class CustomForm extends React.Component {
     constructor(props){
       super(props);
       this.state = {
-        err: null, 
-        jobid: null,
-        userid: null,
-        matchid: null
+        err: null
       }
     }
 
@@ -69,11 +66,12 @@ class CustomForm extends React.Component {
         // const expiry_date = event.target.elements.expiry_date.value;
         const job_poster_id = localStorage.getItem('userProfileID');
         
-
+        // console.log(event.target.elements)
+        // console.log(img_salt)
 
         switch(requestType){
             case 'post':
-              axios.post('http://127.0.0.1:8000/jobpost/', {
+               return axios.post('http://127.0.0.1:8000/jobpost/', {
                     title: title,
                     description: description,
                     job_poster_id: job_poster_id,
@@ -82,13 +80,10 @@ class CustomForm extends React.Component {
                 .then(res => {
                   console.log(res);
                   if(res.status == '201'){
-                    // this.props.history.push('/my-scans/' + res.data.id + '/');
-                    this.setState({jobid: res.data.id});
+                    this.props.history.push('/jobpost/' + res.data.id + '/');
                   }
                 })
                 .catch(error => this.setState({err: error}));
-
-
 
             case 'put':
                 return axios.put('http://127.0.0.1:8000/jobpost/' + jobpostID + '/', {
