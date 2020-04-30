@@ -24,8 +24,7 @@ const validateMessages = {
 class Comparison extends React.Component{
 
     state = {
-        jobid: null,
-        projectid: null
+        loading: false,
     }
 
     componentDidMount() {
@@ -52,29 +51,39 @@ class Comparison extends React.Component{
                 .then(res => {
                   console.log(res);
                   if(res.status == '201'){
-                    // this.props.history.push('/my-scans/' + res.data.id + '/');
-                    this.setState({jobid: res.data.id});
 
                     axios.post('http://127.0.0.1:8000/project/', {
                         title: projtitle,
                         url: projlink,
+                        project_owner_id: job_poster_id
                     })
                     .then(res => {
                       console.log(res);
                       if(res.status == '201'){
-                        // this.props.history.push('/my-scans/' + res.data.id + '/');
-                        this.setState({projectid: res.data.id});
     
-                        // axios.post
+                              axios.post('http://127.0.0.1:8000/scan-results/', {
+                                userid: job_poster_id,
+                                jobid: this.state.jobid,
+                                projectid: this.state.projectid
+                            })
+                            .then(res => {
+                              console.log(res);
+                              if(res.status == '200'){
+                                // this.props.history.push('/my-scans/' + res.data.id + '/');
+                                // this.setState({projectid: res.data.id});
+                                
+                                console.log(res);
+                                // axios.post
+                            }
+                            })
+                            .catch(error => this.setState({err: error}));
+
                     }
                     })
                     .catch(error => this.setState({err: error}));
                 }
                 })
                 .catch(error => this.setState({err: error}));
-
-                
-
     }
 
     render(){
