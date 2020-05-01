@@ -19,7 +19,7 @@ const BaseRouter = () => (
         <Route exact path ='/' component ={LoginHome} />
         <Route exact path ='/new-scan/' component ={Comparison} />
         <Route exact path ='/my-scans/' component ={ScanList} />
-        <Route exact path ='/my-scans/:matchid' component ={ScanDetail} />
+        <Route exact path ='/scan/:matchID' component ={ScanDetail} />
 
         <Route exact path ='/jobs' component ={JobpostList} />
         <Route exact path ='/jobpost/:jobpostID' component ={JobpostDetail} />

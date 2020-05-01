@@ -1,40 +1,68 @@
 import React from 'react';
 import { List } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Card,Progress } from 'antd';
+import {Link } from 'react-router-dom';
 
+// {id, projectid, userid, jobid, matchpercent}
 
+const { Meta } = Card;
 
+const parseDate = (date) => {
+    var parts = date.split('-')
+    var d = new Date(parts[0], parts[1], parts[2].split('T')[0]);
+    return d.toDateString();
+}
 const Scan = (props) => {
     return (
         <List
-        itemLayout="vertical"
-        size="large"
-        pagination={{
-        onChange: page => {
-            // console.log(page);
-        },
-        pageSize: 3,
+        grid={{
+          gutter: 16,
+          xs: 1,
+          sm: 2,
+          md: 4,
+          lg: 4,
+          xl: 6,
+          xxl: 3,
         }}
+        
+        pagination={{
+            onChange: page => {
+                // console.log(page);
+            },
+            pageSize: 10,
+            }}
         dataSource={props.data}
         renderItem={item => (
-        <List.Item
-            key={item.title}
-            
-            extra={
-            <img
-                width="100px"
-                alt={item.img}
-                src={item.img}
-            />
-            }
+          <List.Item>
+
+            <Link to={"scan/" + item.id}>
+            <Card 
+            // title={item.title}
+            hoverable
+            loading={item ? false : true}
+
+
+        cover={
+            <Progress type="circle" percent={item.matchpercent? item.matchpercent : 0} />
+          }
+
+          actions={[
+            <EditOutlined key="edit" />,
+            <DeleteOutlined key="delete" />,
+          ]}
         >
-        <List.Item.Meta
-          title={<a href={"/my-scans/" + item.id} >{item.title}</a>}
-          description={"Posted by " + item.userid + " on " + item.post_date}
-        />
-        {item.description}
-      </List.Item>
-    )}
-  />
+            
+            <Meta
+                // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                title= {item.title ? item.title : "No position details"}
+                description={"Created on " + parseDate(item.posted_date)}
+            />
+            </Card>
+            </Link>
+          </List.Item>
+        )}
+      />
   )
 }
 

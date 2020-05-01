@@ -7,14 +7,14 @@ import axios from 'axios';
 class ScanList extends React.Component{
 
     state = {
-        jobposts: []
+        scans: []
     }
 
     componentDidMount() {
-        axios.get('http://127.0.0.1:8000/jobpost/')
+        axios.get('http://127.0.0.1:8000/scans/')
             .then(res => {
                 this.setState({
-                    jobposts: res.data
+                    scans: res.data
                 });
                 //console.log(res.data);
             })
@@ -23,7 +23,7 @@ class ScanList extends React.Component{
     render(){
         return (
             <div>
-                 <Scan data={this.state.jobposts} />
+                 <Scan data={this.state.scans} />
                 <br />
             </div>
             

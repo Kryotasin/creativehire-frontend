@@ -1,6 +1,6 @@
 import React from 'react';
 import CustomForm from '../components/Form';
-import { Form, Input, Button, DatePicker, Upload, message } from 'antd';
+import { Form, Input, Button, DatePicker, Upload, message,  Spin, Alert } from 'antd';
 
 
 import axios from 'axios';
@@ -24,8 +24,12 @@ const validateMessages = {
 class Comparison extends React.Component{
 
     state = {
-        loading: false,
+        jobid: null,
+        projectid: null,
+        jobtitle: null
     }
+
+    loading = false;
 
     componentDidMount() {
     }
@@ -42,6 +46,9 @@ class Comparison extends React.Component{
         
         // console.log(title, description, projlink, projtitle, job_poster_id);
 
+        this.loading = true;
+
+
               axios.post('http://127.0.0.1:8000/jobpost/', {
                     title: title,
                     description: description,
@@ -49,8 +56,9 @@ class Comparison extends React.Component{
                     // img:img
                 })
                 .then(res => {
-                  console.log(res);
+                  // console.log(res);
                   if(res.status == '201'){
+                    this.setState({jobid: res.data.id});
 
                     axios.post('http://127.0.0.1:8000/project/', {
                         title: projtitle,
@@ -58,21 +66,24 @@ class Comparison extends React.Component{
                         project_owner_id: job_poster_id
                     })
                     .then(res => {
-                      console.log(res);
+                      this.setState({jobtitle: title});
+                      // console.log(res);
                       if(res.status == '201'){
+                        this.setState({projectid: res.data.id});
     
                               axios.post('http://127.0.0.1:8000/scan-results/', {
                                 userid: job_poster_id,
                                 jobid: this.state.jobid,
-                                projectid: this.state.projectid
+                                projectid: this.state.projectid,
+                                jobtitle: this.state.jobtitle
                             })
                             .then(res => {
-                              console.log(res);
+                              // console.log(res);
                               if(res.status == '200'){
                                 // this.props.history.push('/my-scans/' + res.data.id + '/');
                                 // this.setState({projectid: res.data.id});
-                                
-                                console.log(res);
+                                this.props.history.push('scan/' + res.data['scanid'])
+                                // console.log(res);
                                 // axios.post
                             }
                             })
@@ -90,6 +101,8 @@ class Comparison extends React.Component{
         return (
             <div>
             <br />
+            <Spin tip="Loading..." spinning={this.loading}>
+
             <h2>New Scan</h2>
             <Form onSubmitCapture={(event) => this.handleFormSubmit(
                 event
@@ -152,12 +165,13 @@ class Comparison extends React.Component{
               </Form.Item>
              
               <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" loading={this.loading}>
                   Scan Now
                 </Button>
               </Form.Item>
             </Form>
 
+            </Spin>
             </div>
         )
     }

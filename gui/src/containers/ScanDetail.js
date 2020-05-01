@@ -2,57 +2,68 @@ import React from 'react';
 import axios from 'axios';
 import CustomForm from '../components/Form';
 
-import { Button, Card } from 'antd';
+import { Button, Card, Row, Col } from 'antd';
 
 class ScanDetail extends React.Component{
 
     state = {
-        jobpost: {}
+        match: {},
+        structure: {}
     }
 
     componentDidMount() {
-        const jobpostID = this.props.match.params.jobpostID;
-        axios.get('http://127.0.0.1:8000/jobpost/' + jobpostID + '/')
+        const matchID = this.props.match.params.matchID;
+        axios.get('http://127.0.0.1:8000/scans/' + matchID + '/')
             .then(res => {
-                this.setState({
-                    jobpost: res.data
-                });
+                if(res.status == 200){
+                    this.setState({
+                        match: res.data
+                    });
+                    
+                    axios.get('http://127.0.0.1:8000/metrics-structure/')
+                    .then(res => {
+                        if(res.status == 200){
+                            this.setState({structure: res.data});
+                        }
+                    })
+                }
             })
             .catch(err => {
-                err.response.status == '404' ? 
-                    this.props.history.push('/')
-                :
-                    console.log('loading')
+                // err.response.status == '404' ? 
+                //     this.props.history.push('/')
+                // :
+                //     console.log('loading')
             })
     }
 
     handleDelete = (event) => {
-        const jobpostID = this.props.match.params.jobpostID;
-        axios.delete('http://127.0.0.1:8000/jobpost/' + jobpostID + '/');
+        const matchID = this.props.match.params.matchID;
+        axios.delete('http://127.0.0.1:8000/scans/' + matchID + '/');
     }
 
     render(){
         return (
            <div>
-                <Card title={this.state.jobpost.title}>
-                    <p>{this.state.jobpost.description}</p>
-                </Card>
                 {
-                this.props.match.params.jobpostID !== null ? 
+                this.props.match.params.matchID !== null ? 
                 
-                <div>
-                    <CustomForm {...this.state}
-                    requestType="put" 
-                    jobpostID={this.props.match.params.jobpostID} 
-                    btnText="Update" />
-                    <form onSubmitCapture={this.handleDelete}>
-                        <Button type="danger" htmlType="submit">Delete</Button>
-                    </form>
-                </div>
+                    <div>
+                        <h1>Match Details</h1>
+                        <Row>
+                            <Col span={12}>
+                                { this.state.structure ?
+                                    this.state.structure[0]
+                                        :
+                                ''
+                                }
+                            </Col>
+                            <Col span={12}>col-12</Col>
+                        </Row>
+                    </div>
 
                 :
-
-                    <span>No data fdound</span>
+                    
+                    <span>No data found</span>
                 }
            </div>
         )
