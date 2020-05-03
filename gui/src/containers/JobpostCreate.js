@@ -10,13 +10,7 @@ class JobpostCreate extends React.Component{
     }
 
     componentDidMount() {
-        // axios.get('http://127.0.0.1:8000/jobpost')
-        //     .then(res => {
-        //         this.setState({
-        //             jobposts: res.data
-        //         });
-        //         //console.log(res.data);
-        //     })
+
     }
 
     render(){

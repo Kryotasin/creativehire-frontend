@@ -1,5 +1,6 @@
 import React from 'react';
-import axios from 'axios';
+
+import axios from '../axiosConfig';
 import CustomForm from '../components/Form';
 
 import { Button, Card } from 'antd';

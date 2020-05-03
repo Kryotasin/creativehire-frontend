@@ -1,8 +1,7 @@
 import React from 'react';
 import Articles from '../components/Article';
 
-import axios from 'axios';
-
+import axios from '../axiosConfig';
 
 class ArticleList extends React.Component{
 

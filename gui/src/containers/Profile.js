@@ -1,6 +1,7 @@
 import React, { useState, useEffect }  from 'react';
 import { Modal, Form, Input, Row, Col, Avatar, Upload, Button, message, Skeleton, Space, Typography  } from 'antd';
-import axios from 'axios';
+
+import axios from '../axiosConfig';
 import { UserOutlined, UploadOutlined } from '@ant-design/icons';
 
 

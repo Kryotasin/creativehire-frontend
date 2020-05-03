@@ -3,7 +3,7 @@ import CustomForm from '../components/Form';
 import { Form, Input, Button, DatePicker, Upload, message,  Spin, Alert } from 'antd';
 
 
-import axios from 'axios';
+import axios from '../axiosConfig';
 
 const layout = {
   labelCol: {

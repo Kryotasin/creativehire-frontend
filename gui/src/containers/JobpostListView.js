@@ -1,7 +1,8 @@
 import React from 'react';
 import Jobposts from '../components/Jobpost';
 
-import axios from 'axios';
+
+import axios from '../axiosConfig';
 
 
 class JobpostList extends React.Component{

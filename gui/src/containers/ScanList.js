@@ -1,7 +1,8 @@
 import React from 'react';
 import Scan from '../components/Scan';
 
-import axios from 'axios';
+
+import axios from '../axiosConfig';
 
 
 class ScanList extends React.Component{

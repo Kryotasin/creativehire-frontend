@@ -3,7 +3,7 @@ import { Form, Input, Button, DatePicker, Upload, message } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 
 
-import axios from 'axios';
+import axios from '../axiosConfig';
 
 const layout = {
   labelCol: {
