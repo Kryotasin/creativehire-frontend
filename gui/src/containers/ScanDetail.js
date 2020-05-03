@@ -1,14 +1,21 @@
 import React from 'react';
 import axios from 'axios';
-import CustomForm from '../components/Form';
+import { Space } from 'antd';
 
-import { Button, Card, Row, Col } from 'antd';
+import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 
 class ScanDetail extends React.Component{
 
+    cat = null;
+
+    subcat = null;
+
+    label = null;
+
     state = {
         match: {},
-        structure: {}
+        structure: null,
+        processed: null
     }
 
     componentDidMount() {
@@ -40,26 +47,86 @@ class ScanDetail extends React.Component{
         const matchID = this.props.match.params.matchID;
         axios.delete('http://127.0.0.1:8000/scans/' + matchID + '/');
     }
+//
+    existsInProject = (row) => {
+        for(var i=0;i<this.state.match['project_results'].length;i++){
+            if(this.state.match['project_results'][i][0] == row){
+                return <CheckCircleTwoTone twoToneColor="#52c41a" />
+            }
+        }
+
+        return <CloseCircleTwoTone twoToneColor="#FF0000" />
+    }
+
 
     render(){
+
+        if(this.state.structure){
+            this.cat = this.state.structure[0][this.state.match['jobpost_results'][0].split(',')[0]]
+            this.subcat = this.state.match['jobpost_results'][0].split(',')[1];
+            this.label = this.state.match['jobpost_results'][0].split(',')[0];
+        } 
+            
+        
+
         return (
            <div>
                 {
                 this.props.match.params.matchID !== null ? 
                 
-                    <div>
-                        <h1>Match Details</h1>
-                        <Row>
-                            <Col span={12}>
-                                { this.state.structure ?
-                                    this.state.structure[0]
-                                        :
-                                ''
+                    <Space size='10' direction='vertical'>
+                        { this.state.structure ?
+                        <ul style={{ listStyleType: "none" }}>
+                            <h1>{this.state.structure[0][this.label]}</h1>
+                            <h3>{this.state.structure[1][this.subcat]}</h3>
+                            <li>{this.state.structure[3][this.label]}{this.existsInProject(this.label)}</li>
+
+
+                                {
+                                this.state.match['jobpost_results'].map((item, key) => {
+                                    var parts = item.split(',');
+                                    
+                                    if(this.subcat === parts[1]){
+                                        if(this.label != parts [0]){
+                                            this.label = parts[0];
+                                            return(
+                                                <React.Fragment key={key}>
+                                                    <li>{this.state.structure[3][parts[0]]}{this.existsInProject(this.label)}</li>
+                                                </React.Fragment>
+                                                )
+                                        }
+                                        else{
+
+                                        }
+
+
+                                    }
+                                    else{
+                                        this.subcat = parts[1];
+                                        this.label = parts[0];
+                                    return(
+                                        <React.Fragment key={key}>
+                                            <h1>{
+                                                this.cat === this.state.structure[0][this.label] ?
+                                                ''
+                                                :
+                                                this.cat = this.state.structure[0][this.label]
+                                                }</h1>
+                                            <h3>{this.state.structure[1][parts[1]]}</h3>
+                                            <li>{this.state.structure[3][parts[0]]}
+                                    {this.existsInProject(this.label)}</li>
+                                        </React.Fragment>
+                                    )                                    
+
                                 }
-                            </Col>
-                            <Col span={12}>col-12</Col>
-                        </Row>
-                    </div>
+                                }) 
+                                
+                                }
+                        </ul>
+                                :
+                        ''
+                        }
+                    </Space>
 
                 :
                     

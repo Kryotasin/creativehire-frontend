@@ -109,7 +109,7 @@ function UserProfile() {
                 console.log(res);
             }
 
-            else if (res.status === 200 && res.data != 'ErrorResponseMetadata'){
+            else if (res.status === 200 && res.data !== 'ErrorResponseMetadata'){
                 console.log(res)
                 reloadImg(res.data);
             }

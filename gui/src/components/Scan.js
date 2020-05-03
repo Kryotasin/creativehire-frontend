@@ -36,7 +36,7 @@ const Scan = (props) => {
         renderItem={item => (
           <List.Item>
 
-            <Link to={"scan/" + item.id}>
+            <Link to={"scan/" + item.pk}>
             <Card 
             // title={item.title}
             hoverable
@@ -44,7 +44,7 @@ const Scan = (props) => {
 
 
         cover={
-            <Progress type="circle" percent={item.matchpercent? item.matchpercent : 0} />
+            <Progress type="circle" percent={item.fields.matchpercent? item.matchpercent : 0} />
           }
 
           actions={[
@@ -55,8 +55,8 @@ const Scan = (props) => {
             
             <Meta
                 // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                title= {item.title ? item.title : "No position details"}
-                description={"Created on " + parseDate(item.posted_date)}
+                title= {item.fields.title ? item.fields.title : "No position details"}
+                description={"Created on " + parseDate(item.fields.posted_date)}
             />
             </Card>
             </Link>

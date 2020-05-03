@@ -10,14 +10,18 @@ class ScanList extends React.Component{
         scans: []
     }
 
+    fetchMyScans = () => {
+
+    }
+
     componentDidMount() {
-        axios.get('http://127.0.0.1:8000/scans/')
-            .then(res => {
-                this.setState({
-                    scans: res.data
-                });
-                //console.log(res.data);
-            })
+        axios.post('http://127.0.0.1:8000/my-scans/', {
+                uid: localStorage.getItem('userProfileID')
+        })
+        .then(res => {
+            console.log(res.data);
+            this.setState({scans: res.data})
+        })
     }
 
     render(){
