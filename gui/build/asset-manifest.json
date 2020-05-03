@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/creativehire-frontend/static/css/main.d68ae2d0.chunk.css",
+    "main.js": "/creativehire-frontend/static/js/main.5228ae81.chunk.js",
+    "main.js.map": "/creativehire-frontend/static/js/main.5228ae81.chunk.js.map",
+    "runtime-main.js": "/creativehire-frontend/static/js/runtime-main.33020a6e.js",
+    "runtime-main.js.map": "/creativehire-frontend/static/js/runtime-main.33020a6e.js.map",
+    "static/css/2.0e1745bb.chunk.css": "/creativehire-frontend/static/css/2.0e1745bb.chunk.css",
+    "static/js/2.4722c6e1.chunk.js": "/creativehire-frontend/static/js/2.4722c6e1.chunk.js",
+    "static/js/2.4722c6e1.chunk.js.map": "/creativehire-frontend/static/js/2.4722c6e1.chunk.js.map",
+    "index.html": "/creativehire-frontend/index.html",
+    "precache-manifest.edf088d6664ca845e1e1d94f3a7ae396.js": "/creativehire-frontend/precache-manifest.edf088d6664ca845e1e1d94f3a7ae396.js",
+    "service-worker.js": "/creativehire-frontend/service-worker.js",
+    "static/css/2.0e1745bb.chunk.css.map": "/creativehire-frontend/static/css/2.0e1745bb.chunk.css.map",
+    "static/css/main.d68ae2d0.chunk.css.map": "/creativehire-frontend/static/css/main.d68ae2d0.chunk.css.map",
+    "static/js/2.4722c6e1.chunk.js.LICENSE.txt": "/creativehire-frontend/static/js/2.4722c6e1.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/creativehire-frontend/static/media/logo.eb89aec1.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.33020a6e.js",
+    "static/css/2.0e1745bb.chunk.css",
+    "static/js/2.4722c6e1.chunk.js",
+    "static/css/main.d68ae2d0.chunk.css",
+    "static/js/main.5228ae81.chunk.js"
+  ]
+}
