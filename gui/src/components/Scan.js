@@ -44,7 +44,7 @@ const Scan = (props) => {
 
 
         cover={
-            <Progress type="circle" percent={item.fields.matchpercent? item.matchpercent : 0} />
+            <Progress type="circle" percent={item.fields.matchpercent? item.fields.matchpercent*100 : 0} />
           }
 
           actions={[

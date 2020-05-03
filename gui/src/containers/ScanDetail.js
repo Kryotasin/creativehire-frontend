@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import { Space } from 'antd';
+import { Empty  } from 'antd';
+import { Progress, Row, Col } from 'antd';
+
 
 import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 
@@ -47,39 +49,52 @@ class ScanDetail extends React.Component{
         const matchID = this.props.match.params.matchID;
         axios.delete('http://127.0.0.1:8000/scans/' + matchID + '/');
     }
-//
+
     existsInProject = (row) => {
-        for(var i=0;i<this.state.match['project_results'].length;i++){
-            if(this.state.match['project_results'][i][0] == row){
-                return <CheckCircleTwoTone twoToneColor="#52c41a" />
+        if(this.state.match['matchitems']){
+            for(var i=0;i<this.state.match['matchitems'].length;i++){
+                if(this.state.match['matchitems'][i].trim() == row.trim()){
+                    return <CheckCircleTwoTone style={{ fontSize: '1.2rem', float: "right" }} twoToneColor="#52c41a" />
+                }
             }
         }
 
-        return <CloseCircleTwoTone twoToneColor="#FF0000" />
+
+        return <CloseCircleTwoTone style={{ fontSize: '1rem', float: "right" }} twoToneColor="#FF0000" />
+    }
+
+
+    componentDidUpdate = () => {
+        // console.log(this.state.match['matchitems'][0][0])
     }
 
 
     render(){
 
-        if(this.state.structure){
+        if(this.state.structure && this.state.match['jobpost_result']){
             this.cat = this.state.structure[0][this.state.match['jobpost_results'][0].split(',')[0]]
             this.subcat = this.state.match['jobpost_results'][0].split(',')[1];
             this.label = this.state.match['jobpost_results'][0].split(',')[0];
         } 
             
-        
+
 
         return (
-           <div>
+
+            <Row>
+                <Col span={3}></Col>
+            <Col span={9}><Progress type="circle" percent={this.state.match.matchpercent? this.state.match.matchpercent*100 : 0} /></Col>
+
+
+                
                 {
                 this.props.match.params.matchID !== null ? 
                 
-                    <Space size='10' direction='vertical'>
-                        { this.state.structure ?
-                        <ul style={{ listStyleType: "none" }}>
+                <Col span={5}>
+                        { this.state.structure && this.state.match['jobpost_results'] ?
+                        <div style={{ listStyleType: "none" }}>
                             <h1>{this.state.structure[0][this.label]}</h1>
                             <h3>{this.state.structure[1][this.subcat]}</h3>
-                            <li>{this.state.structure[3][this.label]}{this.existsInProject(this.label)}</li>
 
 
                                 {
@@ -91,7 +106,7 @@ class ScanDetail extends React.Component{
                                             this.label = parts[0];
                                             return(
                                                 <React.Fragment key={key}>
-                                                    <li>{this.state.structure[3][parts[0]]}{this.existsInProject(this.label)}</li>
+                                                    <p>{this.state.structure[3][parts[0]]}{this.existsInProject(this.label)}</p>
                                                 </React.Fragment>
                                                 )
                                         }
@@ -113,8 +128,8 @@ class ScanDetail extends React.Component{
                                                 this.cat = this.state.structure[0][this.label]
                                                 }</h1>
                                             <h3>{this.state.structure[1][parts[1]]}</h3>
-                                            <li>{this.state.structure[3][parts[0]]}
-                                    {this.existsInProject(this.label)}</li>
+                                            <p>{this.state.structure[3][parts[0]]}
+                                    {this.existsInProject(this.label)}</p>
                                         </React.Fragment>
                                     )                                    
 
@@ -122,17 +137,17 @@ class ScanDetail extends React.Component{
                                 }) 
                                 
                                 }
-                        </ul>
+                        </div>
                                 :
-                        ''
+                        <Empty  />
                         }
-                    </Space>
+                        </Col>
 
                 :
                     
                     <span>No data found</span>
                 }
-           </div>
+                </Row>
         )
     }
 }
