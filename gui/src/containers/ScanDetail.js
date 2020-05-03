@@ -1,8 +1,8 @@
 import React from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import { Empty  } from 'antd';
 import { Progress, Row, Col } from 'antd';
-
+import axiosConfig from '../axiosConfig';
 
 import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 
@@ -22,14 +22,14 @@ class ScanDetail extends React.Component{
 
     componentDidMount() {
         const matchID = this.props.match.params.matchID;
-        axios.get('http://127.0.0.1:8000/scans/' + matchID + '/')
+        axiosConfig.get('scans/' + matchID + '/')
             .then(res => {
                 if(res.status == 200){
                     this.setState({
                         match: res.data
                     });
                     
-                    axios.get('http://127.0.0.1:8000/metrics-structure/')
+                    axiosConfig.get('/metrics-structure/')
                     .then(res => {
                         if(res.status == 200){
                             this.setState({structure: res.data});
@@ -47,7 +47,7 @@ class ScanDetail extends React.Component{
 
     handleDelete = (event) => {
         const matchID = this.props.match.params.matchID;
-        axios.delete('http://127.0.0.1:8000/scans/' + matchID + '/');
+        axiosConfig.delete('scans/' + matchID + '/');
     }
 
     existsInProject = (row) => {
