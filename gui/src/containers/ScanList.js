@@ -16,7 +16,7 @@ class ScanList extends React.Component{
     }
 
     componentDidMount() {
-        axios.post('http://127.0.0.1:8000/my-scans/', {
+        axios.post('my-scans/', {
                 uid: localStorage.getItem('userProfileID')
         })
         .then(res => {

@@ -27,12 +27,12 @@ function UserProfile() {
         multiple: false,
         method: 'post',
         data: typeOfImage("upload"),
-        action: 'http://127.0.0.1:8000/file-handler/',
+        action: 'file-handler/',
         onRemove(file){
 
             console.log(file);
             
-            axios.post('http://127.0.0.1:8000/file-handler/', {
+            axios.post('file-handler/', {
                 "file": file.name,
                 ...typeOfImage('remove')
             });
@@ -54,7 +54,7 @@ function UserProfile() {
       };
 
     const getProfile = () => {
-    axios.get('http://localhost:8000/userprofile/' + localStorage.getItem('userProfileID'))
+    axios.get('userprofile/' + localStorage.getItem('userProfileID'))
     .then( res => {
         // Load all profile data
 
@@ -99,7 +99,7 @@ function UserProfile() {
 
     const reloadProfilePicture = () => {
         console.log(typeOfImage('fetch'));
-        axios.post('http://localhost:8000/file-handler/', {
+        axios.post('file-handler/', {
             ...typeOfImage('fetch')
         })
         .then(
@@ -201,7 +201,7 @@ function UserProfile() {
             var newName = values.name == null ? name : values.name;
             var newLocation = values.location == null ? location : values.location;
             
-            axios.put('http://127.0.0.1:8000/userprofile/update/' + localStorage.getItem('userProfileID'),{
+            axios.put('userprofile/update/' + localStorage.getItem('userProfileID'),{
                 email: newEmail,
                 name: newName,
                 location: newLocation

@@ -12,7 +12,7 @@ class JobpostList extends React.Component{
     }
 
     componentDidMount() {
-        axios.get('http://127.0.0.1:8000/jobpost/')
+        axios.get('jobpost/')
             .then(res => {
                 this.setState({
                     jobposts: res.data

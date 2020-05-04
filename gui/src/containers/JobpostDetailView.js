@@ -13,7 +13,7 @@ class JobpostDetail extends React.Component{
 
     componentDidMount() {
         const jobpostID = this.props.match.params.jobpostID;
-        axios.get('http://127.0.0.1:8000/jobpost/' + jobpostID + '/')
+        axios.get('jobpost/' + jobpostID + '/')
             .then(res => {
                 this.setState({
                     jobpost: res.data
@@ -29,7 +29,7 @@ class JobpostDetail extends React.Component{
 
     handleDelete = (event) => {
         const jobpostID = this.props.match.params.jobpostID;
-        axios.delete('http://127.0.0.1:8000/jobpost/' + jobpostID + '/');
+        axios.delete('jobpost/' + jobpostID + '/');
     }
 
     render(){

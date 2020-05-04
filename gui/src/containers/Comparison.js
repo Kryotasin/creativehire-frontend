@@ -49,7 +49,7 @@ class Comparison extends React.Component{
         this.loading = true;
 
 
-              axios.post('http://127.0.0.1:8000/jobpost/', {
+              axios.post('jobpost/', {
                     title: title,
                     description: description,
                     job_poster_id: job_poster_id,
@@ -60,7 +60,7 @@ class Comparison extends React.Component{
                   if(res.status == '201'){
                     this.setState({jobid: res.data.id});
 
-                    axios.post('http://127.0.0.1:8000/project/', {
+                    axios.post('project/', {
                         title: projtitle,
                         url: projlink,
                         project_owner_id: job_poster_id
@@ -71,7 +71,7 @@ class Comparison extends React.Component{
                       if(res.status == '201'){
                         this.setState({projectid: res.data.id});
     
-                              axios.post('http://127.0.0.1:8000/scan-results/', {
+                              axios.post('scan-results/', {
                                 userid: job_poster_id,
                                 jobid: this.state.jobid,
                                 projectid: this.state.projectid,
