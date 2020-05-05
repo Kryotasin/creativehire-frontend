@@ -24,6 +24,13 @@ const tailLayout = {
 };
 class NormalLoginForm extends React.Component {
 
+    componentDidMount(){
+
+        if(localStorage.getItem('token')){
+            this.props.history.push('/');
+        }
+    }
+
   render() {
 
     const onFinish = values => {
