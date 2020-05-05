@@ -27,10 +27,8 @@ function UserProfile() {
         multiple: false,
         method: 'post',
         data: typeOfImage("upload"),
-        action: 'file-handler/',
+        action: 'http://localhost:8000/file-handler/',
         onRemove(file){
-
-            console.log(file);
             
             axios.post('file-handler/', {
                 "file": file.name,
@@ -98,7 +96,6 @@ function UserProfile() {
     }
 
     const reloadProfilePicture = () => {
-        console.log(typeOfImage('fetch'));
         axios.post('file-handler/', {
             ...typeOfImage('fetch')
         })
@@ -107,11 +104,9 @@ function UserProfile() {
 
             if(res.status === 404){
                 // Set something to show lack of profile picture.
-                console.log(res);
             }
 
             else if (res.status === 200 && res.data !== 'ErrorResponseMetadata'){
-                console.log(res)
                 reloadImg(res.data);
             }
         })
