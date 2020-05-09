@@ -20,7 +20,6 @@ class ScanList extends React.Component{
                 uid: localStorage.getItem('userProfileID')
         })
         .then(res => {
-            console.log(res.data);
             this.setState({scans: res.data})
         })
     }
