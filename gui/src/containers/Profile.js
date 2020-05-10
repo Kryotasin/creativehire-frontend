@@ -16,6 +16,9 @@ function UserProfile() {
 
     const { Text } = Typography;
 
+    const uploadURL = process.env.REACT_APP_AXIOS_BASEURL + "file-handler/";
+
+    console.log(process.env.REACT_APP_AXIOS_BASEURL)
 
     const typeOfImage = (proc) => {
         return {"type" : "profile_pic", "process": proc, "fileName": img_salt}
@@ -27,7 +30,7 @@ function UserProfile() {
         multiple: false,
         method: 'post',
         data: typeOfImage("upload"),
-        action: 'http://localhost:8000/file-handler/',
+        action: {uploadURL},
         onRemove(file){
             
             axios.post('file-handler/', {
