@@ -66,7 +66,6 @@ class CustomLayout extends React.Component {
 
 
         <Layout className="site-layout">
-          <Header className="site-layout-background" style={{ padding: 0 }} />
           
           <Content style={{ margin: '0 16px', padding: '50px' }}>
             <div className="site-layout-content">
