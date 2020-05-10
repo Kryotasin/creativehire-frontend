@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import 'antd/dist/antd.css';
-import {BrowserRouter as Router} from 'react-router-dom';
+import {HashRouter as Router} from 'react-router-dom';
 import {connect} from 'react-redux';
 import BaseRouter from './routes';
 import * as actions from './store/actions/auth'
@@ -24,7 +24,7 @@ class App extends Component {
 
 {
                     localStorage.getItem('token') !== null ?
-                    <Router>
+                    <Router basename="/">
                     <CustomLayout {...this.props}>
                       <ErrorBoundary>
                        <BaseRouter />
@@ -32,7 +32,7 @@ class App extends Component {
                      </CustomLayout>
                    </Router>
                     :
-                    <Router>
+                    <Router basename="/">
                     <CustomLayout {...this.props}>
                        <GuestRouter />
                      </CustomLayout>
