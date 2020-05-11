@@ -18,8 +18,6 @@ function UserProfile() {
 
     const uploadURL = process.env.REACT_APP_AXIOS_BASEURL + "file-handler/";
 
-    console.log(process.env.REACT_APP_AXIOS_BASEURL)
-
     const typeOfImage = (proc) => {
         return {"type" : "profile_pic", "process": proc, "fileName": img_salt}
     }
@@ -67,7 +65,8 @@ function UserProfile() {
         reloadImgSalt(res.data['img_salt']);
 
         setTimeout(() => message.success('Profile loaded successfully.'), 100);
-        }
+        reloadProfilePicture();  
+      }
     )
     .catch(err => {
         message.error(`Your profile could not be loaded due to ` + err.message);
@@ -104,7 +103,7 @@ function UserProfile() {
         })
         .then(
             res => {
-
+console.log(typeOfImage('fetch'))
             if(res.status === 404){
                 // Set something to show lack of profile picture.
             }
