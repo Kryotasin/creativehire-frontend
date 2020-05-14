@@ -1,6 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, DatePicker, Upload, message } from 'antd';
-import { InboxOutlined } from '@ant-design/icons';
+import { Form, Input, Button, message } from 'antd';
 
 
 import axios from '../axiosConfig';
@@ -79,7 +78,7 @@ class CustomForm extends React.Component {
                 })
                 .then(res => {
                   console.log(res);
-                  if(res.status == '201'){
+                  if(res.status === '201'){
                     this.props.history.push('/jobpost/' + res.data.id + '/');
                   }
                 })
@@ -115,7 +114,7 @@ class CustomForm extends React.Component {
                 ]}
               >
                 <Input name="title" placeholder={
-                  this.props.requestType == 'put' ?
+                  this.props.requestType === 'put' ?
                     this.props.jobpost.title
                   :
                     "Enter a title"
@@ -129,7 +128,7 @@ class CustomForm extends React.Component {
                     message:'Please enter an image url'},
               ]}>
                 <Input.TextArea name="description" placeholder={
-                  this.props.requestType == 'put' ?
+                  this.props.requestType === 'put' ?
                     this.props.jobpost.description
                   :
                     "Enter a Description"

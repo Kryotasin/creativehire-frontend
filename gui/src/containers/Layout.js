@@ -8,7 +8,7 @@ import logo from '../assets/logo.svg';
 import { Link } from 'react-router-dom';
 
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 
 
 class CustomLayout extends React.Component {
@@ -40,7 +40,7 @@ class CustomLayout extends React.Component {
                             defaultSelectedKeys={['10']}
                             style={{ lineHeight: '64px' }}
                             >                            
-                                <Menu.Item key="6"><Link to="/"><img src={logo} style={{width: '9rem'}}></img></Link></Menu.Item>
+                                <Menu.Item key="6"><Link to="/"><img alt="Creativehire logo" src={logo} style={{width: '9rem'}}></img></Link></Menu.Item>
                                 <Menu.Item key="1" icon={<PlusCircleOutlined />}><Link to="/new-scan">New Scan  </Link></Menu.Item>
                                 <Menu.Item key="2" icon={<FolderOpenOutlined />}><Link to="/my-scans">My Scans </Link></Menu.Item>
                                 <Menu.Item key="3" icon={<QuestionCircleOutlined />}><Link to="/how-it-works/">How it works </Link></Menu.Item>

@@ -7,7 +7,6 @@ import JobpostDetail from './containers/JobpostDetailView';
 import JobpostCreate from './containers/JobpostCreate';
 import Login from './containers/Login';
 import Signup from './containers/Signup';
-import LandingPage from './containers/LadingPage';
 import UserProfile from './containers/Profile';
 import Comparison from './containers/Comparison';
 import LoginHome from './containers/LoginHome';

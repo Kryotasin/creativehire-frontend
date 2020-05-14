@@ -24,21 +24,21 @@ class ScanDetail extends React.Component{
         const matchID = this.props.match.params.matchID;
         axiosConfig.get('scans/' + matchID + '/')
             .then(res => {
-                if(res.status == 200){
+                if(res.status === 200){
                     this.setState({
                         match: res.data
                     });
                     
                     axiosConfig.get('/metrics-structure/')
                     .then(res => {
-                        if(res.status == 200){
+                        if(res.status === 200){
                             this.setState({structure: res.data});
                         }
                     })
                 }
             })
             .catch(err => {
-                // err.response.status == '404' ? 
+                // err.response.status === '404' ? 
                 //     this.props.history.push('/')
                 // :
                 //     console.log('loading')
@@ -53,7 +53,7 @@ class ScanDetail extends React.Component{
     existsInProject = (row) => {
         if(this.state.match['matchitems']){
             for(var i=0;i<this.state.match['matchitems'].length;i++){
-                if(this.state.match['matchitems'][i].trim() == row.trim()){
+                if(this.state.match['matchitems'][i].trim() === row.trim()){
                     return <CheckCircleTwoTone style={{ fontSize: '1.2rem', float: "right" }} twoToneColor="#52c41a" />
                 }
             }
@@ -102,7 +102,7 @@ class ScanDetail extends React.Component{
                                     var parts = item.split(',');
                                     
                                     if(this.subcat === parts[1]){
-                                        if(this.label != parts [0]){
+                                        if(this.label !== parts[0]){
                                             this.label = parts[0];
                                             return(
                                                 <React.Fragment key={key}>

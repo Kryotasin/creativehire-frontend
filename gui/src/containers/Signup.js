@@ -46,7 +46,14 @@ const tailFormItemLayout = {
 
 class RegistrationForm extends React.Component {
 
-    formRef = React.createRef();
+
+  componentDidMount(){
+
+    if(localStorage.getItem('token')){
+        this.props.history.push('/');
+        console.log(localStorage.getItem('token'))
+    }
+}
 
 
 
@@ -59,8 +66,6 @@ class RegistrationForm extends React.Component {
                   values.password,
                   values.confirm
               );
-              this.props.history.push('/');
-              console.log('Received values of form: ', values);
             };
 
             return (
@@ -139,7 +144,7 @@ class RegistrationForm extends React.Component {
             
                   <Form.Item name="agreement" valuePropName="checked" {...tailFormItemLayout}>
                     <Checkbox>
-                      I have read the <a href="">agreement</a>
+                      I have read the <a href="terms">agreement</a>
                     </Checkbox>
                   </Form.Item>
             

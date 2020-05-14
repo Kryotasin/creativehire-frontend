@@ -92,9 +92,10 @@ export const authSignup = (username, email, password1, password2) => {
             localStorage.setItem('expirationDate', expirationDate);
             dispatch(authSuccess(token));
             dispatch(checkAuthTimeout(3600));
+            console.log(res);
         })
         .catch(err => {
-            dispatch(authFail(err))
+            dispatch(authFail(err));
         })
     }
 }

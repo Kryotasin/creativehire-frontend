@@ -2,7 +2,7 @@ import React, { useState, useEffect }  from 'react';
 import { Modal, Form, Input, Row, Col, Avatar, Upload, Button, message, Skeleton, Space, Typography  } from 'antd';
 
 import axios from '../axiosConfig';
-import { UserOutlined, UploadOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 
 
 
@@ -220,6 +220,7 @@ console.log(typeOfImage('fetch'))
 
 
     useEffect(() => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
         getProfile();
     }, []); 
 
@@ -235,7 +236,7 @@ console.log(typeOfImage('fetch'))
                             img == null?
                                 <Avatar shape="square" size="large" icon={ <UserOutlined />}/>
                             :
-                            <img src={`data:image/png;base64,${img}`} />                        
+                            <img alt={ name == null ? <Text type="danger">No name found!</Text> : name + ".png"} src={`data:image/png;base64,${img}`} />                        
                         }   
                     </Col>
                     <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
