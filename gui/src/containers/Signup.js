@@ -47,7 +47,9 @@ const tailLayout = {
 
 class RegistrationForm extends React.Component {
 
-  errorParts = []
+  errorParts = [];
+  errorPartsHead = [];
+
   state = {
     agreementChecked: false
   }
@@ -78,6 +80,7 @@ class RegistrationForm extends React.Component {
                 Object.entries(this.props.error).map((key, value) => {
                   for(var i=0;i<=value;i++){
                     this.errorParts.push(key[1][i]);
+                    this.errorPartsHead.push(key[0]);
                   }
                 })
               }
@@ -85,10 +88,10 @@ class RegistrationForm extends React.Component {
 
             if(this.props.error){
               getErrorValues();
-              this.errorParts.forEach(element => {
+              this.errorParts.forEach((element, idx) => {
                 if(element){
                   errorMessage = (
-                    <Alert {...tailLayout} message = "Registration failed!" description = {element} type='error' showIcon />
+                    <Alert {...tailLayout} message = "Registration failed!" description = {this.errorPartsHead[idx] + " : " + element} type='error' showIcon />
                   )     
                 }
             });
