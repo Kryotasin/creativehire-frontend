@@ -55,8 +55,6 @@ class CustomLayout extends React.Component {
           }
         </Sider>
 
-
-
         <Layout className="site-layout">
           
           <Content style={{ margin: '0 16px', padding: '50px' }}>
