@@ -19,10 +19,11 @@ const layout = {
 const tailLayout = {
   wrapperCol: {
     offset: 8,
-    span: 16,
+    span: 8,
   },
 };
 class NormalLoginForm extends React.Component {
+    errorParts = [];
 
     componentDidMount(){
 
@@ -45,14 +46,30 @@ class NormalLoginForm extends React.Component {
         // this.props.onAuth(event.username, event.password);
     };
 
+
     let errorMessage = null;
 
-    if(this.props.error){
-        errorMessage = (
-            // <p>{this.props.error.message}</p>
-            <Alert {...tailLayout} message = 'Username password combination not found.' type='error' showIcon />
-        )
+    const getErrorValues = () => {
+      if(this.props.error){
+        Object.entries(this.props.error).map((key, value) => {
+          for(var i=0;i<=value;i++){
+            this.errorParts.push(key[1][i]);
+          }
+        })
+      }
     }
+
+    if(this.props.error){
+        console.log(this.props.error)
+        getErrorValues();
+        this.errorParts.forEach(element => {
+          if(element){
+            errorMessage = (
+              <Alert {...tailLayout} message = "Login failed!" description = {element} type='error' showIcon />
+            )     
+          }
+      });
+      }
 
     
 

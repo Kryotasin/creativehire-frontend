@@ -4,12 +4,13 @@ import {
   Input,
   Checkbox,
   Button,
+  Alert,
+  Popover
 } from 'antd';
 
 import * as actions from '../store/actions/auth';
 import {connect} from 'react-redux';
 import { NavLink } from 'react-router-dom';
-
 
 const formItemLayout = {
   labelCol: {
@@ -30,7 +31,7 @@ const formItemLayout = {
   },
 };
 
-const tailFormItemLayout = {
+const tailLayout = {
     wrapperCol: {
       xs: {
         span: 24,
@@ -46,19 +47,21 @@ const tailFormItemLayout = {
 
 class RegistrationForm extends React.Component {
 
+  errorParts = []
+  state = {
+    agreementChecked: false
+  }
 
   componentDidMount(){
 
     if(localStorage.getItem('token')){
         this.props.history.push('/');
-        console.log(localStorage.getItem('token'))
     }
-}
+  }
 
 
 
         render(){
-
             const onFinish = values => {
               this.props.onAuth(
                   values.username,
@@ -67,6 +70,29 @@ class RegistrationForm extends React.Component {
                   values.confirm
               );
             };
+
+            let errorMessage = null;
+
+            const getErrorValues = () => {
+              if(this.props.error){
+                Object.entries(this.props.error).map((key, value) => {
+                  for(var i=0;i<=value;i++){
+                    this.errorParts.push(key[1][i]);
+                  }
+                })
+              }
+            }
+
+            if(this.props.error){
+              getErrorValues();
+              this.errorParts.forEach(element => {
+                if(element){
+                  errorMessage = (
+                    <Alert {...tailLayout} message = "Registration failed!" description = {element} type='error' showIcon />
+                  )     
+                }
+            });
+            }
 
             return (
                 <Form
@@ -142,20 +168,38 @@ class RegistrationForm extends React.Component {
                     <Input.Password />
                   </Form.Item>
             
-                  <Form.Item name="agreement" valuePropName="checked" {...tailFormItemLayout}>
-                    <Checkbox>
+                  <Form.Item name="agreement" valuePropName="checked" {...tailLayout}>
+                    <Checkbox
+                      defaultChecked={true}
+                      onChange = {() => {
+                        this.setState({
+                          agreementChecked: !this.state.agreementChecked
+                        });
+                      }}
+                    >
                       I have read the <a href="terms">agreement</a>
                     </Checkbox>
                   </Form.Item>
             
-                  <Form.Item {...tailFormItemLayout}>
-                              <Button type="primary" htmlType="submit">
-                                Signup
-                              </Button> Or
-                              <NavLink style={{marginRight: '10px'}} 
-                              to='/login/'> Login
-                              </NavLink>
-                          </Form.Item>
+                  <Form.Item {...tailLayout}>
+
+                    {!this.state.agreementChecked ? 
+                      <Popover content='You need to the agree to the Terms and Conditions.'>
+                        <Button type="primary" htmlType="submit" disabled = {!this.state.agreementChecked}>
+                                  Signup
+                        </Button>
+                     </Popover>
+                     :
+                      <Button type="primary" htmlType="submit" disabled = {!this.state.agreementChecked}>
+                        Signup
+                      </Button>
+                  }
+                    Or
+                    <NavLink style={{marginRight: '10px'}} 
+                    to='/login/'> Login
+                    </NavLink>
+              </Form.Item>
+                          {errorMessage}
                 </Form>
               );
         }
