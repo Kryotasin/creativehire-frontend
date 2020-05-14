@@ -20,7 +20,7 @@ class JobpostDetail extends React.Component{
                 });
             })
             .catch(err => {
-                err.response.status === '404' ? 
+                err.response.status == '404' ? 
                     this.props.history.push('/')
                 :
                     console.log('loading')

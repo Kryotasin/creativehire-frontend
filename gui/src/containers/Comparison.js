@@ -56,7 +56,7 @@ class Comparison extends React.Component{
                 })
                 .then(res => {
                   // console.log(res);
-                  if(res.status === '201'){
+                  if(res.status == '201'){
                     this.setState({jobid: res.data.id});
 
                     axios.post('project/', {
@@ -67,7 +67,7 @@ class Comparison extends React.Component{
                     .then(res => {
                       this.setState({jobtitle: title});
                       // console.log(res);
-                      if(res.status === '201'){
+                      if(res.status == '201'){
                         this.setState({projectid: res.data.id});
     
                               axios.post('scan-results/', {
@@ -78,7 +78,7 @@ class Comparison extends React.Component{
                             })
                             .then(res => {
                               // console.log(res);
-                              if(res.status === '200'){
+                              if(res.status == '200'){
                                 // this.props.history.push('/my-scans/' + res.data.id + '/');
                                 // this.setState({projectid: res.data.id});
                                 this.props.history.push('scan/' + res.data['scanid'])
