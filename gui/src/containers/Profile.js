@@ -1,5 +1,7 @@
 import React, { useState, useEffect }  from 'react';
-import { Modal, Form, Input, Row, Col, Avatar, Upload, Button, message, Skeleton, Space, Typography  } from 'antd';
+import { Alert, Modal, Form, Input, Row, Col, Avatar, Upload, Button, message, Skeleton, Space, Typography  } from 'antd';
+
+import {Link} from 'react-router-dom';
 
 import axios from '../axiosConfig';
 import { UserOutlined } from '@ant-design/icons';
@@ -9,6 +11,7 @@ import { UserOutlined } from '@ant-design/icons';
 function UserProfile() {
     const[username, setUsername] = useState('');
     const[email, setEmail] = useState('');
+    const[email_verified, setEmailverified] = useState(null);
     const[name, setName] = useState('');
     const[location, setLocation] = useState('');
     const[img_salt, setImgSalt] = useState('');
@@ -16,69 +19,18 @@ function UserProfile() {
 
     const { Text } = Typography;
 
-    const uploadURL = process.env.REACT_APP_AXIOS_BASEURL + "file-handler/";
-
-    const typeOfImage = (proc) => {
-        return {"type" : "profile_pic", "process": proc, "fileName": img_salt}
-    }
-    
-    const userProfilePictureUploadProps = {
-        name: 'file',
-        acceptedFiles: '.png',
-        multiple: false,
-        method: 'post',
-        data: typeOfImage("upload"),
-        action: {uploadURL},
-        onRemove(file){
-            
-            axios.post('file-handler/', {
-                "file": file.name,
-                ...typeOfImage('remove')
-            });
-
-        },
-        
-        onChange(info) {
-          const { status } = info.file;
-          if (status !== 'uploading') {
-            // console.log(info.file, info.fileList);
-          }
-          if (status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully.`);
-          } else if (status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
-          }
-          reloadProfilePicture();
-        },
-      };
-
-    const getProfile = () => {
-    axios.get('userprofile/' + localStorage.getItem('userProfileID'))
-    .then( res => {
-        // Load all profile data
-
-
-        reloadUsername(res.data['username']);
-        reloadEmail(res.data['email']);
-        reloadName(res.data['name']);
-        reloadLocation(res.data['location']);
-        reloadImgSalt(res.data['img_salt']);
-
-        setTimeout(() => message.success('Profile loaded successfully.'), 100);
-        reloadProfilePicture();  
-      }
-    )
-    .catch(err => {
-        message.error(`Your profile could not be loaded due to ` + err.message);
-    })
-    }
+    const uploadURL = process.env.REACT_APP_AXIOS_BASEURL + "/file-handler/";
 
     const reloadUsername = (data) => {
-        setUsername(data);
+      setUsername(data);
     }
 
     const reloadEmail = (data) => {
         setEmail(data);
+    }
+
+    const reloadEmailVerified = (data) => {
+      setEmailverified(data);
     }
 
     const reloadName = (data) => {
@@ -97,23 +49,98 @@ function UserProfile() {
         setImg(data);
     }
 
+    const typeOfImage = (proc) => {
+        return {"type" : "profile_pic", "process": proc, "fileName": img_salt}
+    }
+    
+    const userProfilePictureUploadProps = {
+        name: 'file',
+        acceptedFiles: '.png',
+        multiple: false,
+        method: 'post',
+        data: typeOfImage("upload"),
+        action: {uploadURL},
+        onRemove(file){
+            axios.post('file-handler/', {
+                "file": file.name,
+                ...typeOfImage('remove')
+            });
+        },
+        
+        onChange(info) {
+          const { status } = info.file;
+          if (status !== 'uploading') {
+            // console.log(info.file, info.fileList);
+          }
+          if (status === 'done') {
+            message.success(`${info.file.name} file uploaded successfully.`);
+          } else if (status === 'error') {
+            message.error(`${info.file.name} file upload failed.` + info);
+          }
+          reloadProfilePicture();
+        },
+    };
+
+    const getProfile = () => {
+    axios.get('userprofile/' + localStorage.getItem('userProfileID'))
+    .then( res => {
+        // Load all profile data
+
+
+        reloadUsername(res.data['username']);
+        reloadEmail(res.data['email']);
+        reloadName(res.data['name']);
+        reloadLocation(res.data['location']);
+        reloadImgSalt(res.data['img_salt']);
+
+        setTimeout(() => message.success('Profile loaded successfully.'), 100);
+        reloadProfilePicture();  
+
+        axios.get('userprofile/email-verified/' + localStorage.getItem('userProfileID'))
+        .then(res => {
+          if(res.data['verified']){
+            reloadEmailVerified(true);
+          }
+        })
+        .catch(err => {
+          reloadEmailVerified(false);
+        })
+
+      }
+    )
+    .catch(err => {
+        message.error(`Your profile could not be loaded due to ` + err.message);
+    })
+    }
+
+
+
     const reloadProfilePicture = () => {
         axios.post('file-handler/', {
             ...typeOfImage('fetch')
         })
         .then(
             res => {
-console.log(typeOfImage('fetch'))
+              console.log(res);
             if(res.status === 404){
                 // Set something to show lack of profile picture.
+                setTimeout(() => message.error('Profile picture not found.'), 100);
             }
 
             else if (res.status === 200 && res.data !== 'ErrorResponseMetadata'){
                 reloadImg(res.data);
             }
+            
+            else if(res.status === 200 && res.data == 'ErrorResponseMetadata'){
+              // Set something to show lack of profile picture.
+              setTimeout(() => message.error('Profile picture not found.'), 100);
+          }
         })
         .catch(err => {
-            console.log(err);
+          if(err.response.status === 500){
+            // Set something to show lack of profile picture.
+            setTimeout(() => message.error('Profile picture could not be loaded.'), 100);
+        }
         })
     }
 
@@ -170,7 +197,7 @@ console.log(typeOfImage('fetch'))
               >
                 <Input placeholder={email} />
               </Form.Item>
-
+              
               <Form.Item
                 name="location"
                 label="Location"
@@ -228,7 +255,6 @@ console.log(typeOfImage('fetch'))
 
     return (
             <div>  
-                {reloadProfilePicture()}
                 
                 <Row gutter={[8, 48]}>
                     <Col xs={{ span: 6, offset: 1 }} lg={{ span: 6, offset: 2 }}>
@@ -280,7 +306,9 @@ console.log(typeOfImage('fetch'))
                             <p>Email: </p>
                             <p>{email == null ? <Skeleton active /> : email}</p>
                         </Space>
-                    </Col>
+                        <Alert message= {email_verified ? "Email verified!" : <Link to='/confirm-email'>Click here to verify email</Link>} type={email_verified ? "success" : "error"} showIcon />
+  
+              </Col>
                 </Row>
 
                 <Row gutter={[8, 20]}>
