@@ -14,6 +14,7 @@ const GuestRouter = () => (
         
         <Route exact path ='/scan/:scanID' component ={LandingPage} />
         <Route exact path ='/scan/' component ={LandingPage} />
+        <Route exact path ='/confirm-email/' component ={Login} />
     </div>
 );
 

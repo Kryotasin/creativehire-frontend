@@ -12,6 +12,7 @@ import Comparison from './containers/Comparison';
 import LoginHome from './containers/LoginHome';
 import ScanList from './containers/ScanList';
 import ScanDetail from './containers/ScanDetail';
+import ConfirmEmail from './containers/ConfirmEmail';
 
 const BaseRouter = () => (
     <div>
@@ -29,6 +30,7 @@ const BaseRouter = () => (
 {/* 
         <Route exact path ='/home/' component ={LandingPage} /> */}
         <Route exact path ='/profile/' component ={UserProfile} />
+        <Route exact path ='/confirm-email/' component ={ConfirmEmail} />
     </div>
 );
 
