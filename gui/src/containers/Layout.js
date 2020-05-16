@@ -33,7 +33,7 @@ class CustomLayout extends React.Component {
               <Menu
               theme="dark"
               mode="inline"
-              defaultSelectedKeys={['10']}
+              defaultSelectedKeys={['9']}
               style={{ lineHeight: '64px' }}
               >                            
                   <Menu.Item key="6"><Link to="/"><img alt="Creativehire logo" src={logo} style={{width: '9rem'}}></img></Link></Menu.Item>
