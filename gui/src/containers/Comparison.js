@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Spin } from 'antd';
+import { Divider, Form, Input, Button, Spin } from 'antd';
 
 
 import axios from '../axiosConfig';
@@ -36,6 +36,8 @@ class Comparison extends React.Component{
     handleFormSubmit = (event) => {
         event.preventDefault();
 
+        const link_jp = event.target.elements.link_jp.value;
+        const org = event.target.elements.org.value;
         const title = event.target.elements.jdtitle.value;
         const description = event.target.elements.jddescription.value;
         const projtitle = event.target.elements.projtitle.value;
@@ -49,13 +51,14 @@ class Comparison extends React.Component{
 
 
               axios.post('jobpost/', {
+                    org: org,
+                    link_jp, link_jp,
                     title: title,
                     description: description,
                     job_poster_id: job_poster_id,
                     // img:img
                 })
                 .then(res => {
-                  // console.log(res);
                   if(res.status == '201'){
                     this.setState({jobid: res.data.id});
 
@@ -66,7 +69,6 @@ class Comparison extends React.Component{
                     })
                     .then(res => {
                       this.setState({jobtitle: title});
-                      // console.log(res);
                       if(res.status == '201'){
                         this.setState({projectid: res.data.id});
     
@@ -77,13 +79,8 @@ class Comparison extends React.Component{
                                 jobtitle: this.state.jobtitle
                             })
                             .then(res => {
-                              // console.log(res);
                               if(res.status == '200'){
-                                // this.props.history.push('/my-scans/' + res.data.id + '/');
-                                // this.setState({projectid: res.data.id});
                                 this.props.history.push('scan/' + res.data['scanid'])
-                                // console.log(res);
-                                // axios.post
                             }
                             })
                             .catch(error => this.setState({err: error}));
@@ -103,6 +100,7 @@ class Comparison extends React.Component{
             <Spin tip="Loading..." spinning={this.loading}>
 
             <h2>New Scan</h2>
+            <Divider>Project Details</Divider>
             <Form onSubmitCapture={(event) => this.handleFormSubmit(
                 event
                 )} {...layout} name="nest-messages" validateMessages={validateMessages}>
@@ -134,6 +132,34 @@ class Comparison extends React.Component{
               </Form.Item>
 
 
+              <Divider>Job Details</Divider>
+
+              <Form.Item
+                label="Company Name"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Input name="org" placeholder={
+                    "Enter the company/organization name"
+                  }/>
+              </Form.Item>
+
+              <Form.Item
+                label="Link to job post"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Input name="link_jp" placeholder={
+                    "Paste the link ot the job post"
+                  }/>
+              </Form.Item>
+
               <Form.Item
                 label="Job Title"
                 rules={[
@@ -164,7 +190,7 @@ class Comparison extends React.Component{
               </Form.Item>
              
               <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-                <Button type="primary" htmlType="submit" loading={this.loading}>
+                <Button type="primary" htmlType="submit" size="large" loading={this.loading}>
                   Scan Now
                 </Button>
               </Form.Item>

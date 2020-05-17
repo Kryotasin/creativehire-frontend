@@ -20,7 +20,7 @@ const Scan = (props) => {
           gutter: 16,
           xs: 1,
           sm: 2,
-          md: 4,
+          md: 2,
           lg: 4,
           xl: 6,
           xxl: 6,
@@ -44,7 +44,7 @@ const Scan = (props) => {
 
 
         cover={
-            <Progress type="circle" percent={item.fields.matchpercent? item.fields.matchpercent*100 : 0} />
+            <Progress type="circle" strokeColor={item.fields.matchpercent*100 < 25 ? "red" : "#1890ff"} percent={item.fields.matchpercent? (item.fields.matchpercent*100).toFixed(1) : 0} />
           }
 
           actions={[
@@ -54,8 +54,7 @@ const Scan = (props) => {
         >
             
             <Meta
-                // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                title= {item.fields.title ? item.fields.title : "No position details"}
+                title= {item.fields.title ? item.fields.org + " - " + item.fields.title : "No position details"}
                 description={"Created on " + parseDate(item.fields.posted_date)}
             />
             </Card>
