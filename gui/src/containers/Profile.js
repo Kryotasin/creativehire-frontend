@@ -19,7 +19,7 @@ function UserProfile() {
 
     const { Text } = Typography;
 
-    const uploadURL = process.env.REACT_APP_AXIOS_BASEURL + "/file-handler/";
+    const uploadURL = process.env.REACT_APP_AXIOS_FILE_HANDLER;
 
     const reloadUsername = (data) => {
       setUsername(data);
