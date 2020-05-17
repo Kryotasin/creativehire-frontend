@@ -61,7 +61,7 @@ class NormalLoginForm extends React.Component {
       fontWeight: "150",
       width: "",
       fontSize: "2rem",
-      marginTop: "2rem",
+      marginTop: "3rem",
       borderLeft: "1px solid #000",
     };
 
