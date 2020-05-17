@@ -18,8 +18,8 @@ const layout = {
 };
 const tailLayout = {
   wrapperCol: {
-    offset: 12,
-    span: 16,
+    offset: 6,
+    span: 20,
   },
 };
 
@@ -40,6 +40,7 @@ class NormalLoginForm extends React.Component {
       fontFamily: "Helvetica Neue",
       fontWeight: "250",
       fontSize: "3.4rem",
+      marginTop: "5.2rem"
     };
 
     const tagline = {
@@ -48,7 +49,7 @@ class NormalLoginForm extends React.Component {
       fontFamily: "Helvetica Neue",
       fontWeight: "150",
       fontSize: "1.8rem",
-      marginTop: "-30px",
+      marginTop: "-4.2rem",
     };
 
     const brand = {};
@@ -58,10 +59,10 @@ class NormalLoginForm extends React.Component {
       padding: "10px",
       fontFamily: "Helvetica Neue",
       fontWeight: "150",
-      width: "50%",
-      fontSize: "40px",
-      marginTop: "30px",
-      border: "1px solid #fff",
+      width: "",
+      fontSize: "2rem",
+      marginTop: "2rem",
+      borderLeft: "1px solid #000",
     };
 
     const onFinish = values => {
@@ -164,16 +165,14 @@ class NormalLoginForm extends React.Component {
               ]}
             >
               <Input.Password />
-              <Link to="/forgot-password/">Forgot Password</Link>
             </Form.Item>
 
-            <Form.Item
-              {...tailLayout}
-              name="remember"
-              valuePropName="checked"
-            >
+
+            <Form.Item name="remember" valuePropName="checked" {...tailLayout}>
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
+
+              
 
             <Form.Item {...tailLayout}>
               <Button
@@ -190,10 +189,14 @@ class NormalLoginForm extends React.Component {
                 Login
               </Button>{" "}
             </Form.Item>
+            
             <Form.Item {...tailLayout}>
               <Link style={{ marginRight: "10px" }} to="/signup/">
                 Create new account
               </Link>
+              
+
+              <Link to="/forgot-password/">Forgot Password</Link>
             </Form.Item>
             {errorMessage}
           </Form>
