@@ -83,7 +83,7 @@ class ScanDetail extends React.Component{
 
             <Row>
                 <Col span={3}></Col>
-            <Col span={9}><Progress type="circle" percent={this.state.match.matchpercent? (this.state.match.matchpercent*100).toFixed(1) : 0} /></Col>
+            <Col span={9}><Progress type="circle" strokeColor={item.fields.matchpercent*100 < 25 ? "red" : "#1890ff"} percent={this.state.match.matchpercent? (this.state.match.matchpercent*100).toFixed(1) : 0} /></Col>
 
 
                 
