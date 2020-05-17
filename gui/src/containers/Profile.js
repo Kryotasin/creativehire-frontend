@@ -19,8 +19,6 @@ function UserProfile() {
 
     const { Text } = Typography;
 
-    const uploadURL = process.env.REACT_APP_AXIOS_FILE_HANDLER;
-
     const reloadUsername = (data) => {
       setUsername(data);
     }
@@ -59,7 +57,7 @@ function UserProfile() {
         multiple: false,
         method: 'post',
         data: typeOfImage("upload"),
-        action: {uploadURL},
+        action: 'https://api.creativehire.co/file-handler/',
         onRemove(file){
             axios.post('file-handler/', {
                 "file": file.name,
@@ -121,7 +119,6 @@ function UserProfile() {
         })
         .then(
             res => {
-              console.log(res);
             if(res.status === 404){
                 // Set something to show lack of profile picture.
                 setTimeout(() => message.error('Profile picture not found.'), 100);
@@ -218,9 +215,7 @@ function UserProfile() {
         const [visible, setVisible] = useState(false);
     
       
-        const onCreate = values => {
-            console.log('Received values of form: ', values);
-            
+        const onCreate = values => {            
             var newEmail = values.email == null ? email : values.email;
             var newName = values.name == null ? name : values.name;
             var newLocation = values.location == null ? location : values.location;
