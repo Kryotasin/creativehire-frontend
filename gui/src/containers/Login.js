@@ -1,10 +1,10 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox, Spin, Alert } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { Row, Col, Form, Input, Button, Checkbox, Spin, Alert } from 'antd';
+import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import * as actions from '../store/actions/auth';
 import { LoadingOutlined } from '@ant-design/icons';
-
+import "antd/dist/antd.less";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -13,15 +13,16 @@ const layout = {
     span: 8,
   },
   wrapperCol: {
-    span: 8,
+    span: 16,
   },
 };
 const tailLayout = {
   wrapperCol: {
-    offset: 8,
-    span: 8,
+    offset: 12,
+    span: 16,
   },
 };
+
 class NormalLoginForm extends React.Component {
     errorParts = [];
 
@@ -33,6 +34,35 @@ class NormalLoginForm extends React.Component {
     }
 
   render() {
+    const header = {
+      color: "#000",
+      padding: "10px",
+      fontFamily: "Helvetica Neue",
+      fontWeight: "250",
+      fontSize: "3.4rem",
+    };
+
+    const tagline = {
+      color: "#006EA7",
+      padding: "10px",
+      fontFamily: "Helvetica Neue",
+      fontWeight: "150",
+      fontSize: "1.8rem",
+      marginTop: "-30px",
+    };
+
+    const brand = {};
+
+    const login = {
+      color: "#006EA7",
+      padding: "10px",
+      fontFamily: "Helvetica Neue",
+      fontWeight: "150",
+      width: "50%",
+      fontSize: "40px",
+      marginTop: "30px",
+      border: "1px solid #fff",
+    };
 
     const onFinish = values => {
         this.props.onAuth(values.username, values.password);
@@ -74,70 +104,106 @@ class NormalLoginForm extends React.Component {
     
 
     return (
-        <div>
-            {
-  
-                this.props.loading ?
-  
-                <Spin indicator={antIcon} />
-                
-                :
-  
-  
-              <Form
-              {...layout}
-              initialValues={{
-                  remember: true,
+      <Row gutter={[40, 16]}>
+        <Col span={2}>
+        </Col>
+        <Col span={10}>
+        <div style={brand}>
+          <p style={header}>Welcome to Creative Hire</p>
+          <p style={tagline}>
+            Make Smart Decisions in your UX job applications
+          </p>
+        </div>
+        </Col>
+        <Col span={10}>
+          
+      <div style={login}>
+        {this.props.loading ? (
+          <Spin indicator={antIcon} />
+        ) : 
+          <Form
+            {...layout}
+            name="basic"
+            style={{
+              top: "500px",
+            }}
+            initialValues={{
+              remember: true,
+            }}
+            ref={this.formRef}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+          >
+            <Form.Item
+              label="Username"
+              name="username"
+              style={{
+                width: "500px",
               }}
-              ref={this.formRef}
-              onSubmitCapture={onSubCap}
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-              >
-              <Form.Item
-                  label="Username"
-                  name="username"
-                  rules={[
-                  {
-                      required: true,
-                      message: 'Please input your username!',
-                  },
-                  ]}
-              >
-                  <Input />
-              </Form.Item>
-  
-              <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[
-                  {
-                      required: true,
-                      message: 'Please input your password!',
-                  },
-                  ]}
-              >
-                  <Input.Password />
-              </Form.Item>
-  
-              <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                  <Checkbox>Remember me</Checkbox>
-              </Form.Item>
-  
-              <Form.Item {...tailLayout}>
-                  <Button type="primary" htmlType="submit">
-                  Login
-                  </Button> Or
-                  <NavLink style={{marginRight: '10px'}} 
-                  to='/signup/'> Signup
-                  </NavLink>
-              </Form.Item>
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your username!",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
 
-              
-                {errorMessage}
-              </Form>
-          }
+            <Form.Item
+              label="Password"
+              name="password"
+              style={{
+                width: "500px",
+              }}
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your password!",
+                },
+              ]}
+            >
+              <Input.Password />
+              <Link to="/forgot-password/">Forgot Password</Link>
+            </Form.Item>
+
+            <Form.Item
+              {...tailLayout}
+              name="remember"
+              valuePropName="checked"
+            >
+              <Checkbox>Remember me</Checkbox>
+            </Form.Item>
+
+            <Form.Item {...tailLayout}>
+              <Button
+                type="primary"
+                size="large"
+                style={{
+                  background: "#063852",
+                  borderColor: "#063852",
+                  width: "200px",
+                }}
+                htmlType="submit"
+              >
+                {" "}
+                Login
+              </Button>{" "}
+            </Form.Item>
+            <Form.Item {...tailLayout}>
+              <Link style={{ marginRight: "10px" }} to="/signup/">
+                Create new account
+              </Link>
+            </Form.Item>
+            {errorMessage}
+          </Form>
+        }
       </div>
+        </Col>
+        <Col span={2}>
+        </Col>
+
+      </Row>
     );
   } 
   
