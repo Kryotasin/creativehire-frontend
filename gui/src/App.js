@@ -22,22 +22,22 @@ class App extends Component {
     return (
       <div className="">
 
-{
-                    localStorage.getItem('token') !== null ?
-                    <Router basename="/">
-                    <CustomLayout {...this.props}>
-                      <ErrorBoundary>
-                       <BaseRouter />
-                      </ErrorBoundary>
-                     </CustomLayout>
-                   </Router>
-                    :
-                    <Router basename="/">
-                    <CustomLayout {...this.props}>
-                       <GuestRouter />
-                     </CustomLayout>
-                   </Router>
-                }
+          {
+            localStorage.getItem('token') !== null ?
+            <Router basename="/">
+            <CustomLayout {...this.props}>
+              <ErrorBoundary>
+                <BaseRouter />
+              </ErrorBoundary>
+              </CustomLayout>
+            </Router>
+            :
+            <Router basename="/">
+            <CustomLayout {...this.props}>
+                <GuestRouter />
+              </CustomLayout>
+            </Router>
+          }
 
 
         

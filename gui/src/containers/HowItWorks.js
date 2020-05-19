@@ -1,5 +1,7 @@
 import React from "react";
-import { Button, Radio } from "antd";
+import { Button, Typography, Row, Col } from "antd";
+
+const { Title, Text } = Typography;
 
 class HowItWorks extends React.Component {
   state = {};
@@ -12,43 +14,54 @@ class HowItWorks extends React.Component {
       width: "150px",
     };
 
-    const primary = {
-      color: "#063852",
-      padding: "10px",
-      fontFamily: "Arial",
-      /* fontWeight: "bold", */
-      fontSize: "20px",
-    };
 
-    const header = {
-      color: "#000",
-      padding: "10px",
-      fontFamily: "Raleway",
-      fontWeight: "bold",
-      fontSize: "22px",
-    };
 
     return (
       <div>
-        <h1 style={header}>How it Works</h1>
-        <h2 style={primary}>1. Paste a job description from any job portal.</h2>
-        <h2 style={primary}>2. Upload a link to a portfolio project.</h2>
-        <h2 style={primary}>
-          3. Enter the Project Name, Company Name, and Position Advertised.
-        </h2>
-        <h2 style={primary}>
-          4. Scan and check the compatibility score between your portfolio
-          project and the job description's requirements.
-        </h2>
-        <Button
-          type="primary"
-          shape="round"
-          htmlType="submit"
-          style={button}
-          loading={this.loading}
-        >
-          <div style={{ fontSize: "17px" }}>Scan Now</div>
-        </Button>
+        <Row gutter={[16, 24]}>
+          <Col span={3} />
+          <Col span={16}>
+            <Title level={2}>How Creativehire Works</Title>
+          </Col>
+          <Col span={5} />
+        </Row>
+        <Row gutter={[16, 24]}>
+          <Col span={3} />
+          <Col span={16}>
+          <p>
+          <Text>1. Paste a job description from any job portal.</Text>
+          </p>
+          <p>
+            <Text>2. Upload a link to a portfolio project.</Text>
+          </p>
+          <p>
+            <Text>3. Enter the Project Name, Company Name, and Position Advertised.</Text>
+          </p>
+          <p>
+            <Text>
+              4. Scan and check the compatibility score between your portfolio
+              project and the job description's requirements.
+            </Text>        
+          </p>
+          </Col>
+          <Col span={5} />
+        </Row>
+
+        <Row gutter={[16, 24]}>
+          <Col span={8} />
+          <Col span={11}>
+              <Button
+              type="primary"
+              shape="round"
+              htmlType="submit"
+              style={button}
+            >
+              <div style={{ fontSize: "20px", fontWeight: "600" }}>Scan Now</div>
+            </Button>
+          </Col>
+          <Col span={5} />
+        </Row>
+
       </div>
     );
   }

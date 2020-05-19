@@ -8,7 +8,7 @@ import JobpostCreate from './containers/JobpostCreate';
 import Login from './containers/Login';
 import Signup from './containers/Signup';
 import UserProfile from './containers/Profile';
-import Comparison from './containers/Comparison';
+import Comparison from './containers/NewScan';
 import HomePage from './containers/HomePage';
 import ScanList from './containers/ScanList';
 import ScanDetail from './containers/ScanDetail';

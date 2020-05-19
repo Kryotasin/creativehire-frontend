@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 
 const { Header, Content, Footer, Sider } = Layout;
 
-
 class CustomLayout extends React.Component {
 
     state = {
@@ -25,7 +24,6 @@ class CustomLayout extends React.Component {
         return(
 
     <Layout style={{ minHeight: '100vh' }}>
-          <div className="logo" />
 
           {
               localStorage.getItem('token') !== null && localStorage.getItem('error') == null?

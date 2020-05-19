@@ -14,6 +14,15 @@
   padding-left: 17%
 }
 
+.logo{
+  width:100%; /*width of your image*/
+  height:100px; /*height of your image*/
+  background-image: url('assets/logo.svg');
+  
+  margin:0; /* If you want no margin */
+  padding:0; /*if your want to padding */
+}
+
 @media only screen and (min-width: 600px) {
   .ant-list-lg .ant-list-item {
     padding-left: 16px;

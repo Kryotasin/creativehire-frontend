@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Form, Input, Button, Spin } from 'antd';
+import { Row, Col, Typography, Divider, Form, Input, Button, Spin } from 'antd';
 
 
 import axios from '../axiosConfig';
@@ -19,6 +19,9 @@ const validateMessages = {
     number: 'Not a validate number!',
   },
 };
+
+
+const { Title, Text } = Typography;
 
 class Comparison extends React.Component{
 
@@ -101,7 +104,13 @@ class Comparison extends React.Component{
             <br />
             <Spin tip="Loading..." spinning={this.loading}>
 
-            <h2>New Scan</h2>
+            <Row>
+              <Col span={3} />
+              <Col span={14}>
+                <Title level={2}>New Scan</Title>
+              </Col>
+              <Col span={7} />
+            </Row>
             <Divider>Project Details</Divider>
             <Form onSubmitCapture={(event) => this.handleFormSubmit(
                 event
