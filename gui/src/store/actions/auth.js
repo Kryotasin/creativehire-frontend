@@ -70,7 +70,12 @@ export const authLogin = (username, password) => {
             dispatch(checkAuthTimeout(3600));
         })
         .catch(err => {
-            dispatch(authFail(err.response.data));
+            if(!err.response){
+                dispatch(authFail(521));
+            }
+            else if(err.response){
+                dispatch(authFail(err.response.data));
+            }
         })
     }
 }
@@ -94,8 +99,12 @@ export const authSignup = (username, email, password1, password2) => {
             dispatch(checkAuthTimeout(3600));
         })
         .catch(err => {
-            dispatch(authFail(err.response.data));
-        })
+            if(!err.response){
+                dispatch(authFail(521));
+            }
+            else if(err.response){
+                dispatch(authFail(err.response.data));
+            }        })
     }
 }
 

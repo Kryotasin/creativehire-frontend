@@ -8,6 +8,10 @@ import {Link } from 'react-router-dom';
 
 const { Meta } = Card;
 
+const projectName = {
+  marginTop: "2em",
+}
+
 const parseDate = (date) => {
     var parts = date.split('-')
     var d = new Date(parts[0], parts[1], parts[2].split('T')[0]);
@@ -20,7 +24,7 @@ const Scan = (props) => {
           gutter: 16,
           xs: 1,
           sm: 2,
-          md: 2,
+          md: 3,
           lg: 4,
           xl: 6,
           xxl: 6,
@@ -44,7 +48,7 @@ const Scan = (props) => {
 
 
         cover={
-            <Progress type="circle" strokeColor={item.fields.matchpercent*100 < 25 ? "red" : "#1890ff"} percent={item.fields.matchpercent? (item.fields.matchpercent*100).toFixed(1) : 0} />
+            <Progress type="circle" strokeColor={item.fields.matchpercent*100 < 25 ? "red" : "#1890ff"} percent={item.fields.matchpercent? Math.round(item.fields.matchpercent*100) : 0} />
           }
 
           actions={[
@@ -54,9 +58,12 @@ const Scan = (props) => {
         >
             
             <Meta
-                title= {item.fields.title ? item.fields.org + " - " + item.fields.title : "No position details"}
-                description={"Created on " + parseDate(item.fields.posted_date)}
+                title= {item.fields.jobtitle ? item.fields.org + " - " + item.fields.jobtitle : "No position details"}
+                description={parseDate(item.fields.posted_date)}
             />
+            <p style={projectName}>
+              <b>Project:</b>{item.fields.project_title}
+            </p>
             </Card>
             </Link>
           </List.Item>

@@ -1,16 +1,5 @@
 import React from "react";
 import { Button, Radio } from "antd";
-import { Link } from "react-router-dom";
-import {
-  AppstoreOutlined,
-  BarChartOutlined,
-  CloudOutlined,
-  ShopOutlined,
-  TeamOutlined,
-  UserOutlined,
-  UploadOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
 
 class HowItWorks extends React.Component {
   state = {};

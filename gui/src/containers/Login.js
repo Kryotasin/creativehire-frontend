@@ -1,10 +1,17 @@
 import React from 'react';
-import { Row, Col, Form, Input, Button, Checkbox, Spin, Alert } from 'antd';
+import { Row, 
+  Col, 
+  Form, 
+  Input, 
+  Button, 
+  Checkbox, 
+  Spin, 
+  Alert, 
+  Space } from 'antd';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import * as actions from '../store/actions/auth';
 import { LoadingOutlined } from '@ant-design/icons';
-import "antd/dist/antd.less";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -35,31 +42,21 @@ class NormalLoginForm extends React.Component {
 
   render() {
     const header = {
-      color: "#000",
       padding: "10px",
-      fontFamily: "Helvetica Neue",
-      fontWeight: "250",
-      fontSize: "3.4rem",
+      fontSize: "3em",
       marginTop: "5.2rem"
     };
 
     const tagline = {
-      color: "#006EA7",
       padding: "10px",
-      fontFamily: "Helvetica Neue",
-      fontWeight: "150",
-      fontSize: "1.8rem",
+      fontSize: "1.6em",
       marginTop: "-4.2rem",
     };
 
     const brand = {};
 
     const login = {
-      color: "#006EA7",
       padding: "10px",
-      fontFamily: "Helvetica Neue",
-      fontWeight: "150",
-      width: "",
       fontSize: "2rem",
       marginTop: "3rem",
       borderLeft: "1px solid #000",
@@ -91,7 +88,13 @@ class NormalLoginForm extends React.Component {
     }
 
     if(this.props.error){
-        console.log(this.props.error)
+      if(this.props.error == 521){
+        // Catch Netwrok down
+        errorMessage = (
+          <Alert {...tailLayout} message = "Login failed!" description = "The server seems to be down! Please try again later." type='error' showIcon />
+        )
+      }
+      else{
         getErrorValues();
         this.errorParts.forEach(element => {
           if(element){
@@ -100,6 +103,8 @@ class NormalLoginForm extends React.Component {
             )     
           }
       });
+      }
+
       }
 
     
@@ -125,9 +130,7 @@ class NormalLoginForm extends React.Component {
           <Form
             {...layout}
             name="basic"
-            style={{
-              top: "500px",
-            }}
+
             initialValues={{
               remember: true,
             }}
@@ -138,9 +141,6 @@ class NormalLoginForm extends React.Component {
             <Form.Item
               label="Username"
               name="username"
-              style={{
-                width: "500px",
-              }}
               rules={[
                 {
                   required: true,
@@ -154,9 +154,6 @@ class NormalLoginForm extends React.Component {
             <Form.Item
               label="Password"
               name="password"
-              style={{
-                width: "500px",
-              }}
               rules={[
                 {
                   required: true,
@@ -181,7 +178,7 @@ class NormalLoginForm extends React.Component {
                 style={{
                   background: "#063852",
                   borderColor: "#063852",
-                  width: "200px",
+                  width: "8em",
                 }}
                 htmlType="submit"
               >
@@ -191,12 +188,14 @@ class NormalLoginForm extends React.Component {
             </Form.Item>
             
             <Form.Item {...tailLayout}>
+            <Space size="large">
               <Link style={{ marginRight: "10px" }} to="/signup/">
                 Create new account
               </Link>
               
 
               <Link to="/forgot-password/">Forgot Password</Link>
+              </Space>
             </Form.Item>
             {errorMessage}
           </Form>

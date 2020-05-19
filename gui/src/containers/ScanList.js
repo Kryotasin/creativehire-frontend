@@ -25,6 +25,7 @@ class ScanList extends React.Component{
     }
 
     render(){
+        console.log(this.state.scans)
         return (
             <div>
                  <Scan data={this.state.scans} />

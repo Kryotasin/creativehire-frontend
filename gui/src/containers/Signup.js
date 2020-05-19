@@ -5,29 +5,25 @@ import {
   Checkbox,
   Button,
   Alert,
-  Popover
+  Popover,
+  Spin,
+  Space
 } from 'antd';
 
 import * as actions from '../store/actions/auth';
 import {connect} from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { LoadingOutlined } from '@ant-design/icons';
+
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
 
 const formItemLayout = {
   labelCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 8,
-    },
+    span: 8,
   },
   wrapperCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 16,
-    },
+    span: 8,
   },
 };
 
@@ -87,17 +83,30 @@ class RegistrationForm extends React.Component {
             }
 
             if(this.props.error){
-              getErrorValues();
-              this.errorParts.forEach((element, idx) => {
-                if(element){
-                  errorMessage = (
-                    <Alert {...tailLayout} message = "Registration failed!" description = {this.errorPartsHead[idx] + " : " + element} type='error' showIcon />
-                  )     
-                }
-            });
-            }
+              if(this.props.error == 521){
+                // Catch Netwrok down
+                errorMessage = (
+                  <Alert {...tailLayout} message = "Login failed!" description = "The server seems to be down! Please try again later." type='error' showIcon />
+                )
+              }
+              else{
+                getErrorValues();
+                this.errorParts.forEach(element => {
+                  if(element){
+                    errorMessage = (
+                      <Alert {...tailLayout} message = "Login failed!" description = {element} type='error' showIcon />
+                    )     
+                  }
+              });
+              }
+        
+              }
 
             return (
+              <div>
+              {this.props.loading ? (
+                <Spin indicator={antIcon} />
+              ) : 
                 <Form
                   {...formItemLayout}
                   name="register"
@@ -183,27 +192,31 @@ class RegistrationForm extends React.Component {
                       I have read the <a href="terms">agreement</a>
                     </Checkbox>
                   </Form.Item>
+
             
                   <Form.Item {...tailLayout}>
-
-                    {!this.state.agreementChecked ? 
-                      <Popover content='You need to the agree to the Terms and Conditions.'>
+                    <Space size="large">
+                      {!this.state.agreementChecked ? 
+                        <Popover content='You need to the agree to the Terms and Conditions.'>
+                          <Button type="primary" htmlType="submit" disabled = {!this.state.agreementChecked}>
+                                    Signup
+                          </Button>
+                      </Popover>
+                      :
                         <Button type="primary" htmlType="submit" disabled = {!this.state.agreementChecked}>
-                                  Signup
+                          Signup
                         </Button>
-                     </Popover>
-                     :
-                      <Button type="primary" htmlType="submit" disabled = {!this.state.agreementChecked}>
-                        Signup
-                      </Button>
-                  }
-                    Or
-                    <NavLink style={{marginRight: '10px'}} 
-                    to='/login/'> Login
-                    </NavLink>
+                    }
+                      Or
+                      <NavLink style={{marginRight: '10px'}} 
+                      to='/login/'> Login
+                      </NavLink>
+                    </Space>
               </Form.Item>
                           {errorMessage}
                 </Form>
+              }
+              </div>
               );
         }
  

@@ -1,26 +1,9 @@
 import React from "react";
-import { Button, Radio } from "antd";
+import { Button } from "antd";
 import { Link } from "react-router-dom";
 import * as actions from "../store/actions/auth";
-import { LoadingOutlined } from "@ant-design/icons";
 import "antd/dist/antd.less";
 
-const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
-const layout = {
-  labelCol: {
-    span: 8,
-  },
-  wrapperCol: {
-    span: 16,
-  },
-};
-const tailLayout = {
-  wrapperCol: {
-    offset: 8,
-    span: 16,
-  },
-};
 
 class HomePage extends React.Component {
   formRef = React.createRef();

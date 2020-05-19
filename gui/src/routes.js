@@ -14,10 +14,12 @@ import ScanList from './containers/ScanList';
 import ScanDetail from './containers/ScanDetail';
 import ConfirmEmail from './containers/ConfirmEmail';
 import HowItWorks    from './containers/HowItWorks';
+import ResetPassword from './containers/ResetPassword';
 
 const BaseRouter = () => (
     <div>
         <Route exact path ='/' component ={HomePage} />
+
         <Route exact path ='/new-scan/' component ={Comparison} />
         <Route exact path ='/my-scans/' component ={ScanList} />
         <Route exact path ='/scan/:matchID' component ={ScanDetail} />
@@ -28,9 +30,12 @@ const BaseRouter = () => (
 
         <Route exact path ='/login/' component ={Login} />
         <Route exact path ='/signup/' component ={Signup} />
+        <Route exact path ='/confirm-email/' component ={ConfirmEmail} />
+        <Route exact path ='/confirm-email/' component ={ConfirmEmail} />
+        <Route exact path ='/reset-password/' component ={ResetPassword} />
+
 
         <Route exact path ='/profile/' component ={UserProfile} />
-        <Route exact path ='/confirm-email/' component ={ConfirmEmail} />
         <Route exact path="/how-it-works/" component={HowItWorks} />
     </div>
 );
