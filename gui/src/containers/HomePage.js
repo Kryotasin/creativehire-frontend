@@ -34,18 +34,6 @@ class HomePage extends React.Component {
 
     const brand = {};
 
-    const onFinish = (values) => {
-      this.props.onAuth(values.username, values.password);
-      this.props.history.push("/");
-    };
-
-    const onFinishFailed = (errorInfo) => {};
-
-    let errorMessage = null;
-    if (this.props.error) {
-      errorMessage = <p>{this.props.error.message}</p>;
-    }
-
     return (
       <div>
         <div style={brand}>
@@ -54,7 +42,7 @@ class HomePage extends React.Component {
             Scan your portfolio projects and compare with Job Descriptions
           </h1>
           <Button type="primary" shape="round" style={button}>
-            <Link to="/new-scan/" style={{ fontSize: "17px" }}>
+            <Link to="new-scan/" style={{ fontSize: "17px" }}>
               Scan Now
             </Link>
           </Button>
@@ -64,20 +52,6 @@ class HomePage extends React.Component {
   }
 }
 
-//const WrappedNormalLoginForm = this.forkmRef.create()(NormalLoginForm);
 
-const mapStateToProps = (state) => {
-  return {
-    loading: state.loading,
-    error: state.error,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onAuth: (username, password) =>
-      dispatch(actions.authLogin(username, password)),
-  };
-};
 
 export default HomePage;

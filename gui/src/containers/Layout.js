@@ -35,8 +35,8 @@ class CustomLayout extends React.Component {
               style={{ lineHeight: '64px' }}
               >                            
                   <Menu.Item key="6"><Link to="/"><img alt="Creativehire logo" src={logo} style={{width: '9rem'}}></img></Link></Menu.Item>
-                  <Menu.Item key="1" icon={<PlusCircleOutlined />}><PlusCircleOutlined /><Link to="/new-scan">New Scan  </Link></Menu.Item>
-                  <Menu.Item key="2" icon={<FolderOpenOutlined />}><FolderOpenOutlined /><Link to="/my-scans">My Scans </Link></Menu.Item>
+                  <Menu.Item key="1" icon={<PlusCircleOutlined />}><PlusCircleOutlined /><Link to="/new-scan/">New Scan  </Link></Menu.Item>
+                  <Menu.Item key="2" icon={<FolderOpenOutlined />}><FolderOpenOutlined /><Link to="/my-scans/">My Scans </Link></Menu.Item>
                   <Menu.Item key="3" icon={<QuestionCircleOutlined />}><QuestionCircleOutlined /><Link to="/how-it-works/">How it works </Link></Menu.Item>
                   <Menu.Item key="4" icon={<UserOutlined />}><UserOutlined /><Link to="/profile/">Profile </Link></Menu.Item>
                   <Menu.Item key="5" onClickCapture={this.props.logout} icon={<LogoutOutlined />}> <LogoutOutlined /> Logout </Menu.Item>
@@ -46,11 +46,11 @@ class CustomLayout extends React.Component {
               <Header>
                 <Menu
                 theme="dark"
-                mode="inline"
-                defaultSelectedKeys={['']}
-                style={{ lineHeight: '64px' }}
+                mode="horizontal"
+                defaultSelectedKeys={['2']}
                 >
-                  <Menu.Item key="2" icon={<LoginOutlined />}><Link to="/login">Login</Link></Menu.Item>
+                  <Menu.Item key="1" icon={<QuestionCircleOutlined />}><QuestionCircleOutlined /><Link to="/how-it-works/">How it Works</Link></Menu.Item>
+                  <Menu.Item key="2" icon={<LoginOutlined />}><LoginOutlined /><Link to="/login/">Login</Link></Menu.Item>
                 </Menu>
               </Header>
 

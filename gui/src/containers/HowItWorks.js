@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Typography, Row, Col } from "antd";
+import { Link } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 
@@ -53,10 +54,10 @@ class HowItWorks extends React.Component {
               <Button
               type="primary"
               shape="round"
-              htmlType="submit"
               style={button}
+              ghost="true"
             >
-              <div style={{ fontSize: "20px", fontWeight: "600" }}>Scan Now</div>
+              <Link to={localStorage.getItem('token') ? '/new-scan/' : '/login/'} style={{ fontSize: "20px", fontWeight: "600" }}>Scan Now</Link>
             </Button>
           </Col>
           <Col span={5} />

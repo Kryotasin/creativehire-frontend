@@ -44,13 +44,14 @@ class NormalLoginForm extends React.Component {
     const header = {
       padding: "10px",
       fontSize: "3em",
-      marginTop: "5.2rem"
+      marginTop: "4.2rem",
+      lineHeight: '4rem'
     };
 
     const tagline = {
       padding: "10px",
       fontSize: "1.6em",
-      marginTop: "-4.2rem",
+      marginTop: "-3.2rem",
     };
 
     const brand = {};
