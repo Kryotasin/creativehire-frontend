@@ -183,9 +183,8 @@ class NormalLoginForm extends React.Component {
                 }}
                 htmlType="submit"
               >
-                {" "}
                 Login
-              </Button>{" "}
+              </Button>
             </Form.Item>
             
             <Form.Item {...tailLayout}>

@@ -40,7 +40,7 @@ const Scan = (props) => {
         renderItem={item => (
           <List.Item>
 
-            <Link to={"scan/" + item.pk}>
+            <Link to={"/scan/" + item.pk}>
             <Card 
             // title={item.title}
             hoverable

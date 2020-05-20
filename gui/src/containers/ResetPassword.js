@@ -209,7 +209,7 @@ class ResetPassword extends React.Component {
                             <Form.Item {...tailLayout}>
                                 <Space size="large">
                                     <Button type="primary" htmlType="submit">
-                                    Verify Email
+                                    Send Email
                                     </Button>
                                     <Link style={{marginRight: '10px'}} 
                                     to='/login/'> Login
