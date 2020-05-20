@@ -31,8 +31,8 @@ const BaseRouter = () => (
         <Route exact path ='/login/' component ={Login} />
         <Route exact path ='/signup/' component ={Signup} />
         <Route exact path ='/confirm-email/' component ={ConfirmEmail} />
-        <Route exact path ='/confirm-email/' component ={ConfirmEmail} />
         <Route exact path ='/reset-password/' component ={ResetPassword} />
+        <Route exact path ='/reset-password/:uidb64/:token' component ={ResetPassword} />
 
 
         <Route exact path ='/profile/' component ={UserProfile} />

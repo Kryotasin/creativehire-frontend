@@ -195,7 +195,7 @@ class NormalLoginForm extends React.Component {
               </Link>
               
 
-              <Link to="/forgot-password/">Forgot Password</Link>
+              <Link to="/reset-password/">Forgot Password</Link>
               </Space>
             </Form.Item>
             {errorMessage}

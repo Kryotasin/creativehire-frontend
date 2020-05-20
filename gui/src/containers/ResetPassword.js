@@ -1,6 +1,7 @@
 import React from 'react';
-import { Form, Input, Button, Spin, Alert } from 'antd';
+import { Form, Input, Button, Spin, Alert, Space } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 import axios from '../axiosConfig';
 
@@ -30,17 +31,16 @@ class ResetPassword extends React.Component {
     }
 
     componentDidMount(){
-
     }
 
   render() {
 
-    const onFinish = values => {
+    const onFinishEmail = values => {
         this.setState({
             loading: true
         });
-        axios.post('api/v1/rest-auth/registration/verify-email/', {
-            'key': values['token']
+        axios.post('/api/v1/rest-auth/password/reset/', {
+            'email': values['email']
         })
         .then(res => {
             this.setState({
@@ -48,16 +48,51 @@ class ResetPassword extends React.Component {
             });
             if(res.status == '200' || res.status == '201'){
                 this.setState({
-                    message: 'Email verified!',
-                    description: 'Your email has been verified.',
+                    message: 'Email sent!',
+                    description: 'An email with with instructions ot reset your password has been sent.',
                     type: 'success'         
                 });
 
             }
             else if(res.status != '200'){
                 this.setState({
-                    message: 'Email verification failed!',
-                    description: 'Please check the token again If problem persists contact admin@creativehire.co.',
+                    message: 'Failed to send an email!',
+                    description: 'Please check the email again. If problem persists contact admin@creativehire.co.',
+                    type: 'error'         
+                });
+            }
+        })
+    };
+
+
+    const onFinishPassword = values => {
+        this.setState({
+            loading: true
+        });
+
+        axios.post('/api/v1/rest-auth/password/reset/confirm/', {
+            'new_password1': values['password'],
+            'new_password2': values['confirm'],
+            'uid': this.props.match.params.uidb64,
+            'token': this.props.match.params.token
+        })
+        .then(res => {
+            this.setState({
+                loading: false
+            });
+            if(res.status == '200' || res.status == '201'){
+                this.setState({
+                    message: 'Password reset successful!',
+                    description: 'Your password has been changed.',
+                    type: 'success'         
+                });
+
+            }
+            else if(res.status != '200'){
+                this.setState({
+                    message: 'Password reset failed!',
+                    description: 'Please check the password again. Make sure it has atleast one uppercase character, \
+                                , one digit and one symbol. If problem persists contact admin@creativehire.co.',
                     type: 'error'         
                 });
             }
@@ -67,59 +102,131 @@ class ResetPassword extends React.Component {
     const onFinishFailed = errorInfo => {
     };
 
-    const onSubCap = event => {
-        event.preventDefault();
-    };
-   
 
     return (
         <div>
             {
-  
                 this.state.loading ?
   
                 <Spin indicator={antIcon} />
                 
                 :
   
-  
-              <Form
-              {...layout}
-              initialValues={{
-                  remember: true,
-              }}
-              ref={this.formRef}
-              onSubmitCapture={onSubCap}
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-              >
-              <Form.Item
-                  label="Token"
-                  name="token"
-                  rules={[
+              <div>
                   {
-                      required: true,
-                      message: 'Please input your token!',
-                  },
-                  ]}
-              >
-                  <Input />
-              </Form.Item>
-  
-              <Form.Item {...tailLayout}>
-                  <Button type="primary" htmlType="submit">
-                  Verify Email
-                  </Button>
-              </Form.Item>
-            
-            {
-                this.state.message && this.state.description && this.state.type ? 
-                <Alert {...tailLayout} message = {this.state.message} description = {this.state.description} type={this.state.type} showIcon />
-                :
-                ''
-            }
-              
-              </Form>
+                      this.props.match.params.uidb64 && this.props.match.params.token ?
+                      <Form
+                            {...layout}
+                            initialValues={{
+                                remember: true,
+                            }}
+                            ref={this.formRef}
+                            onFinish={onFinishPassword}
+                            onFinishFailed={onFinishFailed}
+                            >
+                         <Form.Item
+                                name="password"
+                                label=" New Password"
+                                rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your new password!',
+                                },
+                                ]}
+                                hasFeedback
+                            >
+                                <Input.Password />
+                            </Form.Item>
+                        
+                            <Form.Item
+                                name="confirm"
+                                label="Confirm Password"
+                                dependencies={['password']}
+                                hasFeedback
+                                rules={[
+                                {
+                                    required: true,
+                                    message: 'Please confirm your new password!',
+                                },
+                                ({ getFieldValue }) => ({
+                                    validator(rule, value) {
+                                    if (!value || getFieldValue('password') === value) {
+                                        return Promise.resolve();
+                                    }
+                        
+                                    return Promise.reject('The two passwords do not match!');
+                                    },
+                                }),
+                                ]}
+                            >
+                                <Input.Password />
+                            </Form.Item>
+                
+                            <Form.Item {...tailLayout}>
+                                <Space size="large">
+                                    <Button type="primary" htmlType="submit">
+                                        Reset Password
+                                    </Button>
+                                    <Link style={{marginRight: '10px'}} 
+                                    to='/login/'> Login
+                                    </Link>
+                                </Space>
+                            </Form.Item>
+                            
+                            {
+                                this.state.message && this.state.description && this.state.type ? 
+                                <Alert {...tailLayout} message = {this.state.message} description = {this.state.description} type={this.state.type} showIcon />
+                                :
+                                ''
+                            }
+                            
+                            </Form>
+
+                      :
+
+                      <Form
+                            {...layout}
+                            initialValues={{
+                                remember: true,
+                            }}
+                            ref={this.formRef}
+                            onFinish={onFinishEmail}
+                            onFinishFailed={onFinishFailed}
+                            >
+                            <Form.Item
+                                label="Email"
+                                name="email"
+                                rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your email!',
+                                },
+                                ]}
+                            >
+                                <Input />
+                            </Form.Item>
+                
+                            <Form.Item {...tailLayout}>
+                                <Space size="large">
+                                    <Button type="primary" htmlType="submit">
+                                    Verify Email
+                                    </Button>
+                                    <Link style={{marginRight: '10px'}} 
+                                    to='/login/'> Login
+                                    </Link>
+                                </Space>
+                            </Form.Item>
+                            
+                            {
+                                this.state.message && this.state.description && this.state.type ? 
+                                <Alert {...tailLayout} message = {this.state.message} description = {this.state.description} type={this.state.type} showIcon />
+                                :
+                                ''
+                            }
+                            
+                            </Form>
+                  }
+              </div>
           }
       </div>
     );

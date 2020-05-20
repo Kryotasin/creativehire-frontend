@@ -322,8 +322,12 @@ function UserProfile() {
                     </Col>
 
                     <Col xs={{ span: 8, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                      <Space size = "large">
                         <Button type="primary" onClickCapture={() => setVisible(true)}>Edit</Button>
+                        <Link to="/reset-password/" >Change Password</Link>
+                      </Space>
                     </Col>
+                    
                 </Row>
 
                     <CollectionCreateForm

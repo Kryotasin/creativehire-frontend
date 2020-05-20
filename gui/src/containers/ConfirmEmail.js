@@ -103,7 +103,7 @@ class ConfirmEmail extends React.Component {
                   },
                   ]}
               >
-                  <Input />
+                  <Input autoComplete="off" />
               </Form.Item>
   
               <Form.Item {...tailLayout}>
