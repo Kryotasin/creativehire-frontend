@@ -8,8 +8,7 @@ import logo from '../assets/logo.svg';
 import { Link } from 'react-router-dom';
 
 
-const { Content, Footer, Sider } = Layout;
-
+const { Header, Content, Footer, Sider } = Layout;
 
 class CustomLayout extends React.Component {
 
@@ -25,11 +24,10 @@ class CustomLayout extends React.Component {
         return(
 
     <Layout style={{ minHeight: '100vh' }}>
-          <div className="logo" />
 
-        <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse} breakpoint="md">
           {
               localStorage.getItem('token') !== null && localStorage.getItem('error') == null?
+              <Sider collapsed={this.state.collapsed} onCollapse={this.onCollapse} breakpoint="md">
               <Menu
               theme="dark"
               mode="inline"
@@ -37,23 +35,26 @@ class CustomLayout extends React.Component {
               style={{ lineHeight: '64px' }}
               >                            
                   <Menu.Item key="6"><Link to="/"><img alt="Creativehire logo" src={logo} style={{width: '9rem'}}></img></Link></Menu.Item>
-                  <Menu.Item key="1" icon={<PlusCircleOutlined />}><Link to="/new-scan">New Scan  </Link></Menu.Item>
-                  <Menu.Item key="2" icon={<FolderOpenOutlined />}><Link to="/my-scans">My Scans </Link></Menu.Item>
-                  <Menu.Item key="3" icon={<QuestionCircleOutlined />}><Link to="/how-it-works/">How it works </Link></Menu.Item>
-                  <Menu.Item key="4" icon={<UserOutlined />}><Link to="/profile/">Profile </Link></Menu.Item>
-                  <Menu.Item key="5" onClickCapture={this.props.logout} icon={<LogoutOutlined />}> Logout </Menu.Item>
+                  <Menu.Item key="1" icon={<PlusCircleOutlined />}><PlusCircleOutlined /><Link to="/new-scan/">New Scan  </Link></Menu.Item>
+                  <Menu.Item key="2" icon={<FolderOpenOutlined />}><FolderOpenOutlined /><Link to="/my-scans/">My Scans </Link></Menu.Item>
+                  <Menu.Item key="3" icon={<QuestionCircleOutlined />}><QuestionCircleOutlined /><Link to="/how-it-works/">How it works </Link></Menu.Item>
+                  <Menu.Item key="4" icon={<UserOutlined />}><UserOutlined /><Link to="/profile/">Profile </Link></Menu.Item>
+                  <Menu.Item key="5" onClickCapture={this.props.logout} icon={<LogoutOutlined />}> <LogoutOutlined /> Logout </Menu.Item>
                   </Menu>
+              </Sider>
               :
-              <Menu
-              theme="dark"
-              mode="inline"
-              defaultSelectedKeys={['']}
-              style={{ lineHeight: '64px' }}
-              >
-                  <Menu.Item key="2" icon={<LoginOutlined />}><Link to="/login">Login</Link></Menu.Item>
-                  </Menu>
+              <Header>
+                <Menu
+                theme="dark"
+                mode="horizontal"
+                defaultSelectedKeys={['2']}
+                >
+                  <Menu.Item key="1" icon={<QuestionCircleOutlined />}><QuestionCircleOutlined /><Link to="/how-it-works/">How it Works</Link></Menu.Item>
+                  <Menu.Item key="2" icon={<LoginOutlined />}><LoginOutlined /><Link to="/login/">Login</Link></Menu.Item>
+                </Menu>
+              </Header>
+
           }
-        </Sider>
 
         <Layout className="site-layout">
           
@@ -63,7 +64,7 @@ class CustomLayout extends React.Component {
             </div>
           </Content>
 
-          <Footer style={{ textAlign: 'center' }}>CreativeHire 2020</Footer>
+          <Footer style={{ textAlign: 'center' }}>Copyright CreativeHire 2020</Footer>
         </Layout>
 
       </Layout>

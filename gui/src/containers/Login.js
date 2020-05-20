@@ -1,10 +1,17 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox, Spin, Alert } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { Row, 
+  Col, 
+  Form, 
+  Input, 
+  Button, 
+  Checkbox, 
+  Spin, 
+  Alert, 
+  Space } from 'antd';
+import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import * as actions from '../store/actions/auth';
 import { LoadingOutlined } from '@ant-design/icons';
-
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -13,15 +20,16 @@ const layout = {
     span: 8,
   },
   wrapperCol: {
-    span: 8,
+    span: 16,
   },
 };
 const tailLayout = {
   wrapperCol: {
-    offset: 8,
-    span: 8,
+    offset: 6,
+    span: 20,
   },
 };
+
 class NormalLoginForm extends React.Component {
     errorParts = [];
 
@@ -33,6 +41,27 @@ class NormalLoginForm extends React.Component {
     }
 
   render() {
+    const header = {
+      padding: "10px",
+      fontSize: "3em",
+      marginTop: "4.2rem",
+      lineHeight: '4rem'
+    };
+
+    const tagline = {
+      padding: "10px",
+      fontSize: "1.6em",
+      marginTop: "-3.2rem",
+    };
+
+    const brand = {};
+
+    const login = {
+      padding: "10px",
+      fontSize: "2rem",
+      marginTop: "3rem",
+      borderLeft: "1px solid #000",
+    };
 
     const onFinish = values => {
         this.props.onAuth(values.username, values.password);
@@ -60,7 +89,13 @@ class NormalLoginForm extends React.Component {
     }
 
     if(this.props.error){
-        console.log(this.props.error)
+      if(this.props.error == 521){
+        // Catch Netwrok down
+        errorMessage = (
+          <Alert {...tailLayout} message = "Login failed!" description = "The server seems to be down! Please try again later." type='error' showIcon />
+        )
+      }
+      else{
         getErrorValues();
         this.errorParts.forEach(element => {
           if(element){
@@ -71,73 +106,107 @@ class NormalLoginForm extends React.Component {
       });
       }
 
+      }
+
     
 
     return (
-        <div>
-            {
-  
-                this.props.loading ?
-  
-                <Spin indicator={antIcon} />
-                
-                :
-  
-  
-              <Form
-              {...layout}
-              initialValues={{
-                  remember: true,
-              }}
-              ref={this.formRef}
-              onSubmitCapture={onSubCap}
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-              >
-              <Form.Item
-                  label="Username"
-                  name="username"
-                  rules={[
-                  {
-                      required: true,
-                      message: 'Please input your username!',
-                  },
-                  ]}
-              >
-                  <Input />
-              </Form.Item>
-  
-              <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[
-                  {
-                      required: true,
-                      message: 'Please input your password!',
-                  },
-                  ]}
-              >
-                  <Input.Password />
-              </Form.Item>
-  
-              <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                  <Checkbox>Remember me</Checkbox>
-              </Form.Item>
-  
-              <Form.Item {...tailLayout}>
-                  <Button type="primary" htmlType="submit">
-                  Login
-                  </Button> Or
-                  <NavLink style={{marginRight: '10px'}} 
-                  to='/signup/'> Signup
-                  </NavLink>
-              </Form.Item>
+      <Row gutter={[40, 16]}>
+        <Col span={2}>
+        </Col>
+        <Col span={10}>
+        <div style={brand}>
+          <p style={header}>Welcome to Creative Hire</p>
+          <p style={tagline}>
+            Make Smart Decisions in your UX job applications
+          </p>
+        </div>
+        </Col>
+        <Col span={10}>
+          
+      <div style={login}>
+        {this.props.loading ? (
+          <Spin indicator={antIcon} />
+        ) : 
+          <Form
+            {...layout}
+            name="basic"
+
+            initialValues={{
+              remember: true,
+            }}
+            ref={this.formRef}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+          >
+            <Form.Item
+              label="Username"
+              name="username"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your username!",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your password!",
+                },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+
+
+            <Form.Item name="remember" valuePropName="checked" {...tailLayout}>
+              <Checkbox>Remember me</Checkbox>
+            </Form.Item>
 
               
-                {errorMessage}
-              </Form>
-          }
+
+            <Form.Item {...tailLayout}>
+              <Button
+                type="primary"
+                size="large"
+                style={{
+                  background: "#063852",
+                  borderColor: "#063852",
+                  width: "8em",
+                }}
+                htmlType="submit"
+              >
+                {" "}
+                Login
+              </Button>{" "}
+            </Form.Item>
+            
+            <Form.Item {...tailLayout}>
+            <Space size="large">
+              <Link style={{ marginRight: "10px" }} to="/signup/">
+                Create new account
+              </Link>
+              
+
+              <Link to="/reset-password/">Forgot Password</Link>
+              </Space>
+            </Form.Item>
+            {errorMessage}
+          </Form>
+        }
       </div>
+        </Col>
+        <Col span={2}>
+        </Col>
+
+      </Row>
     );
   } 
   

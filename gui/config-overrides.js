@@ -12,7 +12,8 @@ module.exports = override(
         '@layout-header-background': '#063852',
         '@layout-body-background': '#F5F5F5',
         '@text-color': '#000000',
-        '@btn-primary-bg': '#F0810F'
+        '@btn-primary-bg': '#F0810F',
+        '@font-size-base': '16px'
       },
   }),
 );

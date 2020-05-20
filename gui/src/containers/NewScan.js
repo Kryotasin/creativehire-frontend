@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Form, Input, Button, Spin } from 'antd';
+import { Row, Col, Typography, Divider, Form, Input, Button, Spin } from 'antd';
 
 
 import axios from '../axiosConfig';
@@ -20,15 +20,17 @@ const validateMessages = {
   },
 };
 
+
+const { Title, Text } = Typography;
+
 class Comparison extends React.Component{
 
-    state = {
-        jobid: null,
-        projectid: null,
-        jobtitle: null
-    }
-
     loading = false;
+
+    state = {
+      jobid: null,
+      projectid: null
+    }
 
     componentDidMount() {
     }
@@ -38,59 +40,62 @@ class Comparison extends React.Component{
 
         const link_jp = event.target.elements.link_jp.value;
         const org = event.target.elements.org.value;
-        const title = event.target.elements.jdtitle.value;
+        const jobtitle = event.target.elements.jdtitle.value;
         const description = event.target.elements.jddescription.value;
+
         const projtitle = event.target.elements.projtitle.value;
         const projlink = event.target.elements.projlink.value;
 
         const job_poster_id = localStorage.getItem('userProfileID');
         
-        // console.log(title, description, projlink, projtitle, job_poster_id);
-
         this.loading = true;
 
+        // Post the job post
+          axios.post('jobpost/', {
+                org: org,
+                link_jp: link_jp,
+                title: jobtitle,
+                description: description,
+                job_poster_id: job_poster_id,
+                // img:img
+            })
+            .then(res => {
+              if(res.status == '201'){
+                this.setState({jobid: res.data.id});
 
-              axios.post('jobpost/', {
-                    org: org,
-                    link_jp, link_jp,
-                    title: title,
-                    description: description,
-                    job_poster_id: job_poster_id,
-                    // img:img
+                // Post the project
+                axios.post('project/', {
+                    title: projtitle,
+                    url: projlink,
+                    project_owner_id: job_poster_id
                 })
                 .then(res => {
                   if(res.status == '201'){
-                    this.setState({jobid: res.data.id});
+                    this.setState({projectid: res.data.id});
 
-                    axios.post('project/', {
-                        title: projtitle,
-                        url: projlink,
-                        project_owner_id: job_poster_id
-                    })
-                    .then(res => {
-                      this.setState({jobtitle: title});
-                      if(res.status == '201'){
-                        this.setState({projectid: res.data.id});
-    
-                              axios.post('scan-results/', {
-                                userid: job_poster_id,
-                                jobid: this.state.jobid,
-                                projectid: this.state.projectid,
-                                jobtitle: this.state.jobtitle
-                            })
-                            .then(res => {
-                              if(res.status == '200'){
-                                this.props.history.push('scan/' + res.data['scanid'])
-                            }
-                            })
-                            .catch(error => this.setState({err: error}));
+                    
+                    // Post the Scan and await reply
+                          axios.post('scan-results/', {
+                            projectid: this.state.projectid,
+                            userid: job_poster_id,
+                            jobid: this.state.jobid,
+                            org: org,
+                            jobtitle: jobtitle,
+                            project_title: projtitle
+                        })
+                        .then(res => {
+                          if(res.status == '200'){
+                            this.props.history.push('scan/' + res.data['scanid'])
+                        }
+                        })
+                        .catch(error => this.setState({err: error}));
 
-                    }
-                    })
-                    .catch(error => this.setState({err: error}));
                 }
                 })
                 .catch(error => this.setState({err: error}));
+            }
+            })
+            .catch(error => this.setState({err: error}));
     }
 
     render(){
@@ -99,7 +104,13 @@ class Comparison extends React.Component{
             <br />
             <Spin tip="Loading..." spinning={this.loading}>
 
-            <h2>New Scan</h2>
+            <Row>
+              <Col span={3} />
+              <Col span={14}>
+                <Title level={2}>New Scan</Title>
+              </Col>
+              <Col span={7} />
+            </Row>
             <Divider>Project Details</Divider>
             <Form onSubmitCapture={(event) => this.handleFormSubmit(
                 event
