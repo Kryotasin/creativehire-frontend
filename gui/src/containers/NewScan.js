@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Typography, Divider, Form, Input, Button, Spin } from 'antd';
+import { Alert, Row, Col, Typography, Divider, Form, Input, Button, Spin } from 'antd';
 
 
 import axios from '../axiosConfig';
@@ -13,13 +13,6 @@ const layout = {
   },
 };
 
-const validateMessages = {
-  required: 'This field is required!',
-  types: {
-    number: 'Not a validate number!',
-  },
-};
-
 
 const { Title, Text } = Typography;
 
@@ -28,27 +21,42 @@ class Comparison extends React.Component{
     loading = false;
 
     state = {
+      err: null,
       jobid: null,
-      projectid: null
+      projectid: null,
+      work: null
     }
 
     componentDidMount() {
     }
 
-    handleFormSubmit = (event) => {
-        event.preventDefault();
 
-        const link_jp = event.target.elements.link_jp.value;
-        const org = event.target.elements.org.value;
-        const jobtitle = event.target.elements.jdtitle.value;
-        const description = event.target.elements.jddescription.value;
+    render(){
+      
+      let errorMessage = null;
 
-        const projtitle = event.target.elements.projtitle.value;
-        const projlink = event.target.elements.projlink.value;
+      const handleFormSubmit = values => {
+
+        const link_jp = values.link_jp;
+        const org = values.org;
+        const jobtitle = values.jdtitle;
+        const description = values.jddescription;
+
+        const projtitle = values.projtitle;
+        const projlink = values.projlink;
 
         const job_poster_id = localStorage.getItem('userProfileID');
         
         this.loading = true;
+        this.setState({
+          work: "Starting upload process..."
+        });
+
+        // Do Something
+
+        this.setState({
+          work: "Uploading job details..."
+        });
 
         // Post the job post
           axios.post('jobpost/', {
@@ -63,6 +71,10 @@ class Comparison extends React.Component{
               if(res.status == '201'){
                 this.setState({jobid: res.data.id});
 
+                this.setState({
+                  work: "Job details uploaded successfully. Uploading project."
+                });
+
                 // Post the project
                 axios.post('project/', {
                     title: projtitle,
@@ -72,9 +84,16 @@ class Comparison extends React.Component{
                 .then(res => {
                   if(res.status == '201'){
                     this.setState({projectid: res.data.id});
-
                     
-                    // Post the Scan and await reply
+                    this.setState({
+                      work: "Project uploaded sucessfully. "
+                    });
+
+                    this.setState({
+                      work: "Analyzing the project and portfolio... "
+                    });
+                    
+                      // Post the Scan and await reply
                           axios.post('scan-results/', {
                             projectid: this.state.projectid,
                             userid: job_poster_id,
@@ -85,24 +104,56 @@ class Comparison extends React.Component{
                         })
                         .then(res => {
                           if(res.status == '200'){
-                            this.props.history.push('scan/' + res.data['scanid'])
+                            this.setState({
+                              work: "Analysis complete. Hold tight while we take you there..."
+                            });
+                            
+                            setTimeout(() => { this.props.history.push('/scan/' + res.data['scanid']) }, 4000);
+                            
                         }
                         })
-                        .catch(error => this.setState({err: error}));
+                        .catch(scanError => {
+                          
+                          // set text
+                            this.setState({
+                              work: "Failed! Deleting project and job details..."
+                            });
+
+                            
+                          this.loading=false;
+
+                          if(scanError.response.status == 500){
+                            axios.delete('project/' + this.state.projectid + '/')
+                            .catch(delErr1 =>{});
+                            axios.delete('jobpost/' + this.state.jobid + '/')
+                            .catch(delErr2 =>{});
+                            this.setState({err: "The server seems to be down. Please try again later."});
+                          }
+                          else{
+                            this.setState({err: scanError.response.statusText});
+                          }
+
+                          
+                        });
 
                 }
                 })
-                .catch(error => this.setState({err: error}));
+                .catch(projectError => this.setState({err: projectError}));
             }
             })
-            .catch(error => this.setState({err: error}));
-    }
+            .catch(jobpostError => this.setState({err: jobpostError}));
+       }
 
-    render(){
+       if(this.state.err){
+          errorMessage = (
+            <Alert {...layout} message = "Login failed!" description = {this.state.err} type='error' showIcon />
+          )
+        }
+
         return (
             <div>
             <br />
-            <Spin tip="Loading..." spinning={this.loading}>
+            <Spin tip={this.state.work} spinning={this.loading}>
 
             <Row>
               <Col span={3} />
@@ -112,33 +163,42 @@ class Comparison extends React.Component{
               <Col span={7} />
             </Row>
             <Divider>Project Details</Divider>
-            <Form onSubmitCapture={(event) => this.handleFormSubmit(
-                event
-                )} {...layout} name="nest-messages" validateMessages={validateMessages}>
+            <Form onFinish={handleFormSubmit}
+                scrollToFirstError 
+                {...layout} 
+                name="new-scan">
               
               <Form.Item
                 label="Project Title"
+                name="projtitle"
                 rules={[
                   {
                     required: true,
+                    message: "Please input the project title",
                   },
                 ]}
               >
-                <Input name="projtitle" placeholder={
+                <Input placeholder={
                     "Enter a title"
                   }/>
               </Form.Item>
 
               <Form.Item
                 label="Project Link"
+                name="projlink"
                 rules={[
                   {
+                    type: 'url',
+                    message: 'The input is not valid link!',
+                  },
+                  {
                     required: true,
+                    message: 'Please paste the link to project',
                   },
                 ]}
               >
-                <Input name="projlink" placeholder={
-                    "Paste exact link to project"
+                <Input placeholder={
+                    "http://...."
                   }/>
               </Form.Item>
 
@@ -147,50 +207,61 @@ class Comparison extends React.Component{
 
               <Form.Item
                 label="Company Name"
+                name="org"
                 rules={[
                   {
                     required: true,
+                    message: "Please input the job posting comapny name!",
                   },
                 ]}
               >
-                <Input name="org" placeholder={
-                    "Enter the company/organization name"
+                <Input placeholder={
+                    "Google Inc."
                   }/>
               </Form.Item>
 
               <Form.Item
                 label="Link to job post"
+                name="link_jp"
                 rules={[
                   {
+                    type: 'url',
+                    message: 'The input is not valid link!',
+                  },
+                  {
                     required: true,
+                    message: 'Please paste the link to job post',
                   },
                 ]}
               >
-                <Input name="link_jp" placeholder={
-                    "Paste the link ot the job post"
+                <Input placeholder={
+                    "http://...."
                   }/>
               </Form.Item>
 
               <Form.Item
                 label="Job Title"
+                name="jdtitle" 
                 rules={[
                   {
                     required: true,
+                    message:'Please enter the job title'
                   },
                 ]}
               >
-                <Input name="jdtitle" placeholder={
-                    "Enter the position/job title"
+                <Input placeholder={
+                    "UX/UI Designer"
                   }/>
               </Form.Item>
         
               <Form.Item label="Description"
+              name="jddescription" 
               rules={[
                   {
                     required: true,
                     message:'Please paste job decription'},
               ]}>
-                <Input.TextArea name="jddescription" placeholder={
+                <Input.TextArea placeholder={
                     "Enter a Description"
                   }/>
               </Form.Item>
@@ -205,6 +276,8 @@ class Comparison extends React.Component{
                   Scan Now
                 </Button>
               </Form.Item>
+              
+            {errorMessage}
             </Form>
 
             </Spin>

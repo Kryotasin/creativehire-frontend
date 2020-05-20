@@ -15,10 +15,17 @@ import ScanDetail from './containers/ScanDetail';
 import ConfirmEmail from './containers/ConfirmEmail';
 import HowItWorks    from './containers/HowItWorks';
 import ResetPassword from './containers/ResetPassword';
+import Portfolio from './containers/Portfolio';
+import NewProject from './containers/NewProject';
+import Project from './components/Project';
 
 const BaseRouter = () => (
     <div>
         <Route exact path ='/' component ={HomePage} />
+
+        <Route exact path ='/new-project/' component ={NewProject} />
+        <Route exact path ='/portfolio/' component ={Portfolio} />
+        <Route exact path ='/project/:matchID' component ={Project} />
 
         <Route exact path ='/new-scan/' component ={Comparison} />
         <Route exact path ='/my-scans/' component ={ScanList} />

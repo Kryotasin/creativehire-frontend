@@ -18,11 +18,6 @@ const GuestRouter = () => (
         <Route exact path ='/reset-password/' component ={ResetPassword} />
         <Route exact path ='/reset-password/:uidb64/:token' component ={ResetPassword} />
 
-        
-        <Route exact path ='/scan/:scanID' component ={Login} />
-        <Route exact path ='/scan/' component ={Login} />
-        <Route exact path ='/confirm-email/' component ={Login} />
-
         <Route exact path="/how-it-works/" component={HowItWorks} />
 
         
