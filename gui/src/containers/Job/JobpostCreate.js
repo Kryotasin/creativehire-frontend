@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomForm from '../components/Form';
+import CustomForm from '../../components/Form';
 
 
 

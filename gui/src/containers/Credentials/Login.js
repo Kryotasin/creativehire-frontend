@@ -10,7 +10,7 @@ import { Row,
   Space } from 'antd';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
-import * as actions from '../store/actions/auth';
+import * as actions from '../../store/actions/auth';
 import { LoadingOutlined } from '@ant-design/icons';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;

@@ -3,7 +3,7 @@ import { Alert, Modal, Form, Input, Row, Col, Avatar, Upload, Button, message, S
 
 import {Link} from 'react-router-dom';
 
-import axios from '../axiosConfig';
+import axios from '../../axiosConfig';
 import { UserOutlined } from '@ant-design/icons';
 
 
@@ -94,7 +94,7 @@ function UserProfile() {
         setTimeout(() => message.success('Profile loaded successfully.'), 100);
         reloadProfilePicture();  
 
-        axios.get('userprofile/email-verified/' + localStorage.getItem('userProfileID'))
+        axios.get('userprofile/email-verified/' + localStorage.getItem('userProfileID') + '/')
         .then(res => {
           if(res.data['verified']){
             reloadEmailVerified(true);

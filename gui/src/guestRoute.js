@@ -2,11 +2,12 @@ import React from 'react'
 import {Switch, Route} from 'react-router-dom';
 
 
-import LandingPage from './containers/LadingPage';
-import Login from './containers/Login';
-import Signup from './containers/Signup';
-import ResetPassword from './containers/ResetPassword';
-import HowItWorks    from './containers/HowItWorks';
+import LandingPage from './containers/Misc/LadingPage';
+import Login from './containers/Credentials/Login';
+import Signup from './containers/Credentials/Signup';
+import ResetPassword from './containers/Credentials/ResetPassword';
+
+import HowItWorks from './containers/Misc/HowItWorks';
 
 
 
