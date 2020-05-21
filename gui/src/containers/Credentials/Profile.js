@@ -94,7 +94,7 @@ function UserProfile() {
         setTimeout(() => message.success('Profile loaded successfully.'), 100);
         reloadProfilePicture();  
 
-        axios.get('userprofile/email-verified/' + localStorage.getItem('userProfileID') + '/')
+        axios.get('userprofile/email-verified/' + localStorage.getItem('userProfileID'))
         .then(res => {
           if(res.data['verified']){
             reloadEmailVerified(true);
