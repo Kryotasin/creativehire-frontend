@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col, Typography, Divider, Form, Input, Button, Spin } from 'antd';
 
 
-import axios from '../axiosConfig';
+import axios from '../../axiosConfig';
 
 const layout = {
   labelCol: {

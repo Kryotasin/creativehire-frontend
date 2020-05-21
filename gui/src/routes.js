@@ -2,22 +2,28 @@ import React from 'react'
 import {Route} from 'react-router-dom';
 
 
-import JobpostList from './containers/JobpostListView';
-import JobpostDetail from './containers/JobpostDetailView';
-import JobpostCreate from './containers/JobpostCreate';
-import Login from './containers/Login';
-import Signup from './containers/Signup';
-import UserProfile from './containers/Profile';
-import Comparison from './containers/NewScan';
-import HomePage from './containers/HomePage';
-import ScanList from './containers/ScanList';
-import ScanDetail from './containers/ScanDetail';
-import ConfirmEmail from './containers/ConfirmEmail';
-import HowItWorks    from './containers/HowItWorks';
-import ResetPassword from './containers/ResetPassword';
-import Portfolio from './containers/Portfolio';
-import NewProject from './containers/NewProject';
-import Project from './components/Project';
+import JobpostList from './containers/Job/JobpostListView';
+import JobpostDetail from './containers/Job/JobpostDetailView';
+import JobpostCreate from './containers/Job/JobpostCreate';
+
+import Login from './containers/Credentials/Login';
+import Signup from './containers/Credentials/Signup';
+import ConfirmEmail from './containers/Credentials/ConfirmEmail';
+import ResetPassword from './containers/Credentials/ResetPassword';
+
+import HowItWorks    from './containers/Misc/HowItWorks';
+import HomePage from './containers/Misc/HomePage';
+
+import UserProfile from './containers/Credentials/Profile';
+
+import Comparison from './containers/Scan/NewScan';
+
+import ScanList from './containers/Scan/ScanList';
+import ScanDetail from './containers/Scan/ScanDetail';
+
+import Portfolio from './containers/Project/Portfolio';
+import NewProject from './containers/Project/NewProject';
+import ProjectDetail from './containers/Project/ProjectDetail';
 
 const BaseRouter = () => (
     <div>
@@ -25,7 +31,7 @@ const BaseRouter = () => (
 
         <Route exact path ='/new-project/' component ={NewProject} />
         <Route exact path ='/portfolio/' component ={Portfolio} />
-        <Route exact path ='/project/:matchID' component ={Project} />
+        <Route exact path ='/project/:matchID' component ={ProjectDetail} />
 
         <Route exact path ='/new-scan/' component ={Comparison} />
         <Route exact path ='/my-scans/' component ={ScanList} />

@@ -11,7 +11,8 @@
 }
 
 .ant-progress{
-  padding-left: 17%
+  margin-top: 9%;
+  padding-left: 24%;
 }
 
 .logo{
@@ -33,4 +34,10 @@
     padding-top: 20px;
   }
   
+}
+
+@media only screen and (max-wdith: 992px){
+  .ant-progress{
+    padding-left: 20%;
+  }
 }

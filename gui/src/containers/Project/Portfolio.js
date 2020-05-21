@@ -1,8 +1,8 @@
 import React from 'react';
-import Project from '../components/Project';
+import Project from '../../components/Project';
 
 
-import axios from '../axiosConfig';
+import axios from '../../axiosConfig';
 
 
 class Portfolio extends React.Component{
@@ -16,11 +16,11 @@ class Portfolio extends React.Component{
             'project_owner_id': localStorage.getItem('userProfileID')
         })
             .then(res => {
-                console.log(res)
+                console.log(res.data)
                 this.setState({
                     projects: res.data
                 });
-                //console.log(res.data);
+                console.log(res.data);
             })
     }
 

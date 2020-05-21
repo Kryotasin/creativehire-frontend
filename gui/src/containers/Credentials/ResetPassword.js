@@ -3,7 +3,7 @@ import { Form, Input, Button, Spin, Alert, Space } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
-import axios from '../axiosConfig';
+import axios from '../../axiosConfig';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 

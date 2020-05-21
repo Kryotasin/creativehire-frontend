@@ -1,7 +1,6 @@
 import React from "react";
-import { Button } from "antd";
+import { Row, Col, Button } from "antd";
 import { Link } from "react-router-dom";
-import * as actions from "../store/actions/auth";
 import "antd/dist/antd.less";
 
 
@@ -36,17 +35,23 @@ class HomePage extends React.Component {
 
     return (
       <div>
-        <div style={brand}>
-          <h1 style={header}>Time to move up the UX Ladder</h1>
-          <h1 style={tagline}>
-            Scan your portfolio projects and compare with Job Descriptions
-          </h1>
-          <Button type="primary" shape="round" style={button}>
-            <Link to="new-scan/" style={{ fontSize: "17px" }}>
-              Scan Now
-            </Link>
-          </Button>
-        </div>
+        <Row>
+          <Col span={6}/>
+          <Col span={16}>
+            <div style={brand}>
+              <h1 style={header}>Time to move up the UX Ladder</h1>
+              <h1 style={tagline}>
+                Scan your portfolio projects and compare with Job Descriptions
+              </h1>
+              <Button type="primary" shape="round" style={button}>
+                <Link to="new-scan/" style={{ fontSize: "17px" }}>
+                  Scan Now
+                </Link>
+              </Button>
+            </div>
+          </Col>
+          <Col span={2}/>
+        </Row>
       </div>
     );
   }

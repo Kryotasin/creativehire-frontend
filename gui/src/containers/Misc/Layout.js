@@ -1,9 +1,9 @@
 import React from'react';
-import * as actions from '../store/actions/auth';
+import * as actions from '../../store/actions/auth';
 import {connect} from 'react-redux';
 import { Menu, Layout } from 'antd';
 import { PlusCircleOutlined, ApartmentOutlined, FolderOpenOutlined, LoginOutlined, LogoutOutlined, QuestionCircleOutlined, UserOutlined } from '@ant-design/icons';
-import logo from '../assets/logo.svg';
+import logo from '../../assets/logo.svg';
 
 import { Link } from 'react-router-dom';
 
@@ -37,9 +37,10 @@ class CustomLayout extends React.Component {
                   <Menu.Item key="6"><Link to="/"><img alt="Creativehire logo" src={logo} style={{width: '9rem'}}></img></Link></Menu.Item>
                   <Menu.Item key="1" icon={<PlusCircleOutlined />}><PlusCircleOutlined /><Link to="/new-scan/">New Scan  </Link></Menu.Item>
                   <Menu.Item key="2" icon={<FolderOpenOutlined />}><FolderOpenOutlined /><Link to="/my-scans/">My Scans </Link></Menu.Item>
-                  <Menu.Item key="3" icon={<QuestionCircleOutlined />}><QuestionCircleOutlined /><Link to="/how-it-works/">How it works </Link></Menu.Item>
-                  <Menu.Item key="4" icon={<ApartmentOutlined />}><ApartmentOutlined /><Link to="/portfolio/">Portfolio </Link></Menu.Item>
+                  {/* <Menu.Item key="4" icon={<ApartmentOutlined />}><ApartmentOutlined /><Link to="/portfolio/">Portfolio </Link></Menu.Item> */}
                   <Menu.Item key="5" icon={<UserOutlined />}><UserOutlined /><Link to="/profile/">Profile </Link></Menu.Item>
+                  <Menu.Divider />
+                  <Menu.Item key="3" icon={<QuestionCircleOutlined />}><QuestionCircleOutlined /><Link to="/how-it-works/">How it works </Link></Menu.Item>
                   <Menu.Item key="7" onClickCapture={this.props.logout} icon={<LogoutOutlined />}> <LogoutOutlined /> Logout </Menu.Item>
                   </Menu>
               </Sider>

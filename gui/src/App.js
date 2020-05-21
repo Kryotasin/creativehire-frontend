@@ -7,7 +7,7 @@ import * as actions from './store/actions/auth'
 
 import './App.css';
 
-import CustomLayout from './containers/Layout';
+import CustomLayout from './containers/Misc/Layout';
 import GuestRouter from './guestRoute';
 import ErrorBoundary from './components/ErrorBoundary'
 

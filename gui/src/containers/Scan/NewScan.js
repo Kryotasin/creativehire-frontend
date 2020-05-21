@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, Row, Col, Typography, Divider, Form, Input, Button, Spin } from 'antd';
 
 
-import axios from '../axiosConfig';
+import axios from '../../axiosConfig';
 
 const layout = {
   labelCol: {
@@ -67,9 +67,9 @@ class Comparison extends React.Component{
                 job_poster_id: job_poster_id,
                 // img:img
             })
-            .then(res => {
-              if(res.status == '201'){
-                this.setState({jobid: res.data.id});
+            .then(jobRes => {
+              if(jobRes.status == '201'){
+                this.setState({jobid: jobRes.data.id});
 
                 this.setState({
                   work: "Job details uploaded successfully. Uploading project."
@@ -81,9 +81,9 @@ class Comparison extends React.Component{
                     url: projlink,
                     project_owner_id: job_poster_id
                 })
-                .then(res => {
-                  if(res.status == '201'){
-                    this.setState({projectid: res.data.id});
+                .then(projectRes => {
+                  if(projectRes.status == '201'){
+                    this.setState({projectid: projectRes.data.id});
                     
                     this.setState({
                       work: "Project uploaded sucessfully. "
@@ -102,14 +102,13 @@ class Comparison extends React.Component{
                             jobtitle: jobtitle,
                             project_title: projtitle
                         })
-                        .then(res => {
-                          if(res.status == '200'){
+                        .then(scanRes => {
+                          if(scanRes.status == '200'){
                             this.setState({
                               work: "Analysis complete. Hold tight while we take you there..."
                             });
                             
-                            setTimeout(() => { this.props.history.push('/scan/' + res.data['scanid']) }, 4000);
-                            
+                            setTimeout(() => { this.props.history.push('/scan/' + scanRes.data['scanid']) }, 4000);
                         }
                         })
                         .catch(scanError => {
@@ -138,7 +137,21 @@ class Comparison extends React.Component{
 
                 }
                 })
-                .catch(projectError => this.setState({err: projectError}));
+                .catch(projectError => {
+                  this.setState({
+                    work: "Failed project uploadings..."
+                  });
+                  
+                  this.loading = false;
+
+                  if(projectError.response.data.includes("IntegrityError ")){
+                    this.setState({err: "Please choose a different project title."})
+                  }
+                  else{
+                    this.setState({err: projectError.response.data})
+                  }
+
+                });
             }
             })
             .catch(jobpostError => this.setState({err: jobpostError}));

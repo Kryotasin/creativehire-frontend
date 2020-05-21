@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from '../axiosConfig';
+import axios from '../../axiosConfig';
 
 import { Card } from 'antd';
 
