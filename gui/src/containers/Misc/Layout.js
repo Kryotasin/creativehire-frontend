@@ -3,7 +3,7 @@ import * as actions from '../../store/actions/auth';
 import {connect} from 'react-redux';
 import { Menu, Layout } from 'antd';
 import { PlusCircleOutlined, ApartmentOutlined, FolderOpenOutlined, LoginOutlined, LogoutOutlined, QuestionCircleOutlined, UserOutlined } from '@ant-design/icons';
-import logo from '../../assets/logo.svg';
+import logo from '../../assets/CH.png';
 
 import { Link } from 'react-router-dom';
 
@@ -51,6 +51,7 @@ class CustomLayout extends React.Component {
                 mode="horizontal"
                 defaultSelectedKeys={['2']}
                 >
+                  <Menu.Item key="6"><Link to="/"><img alt="Creativehire logo" src={logo} style={{width: '9rem'}}></img></Link></Menu.Item>
                   <Menu.Item key="1" icon={<QuestionCircleOutlined />}><QuestionCircleOutlined /><Link to="/how-it-works/">How it Works</Link></Menu.Item>
                   <Menu.Item key="2" icon={<LoginOutlined />}><LoginOutlined /><Link to="/login/">Login</Link></Menu.Item>
                 </Menu>
