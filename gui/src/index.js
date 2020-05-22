@@ -13,7 +13,8 @@ import reducer from './store/reducers/auth';
 import ReactGA from 'react-ga';
 
 ReactGA.initialize('UA-112683232-2');
-ReactGA.pageview(window.location.pathname + window.location.search);
+ReactGA.pageview(window.location.pathname + window.location.hash);
+
 
 const composeEnhancer = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
