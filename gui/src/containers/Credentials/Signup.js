@@ -14,6 +14,7 @@ import * as actions from '../../store/actions/auth';
 import {connect} from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { LoadingOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -189,7 +190,7 @@ class RegistrationForm extends React.Component {
                         });
                       }}
                     >
-                      I have read the <a href="terms">agreement</a>
+                      I have read the <Link to="/terms/">agreement</Link>
                     </Checkbox>
                   </Form.Item>
 

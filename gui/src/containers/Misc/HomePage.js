@@ -3,6 +3,8 @@ import { Row, Col, Button } from "antd";
 import { Link } from "react-router-dom";
 import "antd/dist/antd.less";
 
+import FbShare from '../Social/Fb/Share'
+
 
 class HomePage extends React.Component {
   formRef = React.createRef();
@@ -35,6 +37,7 @@ class HomePage extends React.Component {
 
     return (
       <div>
+        <FbShare />
         <Row>
           <Col span={6}/>
           <Col span={16}>

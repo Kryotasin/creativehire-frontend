@@ -9,11 +9,18 @@ module.exports = override(
       javascriptEnabled: true,
       modifyVars: { 
         '@primary-color': '#011A27',
+
         '@layout-header-background': '#063852',
         '@layout-body-background': '#F5F5F5',
+
         '@text-color': '#000000',
+
         '@btn-primary-bg': '#F0810F',
-        '@font-size-base': '16px'
+
+        '@font-size-base': '16px',
+
+        '@link-color': '@btn-primary-bg'
+
       },
   }),
 );

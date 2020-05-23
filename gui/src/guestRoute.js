@@ -10,6 +10,8 @@ import Signup from './containers/Credentials/Signup';
 import ResetPassword from './containers/Credentials/ResetPassword';
 
 import HowItWorks from './containers/Misc/HowItWorks';
+import Privacy from './containers/Misc/Privacy';
+import Terms from './containers/Misc/Terms';
 
 
 const GuestRouter = () => (
@@ -23,7 +25,9 @@ const GuestRouter = () => (
         <Route exact path="/how-it-works/" component={HowItWorks} />
 
         <Route exact path="/contact/" component={Contact} />
-        
+        <Route exact path="/privacy-policy/" component={Privacy} />
+        <Route exact path="/terms/" component={Terms} />
+
         <Route path ='*' component ={Login} />
     </Switch>
 );

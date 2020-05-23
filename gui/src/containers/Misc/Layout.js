@@ -69,8 +69,10 @@ class CustomLayout extends React.Component {
 
           <Footer style={{ textAlign: 'center' }}>
             <Space size="large">
-            <Link to="/contact/">Contact</Link>
+            <Link to="/terms/">Terms</Link>
+            <Link to="/privacy-policy/">Privacy policy</Link>
             Copyright CreativeHire 2020
+            <Link to="/contact/">Contact</Link>
             </Space>
           </Footer>
         </Layout>
