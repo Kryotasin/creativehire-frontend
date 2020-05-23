@@ -2,6 +2,7 @@ import React from 'react';
 // import axios from 'axios';
 import { Skeleton, Typography, Progress, Row, Col, Empty, Divider, Button  } from 'antd';
 import axios from '../../axiosConfig';
+import {Helmet} from "react-helmet";
 
 import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 
@@ -123,7 +124,11 @@ class ScanDetail extends React.Component{
         } 
             
         return (
-            <div>
+            <div>  
+            <Helmet>
+              <meta charSet="utf-8" />
+              <title>Scan</title>
+            </Helmet>
                 <Row gutter={[16, 16]}>
                     <Col span={3} />
                     <Col span={9}><Title level={3}>Project Details</Title></Col>

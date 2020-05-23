@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions/auth';
 import { LoadingOutlined } from '@ant-design/icons';
+import {Helmet} from "react-helmet";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -111,6 +112,11 @@ class NormalLoginForm extends React.Component {
     
 
     return (
+    <div>  
+    <Helmet>
+      <meta charSet="utf-8" />
+      <title>Login</title>
+    </Helmet>
       <Row gutter={[40, 16]}>
         <Col span={2}>
         </Col>
@@ -206,6 +212,7 @@ class NormalLoginForm extends React.Component {
         </Col>
 
       </Row>
+      </div>
     );
   } 
   

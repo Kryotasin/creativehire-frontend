@@ -1,5 +1,6 @@
 import React from 'react';
 import { Alert, Row, Col, Typography, Divider, Form, Input, Button, Spin } from 'antd';
+import {Helmet} from "react-helmet";
 
 
 import axios from '../../axiosConfig';
@@ -164,7 +165,11 @@ class Comparison extends React.Component{
         }
 
         return (
-            <div>
+            <div>  
+            <Helmet>
+              <meta charSet="utf-8" />
+              <title>Scan Portfolio</title>
+            </Helmet>
             <br />
             <Spin tip={this.state.work} spinning={this.loading}>
 

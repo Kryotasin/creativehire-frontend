@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 
 import axios from '../../axiosConfig';
 import { UserOutlined } from '@ant-design/icons';
+import {Helmet} from "react-helmet";
 
 
 
@@ -250,6 +251,10 @@ function UserProfile() {
 
     return (
             <div>  
+            <Helmet>
+              <meta charSet="utf-8" />
+              <title>{username == null ? '' : (username) + '\'s '}Profile</title>
+            </Helmet>
                 
                 <Row gutter={[8, 48]}>
                     <Col xs={{ span: 6, offset: 1 }} lg={{ span: 6, offset: 2 }}>

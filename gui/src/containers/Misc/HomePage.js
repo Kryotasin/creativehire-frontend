@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "antd/dist/antd.less";
 
 import FbShare from '../Social/Fb/Share'
+import {Helmet} from "react-helmet";
 
 
 class HomePage extends React.Component {
@@ -37,6 +38,10 @@ class HomePage extends React.Component {
 
     return (
       <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Creativhire Home</title>
+      </Helmet>
         <FbShare />
         <Row>
           <Col span={6}/>

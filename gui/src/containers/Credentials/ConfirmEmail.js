@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, Spin, Alert } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
+import {Helmet} from "react-helmet";
 
 import axios from '../../axiosConfig';
 
@@ -73,7 +74,11 @@ class ConfirmEmail extends React.Component {
    
 
     return (
-        <div>
+        <div>  
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Confirm Email</title>
+        </Helmet>
             {
   
                 this.state.loading ?

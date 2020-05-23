@@ -4,6 +4,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 import axios from '../../axiosConfig';
+import {Helmet} from "react-helmet";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -105,6 +106,10 @@ class ResetPassword extends React.Component {
 
     return (
         <div>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Password Reset</title>
+        </Helmet>
             {
                 this.state.loading ?
   

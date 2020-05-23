@@ -15,6 +15,7 @@ import {connect} from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import {Helmet} from "react-helmet";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -104,7 +105,11 @@ class RegistrationForm extends React.Component {
               }
 
             return (
-              <div>
+              <div>  
+              <Helmet>
+                <meta charSet="utf-8" />
+                <title>Signup</title>
+              </Helmet>
               {this.props.loading ? (
                 <Spin indicator={antIcon} />
               ) : 

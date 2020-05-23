@@ -2,6 +2,8 @@ import React from "react";
 import { Button, Typography, Row, Col } from "antd";
 import { Link } from 'react-router-dom';
 
+import {Helmet} from "react-helmet";
+
 const { Title, Text } = Typography;
 
 class HowItWorks extends React.Component {
@@ -19,6 +21,10 @@ class HowItWorks extends React.Component {
 
     return (
       <div>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>How it works</title>
+        </Helmet>
         <Row gutter={[16, 24]}>
           <Col span={3} />
           <Col span={16}>

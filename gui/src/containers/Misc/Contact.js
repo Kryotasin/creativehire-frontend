@@ -9,6 +9,7 @@ import {
 
 import { LoadingOutlined } from '@ant-design/icons';
 import axios from '../../axiosConfig';
+import {Helmet} from "react-helmet";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -82,6 +83,10 @@ class Contact extends React.Component {
 
         return (
             <div>
+            <Helmet>
+              <meta charSet="utf-8" />
+              <title>Contact Us</title>
+            </Helmet>
             {this.props.loading ? (
             <Spin indicator={antIcon} />
             ) : 

@@ -3,6 +3,7 @@ import { Row, Col, Typography } from "antd";
 import "antd/dist/antd.less";
 
 import { Link } from 'react-router-dom';
+import {Helmet} from "react-helmet";
 
 const { Title, Text } = Typography;
 
@@ -14,6 +15,10 @@ class Terms extends React.Component {
 
     return (
       <div>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Terms and Conditions</title>
+            </Helmet>
           <Row>
           <Col span={4}/>
           <Col span={16}>
