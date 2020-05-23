@@ -15,10 +15,6 @@ class Privacy extends React.Component {
 
     return (
       <div>
-          <Helmet>
-              <meta charSet="utf-8" />
-              <title>Privacy Policy</title>
-          </Helmet>
           <Row>
           <Col span={4}/>
           <Col span={16}>

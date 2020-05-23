@@ -16,7 +16,7 @@ import Terms from './containers/Misc/Terms';
 
 const GuestRouter = () => (
     <Switch>
-        <Route exact path ='/' component ={Login} />
+        <Route exact path ='/' component ={LandingPage} />
         <Route exact path ='/login/' component ={Login} />
         <Route exact path ='/signup/' component ={Signup} />
         <Route exact path ='/reset-password/' component ={ResetPassword} />
