@@ -3,12 +3,13 @@ import {Switch, Route} from 'react-router-dom';
 
 
 import LandingPage from './containers/Misc/LadingPage';
+import Contact from './containers/Misc/Contact';
+
 import Login from './containers/Credentials/Login';
 import Signup from './containers/Credentials/Signup';
 import ResetPassword from './containers/Credentials/ResetPassword';
 
 import HowItWorks from './containers/Misc/HowItWorks';
-
 
 
 const GuestRouter = () => (
@@ -21,6 +22,7 @@ const GuestRouter = () => (
 
         <Route exact path="/how-it-works/" component={HowItWorks} />
 
+        <Route exact path="/contact/" component={Contact} />
         
         <Route path ='*' component ={Login} />
     </Switch>

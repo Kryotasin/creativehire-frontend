@@ -1,7 +1,7 @@
 import React from'react';
 import * as actions from '../../store/actions/auth';
 import {connect} from 'react-redux';
-import { Menu, Layout } from 'antd';
+import { Space, Menu, Layout } from 'antd';
 import { PlusCircleOutlined, ApartmentOutlined, FolderOpenOutlined, LoginOutlined, LogoutOutlined, QuestionCircleOutlined, UserOutlined } from '@ant-design/icons';
 import logo from '../../assets/CH.png';
 
@@ -67,7 +67,12 @@ class CustomLayout extends React.Component {
             </div>
           </Content>
 
-          <Footer style={{ textAlign: 'center' }}>Copyright CreativeHire 2020</Footer>
+          <Footer style={{ textAlign: 'center' }}>
+            <Space size="large">
+            <Link to="/contact/">Contact</Link>
+            Copyright CreativeHire 2020
+            </Space>
+          </Footer>
         </Layout>
 
       </Layout>
