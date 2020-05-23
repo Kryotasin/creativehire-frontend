@@ -13,6 +13,7 @@ import ResetPassword from './containers/Credentials/ResetPassword';
 
 import HowItWorks    from './containers/Misc/HowItWorks';
 import HomePage from './containers/Misc/HomePage';
+import Contact from './containers/Misc/Contact';
 
 import UserProfile from './containers/Credentials/Profile';
 
@@ -50,6 +51,8 @@ const BaseRouter = () => (
 
         <Route exact path ='/profile/' component ={UserProfile} />
         <Route exact path="/how-it-works/" component={HowItWorks} />
+        <Route exact path="/contact/" component={Contact} />
+
     </div>
 );
 
