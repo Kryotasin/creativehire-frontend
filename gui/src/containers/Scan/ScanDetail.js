@@ -1,10 +1,10 @@
 import React from 'react';
 // import axios from 'axios';
-import { Skeleton, Typography, Progress, Row, Col, Empty, Divider, Button  } from 'antd';
+import { Spin, Popover, Space, Skeleton, Typography, Progress, Row, Col, Empty, Divider, Button  } from 'antd';
 import axios from '../../axiosConfig';
 import {Helmet} from "react-helmet";
 
-import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
+import { InfoCircleTwoTone, CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 
 const { Title, Text } = Typography;
 
@@ -18,13 +18,22 @@ class ScanDetail extends React.Component{
 
     label = null;
 
-    state = {
-        match: {},
-        structure: null,
-        processed: null,
-        job: null,
-        project: null,
+    loading = false;
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            match: {},
+            structure: null,
+            processed: null,
+            job: null,
+            project: null,
+            work: null,
+            projectid: null,
+            jobid: null
+        }
     }
+
 
     componentDidMount() {
         const matchID = this.props.match.params.matchID;
@@ -46,13 +55,28 @@ class ScanDetail extends React.Component{
                     })
 
                     const project = 'project/' + scanRes.data.projectid;
+                    this.setState({
+                        projectid: scanRes.data.projectid
+                    });
+
                     const job = 'jobpost/' + scanRes.data.jobid;
+
+                    this.setState({
+                        jobid: scanRes.data.jobid
+                    });
                     
                     axios.get(project)
                     .then(projectRes => {
                         this.setState({
                             project: projectRes.data
                         });
+                    })
+                    .catch(projectErr => {
+                        if(projectErr.response.status == '404'){
+                            this.setState({
+                                project: null
+                            });
+                        } 
                     })
 
                     axios.get(job)
@@ -61,20 +85,49 @@ class ScanDetail extends React.Component{
                             job: jobRes.data
                         })
                     })
+                    .catch(jobErr => {
+                        if(jobErr.response.status == '404'){
+                            this.setState({
+                                job: null
+                            });
+                        } 
+                    })
                 }
 
             })
             .catch(err => {
-                // err.response.status === '404' ? 
-                //     this.props.history.push('/')
-                // :
-                //     console.log('loading')
+                if(err.response.status == '404'){
+                    this.props.history.push('/my-scans/')
+                } 
             })
     }
 
     handleDelete = (event) => {
+        this.loading = true;
+        this.setState({
+            work: "Deleting scan details"
+        })
         const matchID = this.props.match.params.matchID;
         axios.delete('scans/' + matchID + '/');
+
+        this.setState({
+            work: "Deleting project details"
+        });
+        axios.delete('project/' + this.state.projectid + '/');
+
+        
+        this.setState({
+            work: "Deleting job details"
+        })
+        axios.delete('jobpost/' + this.state.jobid + '/');
+
+        this.setState({
+            work: "Delete complete"
+        })
+
+        this.loading = false;
+
+        this.props.history.push('/my-scans/');
     }
 
     existsInProject = (row) => {
@@ -129,6 +182,7 @@ class ScanDetail extends React.Component{
               <meta charSet="utf-8" />
               <title>Scan</title>
             </Helmet>
+            <Spin tip={this.state.work} spinning={this.loading}>
                 <Row gutter={[16, 16]}>
                     <Col span={3} />
                     <Col span={9}><Title level={3}>Project Details</Title></Col>
@@ -281,12 +335,20 @@ class ScanDetail extends React.Component{
                 <Row gutter={[24, 12]}>
                     <Col span={8}/>
                     <Col span={10}>
-                        <Button danger onClick={this.handleDelete}>
-                            Delete this Scan
-                        </Button>
+                        <Space size="large">
+                        <Popover content="This will delete all related project and job decriptions.">
+                            <InfoCircleTwoTone twoToneColor="#FF0000"/>
+                        </Popover>
+                        <Popover content="This will delete all related project and job decriptions.">
+                            <Button danger onClick={this.handleDelete}>
+                                Delete this Scan
+                            </Button>                        
+                        </Popover>
+                        </Space>
                     </Col>
                     <Col span={6}/>
                 </Row>
+                </Spin>
                 </div>
         )
     }
