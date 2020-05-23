@@ -29,8 +29,8 @@ const Scan = (props) => {
         sm: 2,
         md: 2,
         lg: 2,
-        xl: 4,
-        xxl: 4,
+        xl: 3,
+        xxl: 3,
       }}
 
       pagination={{

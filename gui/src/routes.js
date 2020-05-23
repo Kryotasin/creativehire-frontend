@@ -1,5 +1,5 @@
 import React from 'react'
-import {Route} from 'react-router-dom';
+import {Switch,Route} from 'react-router-dom';
 
 
 import JobpostList from './containers/Job/JobpostListView';
@@ -27,7 +27,7 @@ import NewProject from './containers/Project/NewProject';
 import ProjectDetail from './containers/Project/ProjectDetail';
 
 const BaseRouter = () => (
-    <div>
+    <Switch>
         <Route exact path ='/' component ={HomePage} />
 
         <Route exact path ='/new-project/' component ={NewProject} />
@@ -53,7 +53,7 @@ const BaseRouter = () => (
         <Route exact path="/how-it-works/" component={HowItWorks} />
         <Route exact path="/contact/" component={Contact} />
 
-    </div>
+    </Switch>
 );
 
 export default BaseRouter;
