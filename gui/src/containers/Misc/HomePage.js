@@ -3,7 +3,9 @@ import { Row, Col, Button } from "antd";
 import { Link } from "react-router-dom";
 import "antd/dist/antd.less";
 
-import FbShare from '../Social/Fb/Share'
+import FbShare from '../Social/Fb/Share';
+import FbPage from '../Social/Fb/Page';
+
 import {Helmet} from "react-helmet";
 
 
