@@ -155,7 +155,7 @@ class Comparison extends React.Component{
                 });
             }
             })
-            .catch(jobpostError => this.setState({err: jobpostError}));
+            .catch(jobpostError => this.setState({err: jobpostError.response.data}));
        }
 
        if(this.state.err){
