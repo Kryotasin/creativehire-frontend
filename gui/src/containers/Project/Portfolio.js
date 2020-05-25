@@ -3,6 +3,9 @@ import Project from '../../components/Project';
 
 
 import axios from '../../axiosConfig';
+import { Row, Col, Button } from 'antd';
+
+import { Link } from 'react-router-dom';
 
 
 class Portfolio extends React.Component{
@@ -27,7 +30,21 @@ class Portfolio extends React.Component{
     render(){
         return (
             <div>
-                 <Project data={this.state.projects} />
+
+                <Row gutter={[16, 48]}>
+                    <Col span={18} />
+                    <Col span={4}>
+                        <Button>
+                            <Link to='/new-project/'>
+                                Add Project
+                            </Link>
+                        </Button>
+                    </Col>
+                    <Col span={2}/>
+                </Row>
+
+                <Project data={this.state.projects} />
+                 
                 <br />
             </div>
             

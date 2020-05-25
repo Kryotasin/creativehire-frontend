@@ -37,7 +37,7 @@ class CustomLayout extends React.Component {
                   <Menu.Item key="6"><Link to="/"><img alt="Creativehire logo" src={logo} style={{width: '9rem'}}></img></Link></Menu.Item>
                   <Menu.Item key="1" icon={<PlusCircleOutlined />}><PlusCircleOutlined /><Link to="/new-scan/">New Scan  </Link></Menu.Item>
                   <Menu.Item key="2" icon={<FolderOpenOutlined />}><FolderOpenOutlined /><Link to="/my-scans/">My Scans </Link></Menu.Item>
-                  {/* <Menu.Item key="4" icon={<ApartmentOutlined />}><ApartmentOutlined /><Link to="/portfolio/">Portfolio </Link></Menu.Item> */}
+                  <Menu.Item key="4" icon={<ApartmentOutlined />}><ApartmentOutlined /><Link to="/portfolio/">Portfolio </Link></Menu.Item>
                   <Menu.Item key="5" icon={<UserOutlined />}><UserOutlined /><Link to="/profile/">Profile </Link></Menu.Item>
                   <Menu.Divider />
                   <Menu.Item key="3" icon={<QuestionCircleOutlined />}><QuestionCircleOutlined /><Link to="/how-it-works/">How it works </Link></Menu.Item>

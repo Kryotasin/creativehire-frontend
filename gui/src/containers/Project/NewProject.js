@@ -1,5 +1,6 @@
 import React from 'react';
-import { Row, Col, Typography, Divider, Form, Input, Button, Spin } from 'antd';
+import { message , Steps, Row, Col, Typography, Divider, Form, Input, Button, Spin } from 'antd';
+import {Helmet} from "react-helmet";
 
 
 import axios from '../../axiosConfig';
@@ -13,199 +14,164 @@ const layout = {
   },
 };
 
-const validateMessages = {
-  required: 'This field is required!',
-  types: {
-    number: 'Not a validate number!',
-  },
-};
-
-
+const { Step } = Steps;
 const { Title, Text } = Typography;
 
 class NewProject extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      stepStatus: null,
+      stepCurrent: 0,
+      step:null,
+      projectlink: null,
+      projectimages: null,
+      projectskills: null
+    }
+  }
+
+  form1 = (
+    <Form onFinish={this.onFinishStep1} {...layout} name="nest-messages">
+    <Form.Item
+      label="Project Link"
+      rules={[
+        {
+          required: true,
+        },
+      ]}
+    >
+      <Input name="projlink" placeholder={
+          "Paste exact link to project"
+        }/>
+    </Form.Item>
+
+    <Form.Item>
+      <Button type="primary" onClick={() => this.next()}>
+        Next
+      </Button>    
+    </Form.Item>
+  </Form>
+  );
+  
+
+  onFinishStep1 = values => {
+    console.log(values)
+  };
+
+  form2 = (
+    <Form onFinish={this.onFinish} {...layout} name="nest-messages">
+    <Form.Item
+      label="Choose Image"
+      rules={[
+        {
+          required: true,
+        },
+      ]}
+    >
+      <Input name="projlink" placeholder={
+          "Paste exact link to project"
+        }/>
+    </Form.Item>
+
+  </Form>
+  );
+
+  steps = [
+    {
+      title: 'Upload link',
+      content: 'Project Link',
+      form: this.form1,
+    },
+    {
+      title: 'Choose image',
+      content: 'Basic Details',
+    },
+    {
+      title: 'Refine data',
+      content: 'Skills & Process',
+    },
+  ];
+
+
+
+  validURL(str) {
+    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+      '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    return !!pattern.test(str);
+  }
+
+  next() {
+    const current = this.state.stepCurrent + 1;
+    this.setState({ stepCurrent :current });
+  }
+
+  prev() {
+    const current = this.state.stepCurrent - 1;
+    this.setState({ stepCurrent: current });
+  }
 
     loading = false;
 
-    state = {
-      jobid: null,
-      projectid: null
-    }
+
 
     componentDidMount() {
     }
 
-    handleFormSubmit = (event) => {
-        event.preventDefault();
-
-        const link_jp = event.target.elements.link_jp.value;
-        const org = event.target.elements.org.value;
-        const jobtitle = event.target.elements.jdtitle.value;
-        const description = event.target.elements.jddescription.value;
-
-        const projtitle = event.target.elements.projtitle.value;
-        const projlink = event.target.elements.projlink.value;
-
-        const job_poster_id = localStorage.getItem('userProfileID');
-        
-        this.loading = true;
-
-        // Post the job post
-          axios.post('jobpost/', {
-                org: org,
-                link_jp: link_jp,
-                title: jobtitle,
-                description: description,
-                job_poster_id: job_poster_id,
-                // img:img
-            })
-            .then(res => {
-              if(res.status == '201'){
-                this.setState({jobid: res.data.id});
-
-                // Post the project
-                axios.post('project/', {
-                    title: projtitle,
-                    url: projlink,
-                    project_owner_id: job_poster_id
-                })
-                .then(res => {
-                  if(res.status == '201'){
-                    this.setState({projectid: res.data.id});
-
-                    
-                    // Post the Scan and await reply
-                          axios.post('scan-results/', {
-                            projectid: this.state.projectid,
-                            userid: job_poster_id,
-                            jobid: this.state.jobid,
-                            org: org,
-                            jobtitle: jobtitle,
-                            project_title: projtitle
-                        })
-                        .then(res => {
-                          if(res.status == '200'){
-                            this.props.history.push('scan/' + res.data['scanid'])
-                        }
-                        })
-                        .catch(error => this.setState({err: error}));
-
-                }
-                })
-                .catch(error => this.setState({err: error}));
-            }
-            })
-            .catch(error => this.setState({err: error}));
-    }
-
     render(){
+
+
         return (
-            <div>
-            <br />
+            <div>  
+            <Helmet>
+              <meta charSet="utf-8" />
+              <title>New Project</title>
+            </Helmet>
+              
             <Spin tip="Loading..." spinning={this.loading}>
 
-            <Row>
-              <Col span={3} />
-              <Col span={14}>
-                <Title level={2}>New Scan</Title>
-              </Col>
-              <Col span={7} />
-            </Row>
-            <Divider>Project Details</Divider>
-            <Form onSubmitCapture={(event) => this.handleFormSubmit(
-                event
-                )} {...layout} name="nest-messages" validateMessages={validateMessages}>
-              
-              <Form.Item
-                label="Project Title"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Input name="projtitle" placeholder={
-                    "Enter a title"
-                  }/>
-              </Form.Item>
 
-              <Form.Item
-                label="Project Link"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Input name="projlink" placeholder={
-                    "Paste exact link to project"
-                  }/>
-              </Form.Item>
+          <Row gutter={[16, 48]}>
+            <Col span={3}/>
+            <Col span={18}>
+            <Steps size="small" current={this.state.stepCurrent}>
+              {this.steps.map(item => (
+                <Step key={item.title} title={item.title} />
+              ))}
+            </Steps>
+            </Col>
+            <Col span={3}/>
+          </Row>
 
 
-              <Divider>Job Details</Divider>
+        <Divider>{this.steps[this.state.stepCurrent].content}</Divider>
 
-              <Form.Item
-                label="Company Name"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Input name="org" placeholder={
-                    "Enter the company/organization name"
-                  }/>
-              </Form.Item>
+          {this.steps[this.state.stepCurrent].form}
 
-              <Form.Item
-                label="Link to job post"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Input name="link_jp" placeholder={
-                    "Paste the link ot the job post"
-                  }/>
-              </Form.Item>
-
-              <Form.Item
-                label="Job Title"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Input name="jdtitle" placeholder={
-                    "Enter the position/job title"
-                  }/>
-              </Form.Item>
-        
-              <Form.Item label="Description"
-              rules={[
-                  {
-                    required: true,
-                    message:'Please paste job decription'},
-              ]}>
-                <Input.TextArea name="jddescription" placeholder={
-                    "Enter a Description"
-                  }/>
-              </Form.Item>
-
-              <Form.Item
-                hidden={this.state.err == null ? true : false}
-              >
-              </Form.Item>
-             
-              <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-                <Button type="primary" htmlType="submit" size="large" loading={this.loading}>
-                  Scan Now
+          <Row gutter={[16, 16]}>
+            <Col span={9}/>
+            <Col span={11}>
+              {/* {this.state.stepCurrent > 0 && (
+                <Button style={{ margin: '0 8px' }} onClick={() => this.prev()}>
+                  Previous
                 </Button>
-              </Form.Item>
-            </Form>
+              )}
+              {this.state.stepCurrent < this.steps.length - 1 && (
+                <Button type="primary" onClick={() => this.next()}>
+                  Next
+                </Button>
+              )}
+              {this.state.stepCurrent === this.steps.length - 1 && (
+                <Button type="primary" onClick={() => message.success('Processing complete!')}>
+                  Done
+                </Button>
+              )} */}
+            </Col>
+            <Col span={4}/>
+          </Row>
 
             </Spin>
             </div>
