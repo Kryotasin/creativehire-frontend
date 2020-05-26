@@ -136,12 +136,11 @@ class NormalLoginForm extends React.Component {
         ) : 
           <Form
             {...layout}
-            name="basic"
+            name="login"
 
             initialValues={{
               remember: true,
             }}
-            ref={this.formRef}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
           >

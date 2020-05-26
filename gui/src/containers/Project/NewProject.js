@@ -1,7 +1,7 @@
 import React from 'react';
-import { message , Steps, Row, Col, Typography, Divider, Form, Input, Button, Spin } from 'antd';
+import { Carousel, Alert, message , Steps, Row, Col, Typography, Divider, Form, Input, Button } from 'antd';
 import {Helmet} from "react-helmet";
-
+import Image from 'react-bootstrap/Image'
 
 import axios from '../../axiosConfig';
 
@@ -23,76 +23,16 @@ class NewProject extends React.Component{
     this.state = {
       stepStatus: null,
       stepCurrent: 0,
-      step:null,
       projectlink: null,
       projectimages: null,
-      projectskills: null
+      projectskills: null,
+      projectimagepointer: 0
     }
   }
 
-  form1 = (
-    <Form onFinish={this.onFinishStep1} {...layout} name="nest-messages">
-    <Form.Item
-      label="Project Link"
-      rules={[
-        {
-          required: true,
-        },
-      ]}
-    >
-      <Input name="projlink" placeholder={
-          "Paste exact link to project"
-        }/>
-    </Form.Item>
+  img = "http://simonpan.com/wp-content/themes/sp_portfolio/assets/sp-logo.png";
 
-    <Form.Item>
-      <Button type="primary" onClick={() => this.next()}>
-        Next
-      </Button>    
-    </Form.Item>
-  </Form>
-  );
-  
-
-  onFinishStep1 = values => {
-    console.log(values)
-  };
-
-  form2 = (
-    <Form onFinish={this.onFinish} {...layout} name="nest-messages">
-    <Form.Item
-      label="Choose Image"
-      rules={[
-        {
-          required: true,
-        },
-      ]}
-    >
-      <Input name="projlink" placeholder={
-          "Paste exact link to project"
-        }/>
-    </Form.Item>
-
-  </Form>
-  );
-
-  steps = [
-    {
-      title: 'Upload link',
-      content: 'Project Link',
-      form: this.form1,
-    },
-    {
-      title: 'Choose image',
-      content: 'Basic Details',
-    },
-    {
-      title: 'Refine data',
-      content: 'Skills & Process',
-    },
-  ];
-
-
+  test = "asd";
 
   validURL(str) {
     var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
@@ -114,58 +54,177 @@ class NewProject extends React.Component{
     this.setState({ stepCurrent: current });
   }
 
-    loading = false;
+  loading = false;
+
+  form1 = (
+    <Form {...layout} name="form1"
+      onFinish={(values) => {
+        
+        this.loading = true;
+
+        this.setState({
+          projectlink:values.projlink
+        });
+
+        axios.post('get-all-images/', {
+          url: values.projlink
+        })
+        .then(res => {
+          if(res.status == 200){
+            this.setState({
+              projectimages: res.data
+            });
+          }
+          this.next();
+        })
+        .catch(err => {
+          this.setState({
+            stepStatus: err.response.data
+          });
+        })
+
+        this.loading = false;
+      }}>
+      <Form.Item
+        label="Project Link"
+        name="projlink"
+        rules={[
+          {
+            required: true,
+            message: "Please enter a link"
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item>
+        <Button type="primary" htmlType="submit" loading={this.loading}>
+          Next
+        </Button>
+      </Form.Item>
+    </Form>
+  );
 
 
+  form2 = (
+    <Form {...layout} name="form2"
+      onFinish={(values) => {
 
-    componentDidMount() {
+
+      }}>
+      <Form.Item
+        label="Project Title"
+        name="title"
+        rules={[
+          {
+            required: true,
+            message: "Please enter a title"
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item>
+        <Image src={this.img} fluid />
+      </Form.Item>
+
+      <Form.Item>
+        <Button type="primary" htmlType="submit" loading={this.loading}>
+          Next
+        </Button>
+      </Form.Item>
+      {this.test}
+    </Form>
+  );
+
+
+  steps = [
+    {
+      title: 'Upload link',
+      content: 'Project Link',
+      form: this.form1,
+    },
+    {
+      title: 'Project Details',
+      content: 'Project Details',
+      form: this.form2,
+    },
+    {
+      title: 'Refine data',
+      content: 'Skills & Process',
+    },
+  ];
+
+
+  render(){
+    
+    this.test = this.state.projectimages;
+console.log(this.test);
+
+    let message = "";
+
+    if(this.state.stepStatus){
+      message = (
+        <Alert message="Error Text" type="error" />
+      );
     }
 
-    render(){
 
+      return (
+          <div>  
+          <Helmet>
+            <meta charSet="utf-8" />
+            <title>New Project</title>
+          </Helmet>
+          
 
-        return (
-            <div>  
-            <Helmet>
-              <meta charSet="utf-8" />
-              <title>New Project</title>
-            </Helmet>
-              
-            <Spin tip="Loading..." spinning={this.loading}>
+        <Row gutter={[16, 48]}>
+          <Col span={3}/>
+          <Col span={18}>
 
-
-          <Row gutter={[16, 48]}>
-            <Col span={3}/>
-            <Col span={18}>
-            <Steps size="small" current={this.state.stepCurrent}>
+            <Steps size="small" onChange={(current) =>{
+              this.setState({ stepCurrent: current });
+            }} 
+            current={this.state.stepCurrent}>
               {this.steps.map(item => (
                 <Step key={item.title} title={item.title} />
               ))}
             </Steps>
-            </Col>
-            <Col span={3}/>
+
+          </Col>
+          <Col span={3}/>
+        </Row>
+
+
+      <Divider>{this.steps[this.state.stepCurrent].content}</Divider>
+
+        {this.steps[this.state.stepCurrent].form}
+
+          <Row gutter={[16, 16]}>
+            <Col span={9}/>
+            <Col span={11}>
+                  {message}
+            </Col>        
+            <Col span={4}/>
           </Row>
-
-
-        <Divider>{this.steps[this.state.stepCurrent].content}</Divider>
-
-          {this.steps[this.state.stepCurrent].form}
 
           <Row gutter={[16, 16]}>
             <Col span={9}/>
             <Col span={11}>
               {/* {this.state.stepCurrent > 0 && (
-                <Button style={{ margin: '0 8px' }} onClick={() => this.prev()}>
+                <Button style={{ margin: '0 8px' }} onClick={(event) => this.handleClick(event, "prev")}>
                   Previous
                 </Button>
               )}
               {this.state.stepCurrent < this.steps.length - 1 && (
-                <Button type="primary" onClick={() => this.next()}>
+                <Button type="primary" onClick={(event) => this.handleClick(event, "next")}>
                   Next
                 </Button>
               )}
               {this.state.stepCurrent === this.steps.length - 1 && (
-                <Button type="primary" onClick={() => message.success('Processing complete!')}>
+                <Button type="primary" onClick={(event) => message.success('Processing complete!')}>
                   Done
                 </Button>
               )} */}
@@ -173,10 +232,9 @@ class NewProject extends React.Component{
             <Col span={4}/>
           </Row>
 
-            </Spin>
-            </div>
-        )
-    }
+          </div>
+      )
+  }
 }
 
 export default NewProject;
